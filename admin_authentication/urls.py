@@ -4,8 +4,7 @@ from django.urls import path, include
 from django.contrib import admin
 
 urlpatterns = [
-path('', views.login, name='login'),
-path('authens', views.authens, name='authens'),
-path('logout', views.logout, name='logout'),
-path('home/', views.admin_home, name='admin_home'),
+    path('', views.login, name='login'),
+    path('authens', views.authens, name='authens'),
+    path('logout', views.logout, name='logout'),
 ]

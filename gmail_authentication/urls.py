@@ -1,6 +1,6 @@
 from django.conf import settings
 from . import views
-from django.urls import path, include
+from django.urls import path
 
 urlpatterns = [
     path('welcome', views.welcome_page, name='welcome_page'),

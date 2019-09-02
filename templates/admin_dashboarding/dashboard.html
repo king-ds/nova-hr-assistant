@@ -1,0 +1,373 @@
+{% extends 'admin_dashboarding/base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="page-header">
+    <h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-home"></i>                 
+    </span>
+    Dashboard
+    </h3>
+</div>
+<div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+        <h4 class="font-weight-normal mb-3">Total Users
+            <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_employees" name="total_employees"></h2>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>                  
+        <h4 class="font-weight-normal mb-3">Total Departments
+            <i class="mdi mdi-briefcase-outline mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_deparments"></h2>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>                                    
+        <h4 class="font-weight-normal mb-3">Total Number of Posts
+            <i class="mdi mdi-buffer mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_posts"></h2>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+        <div class="clearfix">
+            <h4 class="card-title float-left">Employee Happiness Level</h4>
+            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>                                     
+        </div>
+        <select name="company" class="form-control" id="company" required>
+                {% for department in Departments %}
+                <option value="{{department.department_name}}">{{department.department_name}}</option>
+                {% endfor %}
+           </select> 
+        <div id="barChart_container">        
+        <canvas id="barChart" height="200" width="800"></canvas>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- <div class="col-md-5 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+        <h4 class="card-title">Likeability Ratio</h4>
+        <div id="horizontalBar_container">
+        <canvas id="horizontalBar" height="245px"></canvas>
+        </div>
+        <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>                                                      
+        </div>
+    </div>
+    </div> -->
+</div>
+<!-- Start of Row 1 -->
+<div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+             <div class="card-body">
+             <h4 class="card-title">Daily Employee Engagement</h4>
+             <canvas id="lineChart" height="200" width="800"></canvas>
+             </div>
+        </div>
+        </div>
+   </div>
+   <!-- End of Row 2 -->
+<div class="row">
+    <div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+        <h4 class="card-title">User List</h4>
+        <div class="table-responsive">
+            {% if Users %}
+            <table class="table" id="employees_datatables" name="employees_table">
+            <thead>
+                <tr>
+                <th>
+                    ID #
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    Prediction
+                </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in Users %}
+                <tr>
+                <td>
+                    {{ user.id }}
+                </td>
+                <td>
+                    {{ user.username }}
+                </td>
+                <td>
+                    {{ user.department }}
+                </td>
+                <td>
+                    {{ user.datetime_joined }}
+                </td>
+                <td>
+                    {% if user.prediction == True %}
+                    <label class="badge badge-gradient-success">RETAINED</label>
+                    {% else %}
+                    <label class="badge badge-gradient-danger">CHURNED</label>
+                    {% endif %}
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            {% else %}
+            <h5>There is no user yet</h5>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+        <h4 class="card-title">User Posts</h4>
+        <div class="table-responsive">
+            {% if Posts %}
+            <table class="table" id="post_table">
+            <thead>
+                <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Post
+                </th>
+                <th>
+                    Datetime Posted
+                </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in Posts %}
+                <tr>
+                <td>
+                    {{post.id}}
+                </td>
+                <td>
+                    {{post.post}}
+                </td>
+                <td>
+                    {{post.datetime_comments}}
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            {% else %}
+            <h5>No post available</h5>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(event){
+        $("#company").change(function(event){
+            $("#barChart").remove();
+            $("#horizontalBar").remove();
+            $("#horizontalBar_container").append('<canvas id="horizontalBar" height="245px"></canvas>');
+            $("#barChart_container").append('<canvas id="barChart" height="200" width="800"><canvas>');
+        });
+    });
+</script>
+
+<script>
+    function get_total_data(){
+        $.ajax({
+            url: '{% url "get_total_data" %}',
+            type: 'GET',
+            dataType: 'json',
+            
+            success:function(data){
+                $("#total_employees").text(data.total_employees)
+                $("#total_deparments").text(data.total_deparments)
+                $("#total_posts").text(data.total_posts)
+            }
+        });
+    }
+</script>
+
+<script>
+    function get_average_votes(){
+        Chart.defaults.global.defaultFontFamily = "ubuntu-light";
+        var selectedCompany = $("#company").val();
+        $.ajax({
+            url: '{% url "get_average_votes" %}',
+            type: 'GET',
+            data: {
+                'company' : selectedCompany
+            },
+            dataType: 'json',
+
+            success: function(data){
+                var votes_data = {
+                    labels: data.username,
+                    datasets: [
+                        {
+                            label: "Average Votes",
+                            data: data.avg_votes,
+                            backgroundColor: "rgba(10, 161, 255)",
+                        }
+                    ]
+                };
+                var ctx = document.getElementById("barChart").getContext("2d");
+                var options = {
+                    animation: {
+                        duration : 0
+                    },
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: "top",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 12,
+                            }
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    };
+                
+                var barChart = new Chart(ctx, {type:'bar', data:votes_data, options, options})
+
+            }
+        });
+    }
+</script>
+
+<script>
+        function displayLineChart(){
+        $(document).ready(function(event){
+             $.ajax({
+                  url: '{% url "get_total_employee" %}',
+                  type: 'GET',
+                  success:function(data){
+   
+                       var data = {
+                            labels : data.time_series,
+                            datasets : [
+                                 {
+                                 label: "Votes",
+                                 fill: false,
+                                 lineTension: 0.1,
+                                 backgroundColor: "rgba(75,192,192,0.4)",
+                                 borderColor: "rgba(75,192,192,1)",
+                                 borderCapStyle: 'butt',
+                                 borderDashOffset: 0.0,
+                                 borderJoinStyle: 'mitter',
+                                 strokeColor: "#rgba(0, 0, 0)",
+                                 pointBorderColor: "rgba(75,192,192,1)",
+                                 pointBackgroundColor: "#fff",
+                                 pointBorderWidth: 1,
+                                 pointHoverRadius: 5,
+                                 pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                 pointHoverBorderColor: "rgba(220,220,220,1)",
+                                 pointHoverBorderWidth: 2,
+                                 pointRadius: 1,
+                                 pointHitRadius: 10,
+                                 pointColor: "rgba(151,187,205,1)",
+                                 pointStrokeColor: "#fffff",
+                                 data: data.weekly_votes
+                            }
+                            ]
+                       };
+                       var ctx = document.getElementById("lineChart").getContext("2d");
+                       var options = {
+                            animation: {
+                                 duration : 0
+                            }
+                        };
+                       var lineChart = new Chart(ctx, {type : 'line', data : data, options : options});
+                  }
+             });
+        });
+   }
+   
+   </script>
+
+<script>
+    window.onload = function() {
+        get_average_votes();
+        get_total_data();
+        displayLineChart();
+    };
+</script>
+
+<script>     
+    window.setInterval(function(){
+        get_average_votes();
+        get_total_data();
+        displayLineChart();
+    }, 3000);
+</script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#employees_datatables').DataTable({
+            responsive:true,
+            "info":false,
+            });
+            table.on( 'responsive-resize', function ( e, datatable, columns ) {
+                var count = columns.reduce( function (a,b) {
+                    return b === false ? a+1 : a;
+                    }, 0 );
+            });
+        });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var post_table = $("#post_table").DataTable({
+            responsive:true,
+            "info":false,
+            });
+            post_table.on( 'responsive-resize', function ( e, datatable, columns ) {
+                var count = columns.reduce( function (a,b) {
+                    return b === false ? a+1 : a;
+                    }, 0 );
+            });
+        });
+</script>
+
+{% endblock %}

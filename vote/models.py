@@ -5,8 +5,8 @@ from gmail_authentication.models import *
 class Votes(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     votes = models.IntegerField()
-    datetime_voted = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
+    datetime_voted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.datetime_vote)

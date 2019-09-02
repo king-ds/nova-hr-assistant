@@ -1,8 +1,7 @@
+{% extends 'admin_dashboarding/base.html' %}
 {% load static %}
-<script src="{% static "predictions/js/jquery-3.4.1.min.js" %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+{% block content %}
+  
 <script type="text/javascript">
      $(document).ready(function(event) {
           $('#user').change(function(event){
@@ -21,18 +20,17 @@
                          $("#dislikes").val(data.DislikesReceived);
                          $("#numVotes").val(data.TotalVotes);
                          $("#vote").val(data.AvgVotes);
-
-                         console.log(data.TotalVotes)
                     }
                })
           })
           $('#post-form').on('submit', function(event){
+               $(".ajax_progress").show();
+               $(".prediction_form").hide();
+
                event.preventDefault();
                $.ajax({
                     url: '{% url "predictpost" %}',
                     type:'POST',
-                    // dataType: 'json',
-                    // contentType: 'application/json',
                     data: {
                         'departmentAlias' : $("#departmentAlias").val(),
                         'likes_given' : $("#likes_given").val(),
@@ -44,15 +42,15 @@
                         'user' : $('#user').val()
                     },
                     success : function(data){
+                         $(".ajax_progress").hide();
+                         $(".prediction_form").show();
                          if (data.prediction == true) {
-                              // window.alert(data.username + ' is predicted to retain');
-                              // window.location.href='{% url "admin_home" %}';
                               Swal.fire({
                                 type: 'success',
                                 title: 'Retained',
                                 text: data.username + ' is predicted to retain ',
                               }).then(function() {
-                              window.location = '{% url "admin_home" %}';
+                              window.location = '{% url "prediction" %}';
                               });
                          }
                          else {
@@ -83,9 +81,13 @@
 
 <!-- Start of Row 2 -->
 <div class="row">
-          <div class="col-12 grid-margin">
+     <div class="col-12 grid-margin">
           <div class="card">
               <div class="card-body">
+               <div class="ajax_progress" style="display: none; text-align: center;">
+                    <img src="{% static 'predictions/images/prediction_loader.gif' %}" alt="loading">
+               </div>
+               <div class="prediction_form">
               <h4 class="card-title">Retention Predictor</h4>
               <p>Please fill out all the necessary fields</p>
               <form class="was-validated" id="post-form" method="POST">
@@ -159,7 +161,7 @@
               </div>
           </div>
           </div>
+          </div>
       </div>
-     
 
-
+{% endblock %}

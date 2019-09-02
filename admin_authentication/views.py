@@ -26,13 +26,6 @@ def authens(request):
         else:
             return redirect('login')
 
-def admin_home(request):
-    try:
-       if request.session['name'] == 'SecretKey':
-            return render(request, 'admin_authentication/dummy.html', {})
-    except:
-            return redirect('login')
-
 def logout(request):
     del request.session['name']
     del request.session['username']
