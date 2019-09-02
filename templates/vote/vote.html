@@ -1,0 +1,172 @@
+{% extends 'gmail_authentication/configure_account.html' %}
+{% block content %}
+{% load staticfiles %}
+<h3>Hello {{ User.first_name }} {{ User.last_name }}, <br><br> How happy are you today at work?<br></h3>
+
+<div class="table">
+
+<a href="{% url 'add_post' %}">
+  <ul id="emoji">
+      <li value="1" id="btn-1"><img src="{% static 'vote/images/emoji11.png' %}" style="width: 50px; height: 50px;"/></li>
+      <li value="2" id="btn-2"><img src="{% static 'vote/images/emoji22.png' %}" style="width: 50px; height: 50px;"/></li>
+      <li value="3" id="btn-3"><img src="{% static 'vote/images/emoji33.png' %}" style="width: 50px; height: 50px;"/></li>
+      <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji44.png' %}" style="width: 50px; height: 50px;"/></li>
+      <!-- <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji55.png' %}" style="width: 50px; height: 50px;"/></li> -->
+  </ul>
+</a>
+
+<ul id="note">
+    <li>BAD</li>
+    <li>OKAY</li>
+    <li>GOOD</li>
+    <li>GREAT</li>
+</ul>
+
+<div id="line">
+    <div id="dot"></div>
+</div>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+     $("#emoji li:nth-child(1)").hover(function(){
+        $("#dot").css("margin-left","0px");
+         function explode(){
+           $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji1.png" %}");
+           $("#emoji li:nth-child(2) img").attr("src","{% static "vote/images/emoji22.png" %}");
+           $("#emoji li:nth-child(3) img").attr("src","{% static "vote/images/emoji33.png" %}");
+           $("#emoji li:nth-child(4) img").attr("src","{% static "vote/images/emoji44.png" %}");
+           $("#emoji li:nth-child(5) img").attr("src","{% static "vote/images/emoji55.png" %}");
+           $("#note li:nth-child(1)").css("color","black");
+           $("#note li:nth-child(2)").css("color","#d4d3cf");
+           $("#note li:nth-child(3)").css("color","#d4d3cf");
+           $("#note li:nth-child(4)").css("color","#d4d3cf");
+           $("#note li:nth-child(5)").css("color","#d4d3cf");
+         }
+         setTimeout(explode,300);
+     });
+      $("#emoji li:nth-child(2)").hover(function(){
+        $("#dot").css("margin-left","60px");
+         function explode(){
+           $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
+           $("#emoji li:nth-child(2) img").attr("src","{% static "vote/images/emoji2.png" %}");
+           $("#emoji li:nth-child(3) img").attr("src","{% static "vote/images/emoji33.png" %}");
+           $("#emoji li:nth-child(4) img").attr("src","{% static "vote/images/emoji44.png" %}");
+           $("#emoji li:nth-child(5) img").attr("src","{% static "vote/images/emoji55.png" %}");
+           $("#note li:nth-child(1)").css("color","#d4d3cf");
+           $("#note li:nth-child(2)").css("color","black");
+           $("#note li:nth-child(3)").css("color","#d4d3cf");
+           $("#note li:nth-child(4)").css("color","#d4d3cf");
+           $("#note li:nth-child(5)").css("color","#d4d3cf");
+         }
+         setTimeout(explode,300);
+     });
+      $("#emoji li:nth-child(3)").hover(function(){
+        $("#dot").css("margin-left","120px");
+         function explode(){
+           $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
+           $("#emoji li:nth-child(2) img").attr("src","{% static "vote/images/emoji22.png" %}");
+           $("#emoji li:nth-child(3) img").attr("src","{% static "vote/images/emoji3.png" %}");
+           $("#emoji li:nth-child(4) img").attr("src","{% static "vote/images/emoji44.png" %}");
+           $("#emoji li:nth-child(5) img").attr("src","{% static "vote/images/emoji55.png" %}");
+           $("#note li:nth-child(1)").css("color","#d4d3cf");
+           $("#note li:nth-child(2)").css("color","#d4d3cf");
+           $("#note li:nth-child(3)").css("color","black");
+           $("#note li:nth-child(4)").css("color","#d4d3cf");
+           $("#note li:nth-child(5)").css("color","#d4d3cf");
+         }
+         setTimeout(explode,300);
+     });
+      $("#emoji li:nth-child(4)").hover(function(){
+        $("#dot").css("margin-left","180px");
+         function explode(){
+           $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
+           $("#emoji li:nth-child(2) img").attr("src","{% static "vote/images/emoji22.png" %}");
+           $("#emoji li:nth-child(3) img").attr("src","{% static "vote/images/emoji33.png" %}");
+           $("#emoji li:nth-child(4) img").attr("src","{% static "vote/images/emoji4.png" %}");
+           $("#emoji li:nth-child(5) img").attr("src","{% static "vote/images/emoji55.png" %}");
+           $("#note li:nth-child(1)").css("color","#d4d3cf");
+           $("#note li:nth-child(2)").css("color","#d4d3cf");
+           $("#note li:nth-child(3)").css("color","#d4d3cf");
+           $("#note li:nth-child(4)").css("color","black");
+           $("#note li:nth-child(5)").css("color","#d4d3cf");
+         }
+         setTimeout(explode,300);
+     });
+      $("#emoji li:nth-child(5)").hover(function(){
+        $("#dot").css("margin-left","240px");
+         function explode(){
+           $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
+           $("#emoji li:nth-child(2) img").attr("src","{% static "vote/images/emoji22.png" %}");
+           $("#emoji li:nth-child(3) img").attr("src","{% static "vote/images/emoji33.png" %}");
+           $("#emoji li:nth-child(4) img").attr("src","{% static "vote/images/emoji44.png" %}");
+           $("#emoji li:nth-child(5) img").attr("src","{% static "vote/images/emoji5.png" %}");
+           $("#note li:nth-child(1)").css("color","#d4d3cf");
+           $("#note li:nth-child(2)").css("color","#d4d3cf");
+           $("#note li:nth-child(3)").css("color","#d4d3cf");
+           $("#note li:nth-child(4)").css("color","#d4d3cf");
+           $("#note li:nth-child(5)").css("color","black");
+         }
+         setTimeout(explode,300);
+     });
+  });
+
+  $(document).ready(function(event) {
+      $('#btn-1').on('click', function (event) {
+          var Status = $(this).val();
+          console.log(Status)
+          $.ajax({
+              url: '{% url "submit_vote" %}',
+              type: 'GET',
+              data: {
+                  'Status': Status
+              },
+          });
+      });
+  });
+
+  $(document).ready(function(event) {
+      $('#btn-2').on('click', function (event) {
+          var Status = $(this).val();
+          console.log(Status)
+          $.ajax({
+              url: '{% url "submit_vote" %}',
+              type: 'GET',
+              data: {
+                  'Status': Status
+              },
+          });
+      });
+  });
+
+  $(document).ready(function(event) {
+      $('#btn-3').on('click', function (event) {
+          var Status = $(this).val();
+          console.log(Status)
+          $.ajax({
+              url: '{% url "submit_vote" %}',
+              type: 'GET',
+              data: {
+                  'Status': Status
+              },
+          });
+      });
+  });
+
+  $(document).ready(function(event) {
+      $('#btn-4').on('click', function (event) {
+          var Status = $(this).val();
+          console.log(Status)
+          $.ajax({
+              url: '{% url "submit_vote" %}',
+              type: 'GET',
+              data: {
+                  'Status': Status
+              },
+          });
+      });
+  });
+</script>
+{% endblock %}
