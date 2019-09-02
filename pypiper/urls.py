@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gmail_authentication.urls')),
     path('', include('social_django.urls', namespace='social')),
+    path('web/admin/', include('admin_authentication.urls'))
 ]
