@@ -1,0 +1,10 @@
+Django~=2.0.6
+djangorestframework
+django-import-export
+numpy
+scikit-learn
+pickle-mixin
+pandas
+social-auth-app-django
+django-mathfilters
+mysqlclient==1.3.12
