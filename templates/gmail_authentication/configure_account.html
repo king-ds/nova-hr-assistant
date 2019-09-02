@@ -1,0 +1,62 @@
+{% extends 'gmail_authentication/base.html' %}
+{% block title %} PyPiper | Configure your account{% endblock %}
+{% block content %}
+
+<div class="page-container-configure-account-form">
+    <h2 class="page-container-title">Configure your PyPiper account</h2>
+    <p>Please fill out this form</p>
+    {% if user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <div class="input-field">
+                <input type="text" autocomplete="off" placeholder="Username" id="username" name="username" value="{{ user.username }}" readonly required>
+            </div>
+            <div class="input-field">
+                <input type="text"  autocomplete="off" placeholder="First Name" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+            </div>
+            <div class="input-field">
+                <input type="text"  autocomplete="off" placeholder="Last Name" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+            </div>
+            <div class="input-field">
+                <input type="email" autocomplete="off" placeholder="Email Address" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="input-field">
+                <select id="department" name="department">
+                    {% if departments %}
+                    {% for department in departments %}
+                    <option value="" disabled selected>Select your department</option>
+                    <option value="{{ department.id }}">{{ department.department_name }}</option>
+                    {% endfor %}
+                    {% else %}
+                    <p>No department yet</p>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="input-field-button">
+                <button>Proceed</button>
+                <a href="#" class="input-field-button-cancel" id="cancel_configuration">Cancel configuration?</a>
+            </div>
+        </fieldset>
+    </form>
+    {% endif %}
+</div>
+
+<!-- <script>
+window.onbeforeunload = close_tab;
+function close_tab(){
+    $.ajax({
+            url: "{% url 'logout' %}",
+            type: 'POST',
+            data: {
+                'content': 'xxx',
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success : function(data){
+                window.location = "{% url 'home' %}";
+            }
+        });
+   return null;
+}
+</script> -->
+{% endblock %}

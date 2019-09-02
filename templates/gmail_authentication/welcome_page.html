@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+    <title>Welcome to PyPiper</title>
+
+    <!-- Compiled and minified CSS -->
+    <link href="{% static 'gmail_authentication/css/welcome_page.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'gmail_authentication/images/logo.png' %}" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</head>
+<body>
+    <!-- Left Side -->
+    <div class="split left">
+        <div class="centered">
+            <div class="welcome-container">
+                <!-- Header -->
+                <div class="welcome-container-header">
+                    Engage with your Coworkers! Join the Fun.
+                </div>
+                <!-- End of Header -->
+
+                <!-- Subheader -->
+                <div class="welcome-container-subheader">
+                    We have bunch of features, including ...
+                </div>
+                <!-- End of Subheader -->
+
+                <!-- Items -->
+                <!-- Item # 1 -->
+                <div class="welcome-container-item">
+                    <span class="glyphicon glyphicon-bullhorn"></span>
+                    <!-- Title and Text 1 -->
+                    <div>
+                        <div class="welcome-container-item-title">
+                            Vote
+                        </div>
+                        <div class="welcome-container-item-text">
+                            You can evaluate your hapiness level.
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Item # 1 -->
+
+                <!-- Item # 2 -->
+                <div class="welcome-container-item">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <!-- Title and Text 2 -->
+                    <div>
+                        <div class="welcome-container-item-title">
+                            Post
+                        </div>
+                        <div class="welcome-container-item-text">
+                            Share your thoughts with your coworkers.
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Item # 2 -->
+
+                <!-- Item # 3 -->
+                <div class="welcome-container-item">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <!-- Title and Text 3 -->
+                    <div>
+                        <div class="welcome-container-item-title">
+                            Like
+                        </div>
+                        <div class="welcome-container-item-text">
+                          Like your coworkers' posts.
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Items -->
+            </div>
+        </div>
+    </div>
+    <!-- End of Left Side -->
+
+    <!-- Right side -->
+    <div class="split right">
+        <!-- Fotter -->
+        <div class="landing-page-footer">
+
+            <p>© 2019 PyPiper</p>
+        </div>
+
+        <div class="centered">
+            <div class="sign-in-container">
+                <div class="sign-in-container-logo">
+                    <img src="{% static 'gmail_authentication/images/logo.png' %}" class="sign-container-logo-pypiper">
+                </div>
+                <h3 class="sign-in-container-header">An HR system designed to measure Employee happiness level.</h3>
+                <div class="sign-in-container-sign-in-form">
+                    <h2 class="sign-in-container-sign-in-form-join-subheader">Join PyPiper today.</h2>
+                    <div class="sign-in-container-sign-in-form-button">
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Left Side -->
+
+
+</body>
+</html>

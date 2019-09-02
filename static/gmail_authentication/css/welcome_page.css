@@ -1,0 +1,199 @@
+/* font-family: 'Montserrat', sans-serif; */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
+/* font-family: 'Muli', sans-serif; */
+@import url('https://fonts.googleapis.com/css?family=Muli:700&display=swap');
+@import url('../images/gear.png');
+
+body{
+  background-image: url('images/gear.png');
+}
+
+div {
+    display: block;
+}
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/gear.png') !important;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+    background-position: 35% 0%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex: 1;
+  }
+  
+  /* Control the right side */
+  .right {
+    right: 0;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex: 1;
+  }
+  
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .welcome-container {
+    color: #fff;
+    max-width: 500px;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .welcome-container-header{
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-bottom: 16px;
+    margin-top: 32px;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .welcome-container-subheader{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    margin-bottom: 48px;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .glyphicon {
+      font-size: 20px;
+      padding-top: 12px;
+  }
+
+  .glyphicon::before {
+    display: block;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+.welcome-container-item-title{
+  font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 24px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.welcome-container-item-text{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.welcome-container-item {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    margin-bottom: 32px;
+}
+
+.sign-in-container {
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
+  background-color: #fff;
+  max-width: 500px;
+  padding: 0 16px;
+  position: relative;
+  align: left;
+  border: 1.5px solid black;
+  border-radius: 2%;
+  padding-bottom: 20px;
+}
+
+.sign-in-container-sign-in-form {
+  margin-top: 50px;
+}
+
+.sign-in-container-logo {
+  text-align: left;
+}
+
+.sign-in-container-header {
+    font-size: 25px;
+    margin-top: 10px;
+    color: black;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: justify;
+    text-justify: inter-word;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.sign-in-container-logo img{
+    width: 80px;
+    height: 80px;
+    text-align: left;
+    /* border-radius: 50%;
+    border: 5px solid black; */
+    padding: 10px;
+}
+
+.sign-in-container-sign-in-form-join-subheader {
+  font-weight: bold;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  color: #14171a;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 10px auto;
+}
+
+.sign-in-container-sign-in-form-button {
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.sign-in-container-sign-in-form-button i {
+  float: left;
+  margin: 4px 15px  0 5px;
+  min-width: 15px;
+}
+
+.landing-page-footer {
+  border-top: 1px solid #e6ecf0;
+  font-family: 'Montserrat', sans-serif;
+  padding: 3px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #ebebeb;
+  color: black;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 20px;
+}

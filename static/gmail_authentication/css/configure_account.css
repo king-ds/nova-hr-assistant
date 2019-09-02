@@ -1,0 +1,176 @@
+/* font-family: 'Montserrat', sans-serif; */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
+@import url('../images/grey_gear.png');
+@import url('../images/lightgrey_sidelogo.png');
+
+body {
+    margin: 0%;
+    background-color: whitesmoke;
+    background-image: url('../images/grey_gear.png') !important;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+    background-position: 100% 0%;
+    overflow: hidden;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  li {
+    float: left;
+  }
+  
+  li a {
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover{
+    background-color:#44464a;
+    color: whitesmoke;
+    text-decoration: none;
+  }
+  
+.container {
+    position: relative;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.top-bar {
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    height: 46px;
+    position: relative;
+    width: 100%;
+    background-color: #111;
+}
+
+.top-bar-inner {
+    background: #111;
+    color: #14171a;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.page-container {
+    width: 1190px;
+    max-width: 837px;
+    margin: 20px auto;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+.page-container-title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.page-container-configure-account-form {
+    width: auto;
+    max-width: 585px;
+    padding: 0 20px 0;
+    margin: 0 auto 10px;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.input-field {
+    margin-top: 10px;
+}
+
+.input-field>input{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    width: 300px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+}
+
+.input-field>select{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    width: 311px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+}
+
+.input-field-button {
+    margin-top: 20px;
+}
+
+.input-field-button>button{
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    color: white;
+    background-color: black;
+    outline:none;
+    border: none;
+}
+
+.input-field-button>button:hover{
+    background-color: #44464a;
+}
+
+.input-field-button>a{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: none;
+    margin-left: 60px;
+}
+
+.page-outer {
+    height: 1000vh;
+    background-image: url('../images/grey_sidegear.png') !important;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+    bottom: 0;
+}
+
+.landing-page-footer {
+    border-top: 1px solid #e6ecf0;
+    font-family: 'Montserrat', sans-serif;
+    padding: 3px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ebebeb;
+    color: black;
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 20px;
+  }
+
+.page-container-configure-account-form>p{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

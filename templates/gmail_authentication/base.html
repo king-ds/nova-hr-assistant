@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{% static 'gmail_authentication/css/configure_account.css' %}">
+    <link rel="stylesheet" href="{% static "user_web/css/vote_system.css" %}">
+    <link rel="stylesheet" href="{% static "user_web/css/create_post.css" %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="{% static 'gmail_authentication/js/jquery-3.4.1.min.js' %}"></script>
+</head>
+<!-- Footer -->
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div class="container">
+        <ul>
+            <li id="home_button"><a class="active" href="{% url 'logout' %}"><span class="fa fa-cog"></span> Home</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        </div>
+    </div>
+</div>
+<div class="page-outer">
+<div class="page-outer-container">
+    <div class="page-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+<script>
+$(document).ready(function(event){
+    $('#cancel_configuration, #home_button').click(function(){
+        if (confirm('Kanselahin ang pag konfigyor ng akawnt?')){
+            $.ajax({
+            url: "{% url 'logout' %}",
+            type: 'POST',
+            data: {
+                'content': 'xxx',
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success : function(data){
+                window.location = "{% url 'home' %}";
+                }
+            });
+        } else {
+            alert('Ipagpatuloy');
+        }
+    });
+});
+</script>
