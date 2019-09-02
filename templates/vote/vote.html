@@ -1,11 +1,10 @@
-{% extends 'gmail_authentication/configure_account.html' %}
-{% block content %}
 {% load staticfiles %}
+<script src="{% static 'gmail_authentication/js/jquery-3.4.1.min.js' %}"></script>
 <h3>Hello {{ User.first_name }} {{ User.last_name }}, <br><br> How happy are you today at work?<br></h3>
 
 <div class="table">
 
-<a href="{% url 'add_post' %}">
+
   <ul id="emoji">
       <li value="1" id="btn-1"><img src="{% static 'vote/images/emoji11.png' %}" style="width: 50px; height: 50px;"/></li>
       <li value="2" id="btn-2"><img src="{% static 'vote/images/emoji22.png' %}" style="width: 50px; height: 50px;"/></li>
@@ -13,7 +12,7 @@
       <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji44.png' %}" style="width: 50px; height: 50px;"/></li>
       <!-- <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji55.png' %}" style="width: 50px; height: 50px;"/></li> -->
   </ul>
-</a>
+
 
 <ul id="note">
     <li>BAD</li>
@@ -29,9 +28,52 @@
 
 
 
+{% load staticfiles %}
+
+  {% if User %}
+  <h3 id="headpost">Hello {{ User.first_name }} {{ User.last_name }}, How Are You Doing Today? </h3>
+  {% endif %}
+  <form id="post-form" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <br>
+        <textarea class="form-control" rows="5" id="post" name="post" placeholder="Write a post..."></textarea>
+        <button id="submit_btn" type="submit" class="btn btn-primary">Post</button>
+      </div>
+  </form>
+
+<script>
+  var global= 0
+  $(document).ready(function(event) {
+    $('#post-form').on('submit', function(event){
+      event.preventDefault();
+      $.ajax({
+        url: '{% url "submit_vote" %}',
+        type:'POST',
+        data: {
+          'username' : 'User.username',
+          'post' : $("#post").val(),
+          'vote' : global
+        },
+        success : function(data){
+          console.log(data.status);
+          if(data.status == 200){
+            console.log("{% url 'home' %}")
+            window.location.href = "{% url 'home' %}";
+          }
+        }
+      })
+    })
+  });
+  </script>
+
+
+
+</div>
+
 <script>
 $(document).ready(function(){
-     $("#emoji li:nth-child(1)").hover(function(){
+     $("#emoji li:nth-child(1)").click(function(){
         $("#dot").css("margin-left","0px");
          function explode(){
            $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji1.png" %}");
@@ -47,7 +89,7 @@ $(document).ready(function(){
          }
          setTimeout(explode,300);
      });
-      $("#emoji li:nth-child(2)").hover(function(){
+      $("#emoji li:nth-child(2)").click(function(){
         $("#dot").css("margin-left","60px");
          function explode(){
            $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
@@ -63,7 +105,7 @@ $(document).ready(function(){
          }
          setTimeout(explode,300);
      });
-      $("#emoji li:nth-child(3)").hover(function(){
+      $("#emoji li:nth-child(3)").click(function(){
         $("#dot").css("margin-left","120px");
          function explode(){
            $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
@@ -79,7 +121,7 @@ $(document).ready(function(){
          }
          setTimeout(explode,300);
      });
-      $("#emoji li:nth-child(4)").hover(function(){
+      $("#emoji li:nth-child(4)").click(function(){
         $("#dot").css("margin-left","180px");
          function explode(){
            $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
@@ -95,7 +137,7 @@ $(document).ready(function(){
          }
          setTimeout(explode,300);
      });
-      $("#emoji li:nth-child(5)").hover(function(){
+      $("#emoji li:nth-child(5)").click(function(){
         $("#dot").css("margin-left","240px");
          function explode(){
            $("#emoji li:nth-child(1) img").attr("src","{% static "vote/images/emoji11.png" %}");
@@ -115,58 +157,33 @@ $(document).ready(function(){
 
   $(document).ready(function(event) {
       $('#btn-1').on('click', function (event) {
-          var Status = $(this).val();
-          console.log(Status)
-          $.ajax({
-              url: '{% url "submit_vote" %}',
-              type: 'GET',
-              data: {
-                  'Status': Status
-              },
-          });
+          global = $(this).val();
+          console.log(global)
+
       });
   });
 
   $(document).ready(function(event) {
       $('#btn-2').on('click', function (event) {
-          var Status = $(this).val();
-          console.log(Status)
-          $.ajax({
-              url: '{% url "submit_vote" %}',
-              type: 'GET',
-              data: {
-                  'Status': Status
-              },
-          });
+          global = $(this).val();
+          console.log(global)
+
       });
   });
 
   $(document).ready(function(event) {
       $('#btn-3').on('click', function (event) {
-          var Status = $(this).val();
-          console.log(Status)
-          $.ajax({
-              url: '{% url "submit_vote" %}',
-              type: 'GET',
-              data: {
-                  'Status': Status
-              },
-          });
+          global = $(this).val();
+          console.log(global)
+
       });
   });
 
   $(document).ready(function(event) {
       $('#btn-4').on('click', function (event) {
-          var Status = $(this).val();
-          console.log(Status)
-          $.ajax({
-              url: '{% url "submit_vote" %}',
-              type: 'GET',
-              data: {
-                  'Status': Status
-              },
-          });
+         global = $(this).val();
+          console.log(global)
+
       });
   });
 </script>
-{% endblock %}
