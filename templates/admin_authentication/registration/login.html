@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-family: 'Exo', sans-serif;
+    background: #050614 !important;
+    overflow:hidden; 
+}
+
+
+.context {
+    width: 100%;
+    position: absolute;
+    top:50vh;
+    animation-duration: 2s;
+    animation: slide 2s;
+    animation-fill-mode: forwards;
+    animation-delay: 3s;
+}
+@keyframes slide {
+
+0%{
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+}
+
+100%{
+    transform: translateY(-300px) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+}
+
+}
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+.context p {
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+
+.area{
+    background: #050614;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+    width: 100%;
+    height:100vh;
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+
+/* .form {
+    width:30vw;
+    position: absolute;
+    height:70vh;
+    /* margin-top:3vh;
+    /* text-align:center; */
+    /* margin-left:35vw;
+    background:black;
+    color: aliceblue;  
+}
+.form-group{
+    width:30vw;
+} */
+
+.user_card {
+			height: 300px;
+			width: 350px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background:whitesmoke;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.brand_logo_container {
+			position: absolute;
+			height: 120px;
+			width: 120px;
+			top: -55px;
+			border-radius: 50%;
+            border:2px solid white;
+			background:rgb(14, 12, 12);
+			padding: 10px;
+			text-align: center;
+		}
+		.brand_logo {
+            margin-top:20px;
+			height: 50px;
+			width: 50px;
+		}
+		.form_container {
+			margin-top: 20px;
+		}
+		.login_btn {
+			width: 100%;
+			background: rgb(14, 12, 12) !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: rgb(14, 12, 12) !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: rgb(14, 12, 12) !important;
+		}
+        #anim {
+        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+        -o-animation: fadein 2s; /* Opera < 12.1 */
+         animation: fadein 2s;
+         opacity: 0;
+         animation-fill-mode: forwards;
+         animation-delay: 5s;
+        }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+ input {
+    width:50% !important;
+    /* height:7vh !important; */
+} 
+
+    </style>
+</head>
+<body id="gradient">
+        <div class="area">
+                <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                 </ul>
+                </div>
+        <div class="context">
+                <h1> <b>P Y P I P E R </b></h1>
+                <p>
+                   <i> An HR system designed to measure Employee happiness level and <br> predict employees that are at risk of churning. </i>
+                </p>
+                     <div class="container h-100" id="anim" style="margin-top:80px;">
+                            <div class="d-flex justify-content-center h-100">
+                                <div class="user_card">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="brand_logo_container">
+                                            <img src="{% static "admin_authentication/images/pypiper.png" %}" class="brand_logo" alt="Logo">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center form_container">
+                                        <form action="{% url 'authens' %}" method="POST">{% csrf_token %}
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="username" id="username" class="form-control input_user" placeholder="username">
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                                </div>
+                                                <input type="password" name="password" id="password" class="form-control input_pass" placeholder="password">
+                                            </div>
+                                        
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-3 login_container">
+                                        <button type="submit" name="button" class="btn login_btn">Login</button>
+                                    </div>
+                                         </form>
+                                 </div>
+                                </div>
+                            </div>
+                     </div>     
+                        
+</body>
+</html>
