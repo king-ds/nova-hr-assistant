@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin_authentication',
+    'admin_dashboarding',
+    'api',
+    'gmail_authentication',
+    'mailer',
+    'predictions',
+    'profile_feed',
+    'vote',
+    'vote_feed',
 ]
 
 MIDDLEWARE = [
