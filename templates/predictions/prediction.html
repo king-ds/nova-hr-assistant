@@ -1,0 +1,165 @@
+{% load static %}
+<script src="{% static "predictions/js/jquery-3.4.1.min.js" %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script type="text/javascript">
+     $(document).ready(function(event) {
+          $('#user').change(function(event){
+           var selectedValue = $('#user').val();
+               $.ajax({
+                    url: '{% url "getUser" %}',
+                    type:'GET',
+                    data: {
+                         'username' : selectedValue
+                    },
+                    success : function(data){
+                         $("#departmentAlias").val(data.departmentAlias);
+                         $("#likes_given").val(data.LikesGiven);
+                         $("#dislikes_given").val(data.DislikesGiven);
+                         $("#likes").val(data.LikesReceived);
+                         $("#dislikes").val(data.DislikesReceived);
+                         $("#numVotes").val(data.TotalVotes);
+                         $("#vote").val(data.AvgVotes);
+
+                         console.log(data.TotalVotes)
+                    }
+               })
+          })
+          $('#post-form').on('submit', function(event){
+               event.preventDefault();
+               $.ajax({
+                    url: '{% url "predictpost" %}',
+                    type:'POST',
+                    // dataType: 'json',
+                    // contentType: 'application/json',
+                    data: {
+                        'departmentAlias' : $("#departmentAlias").val(),
+                        'likes_given' : $("#likes_given").val(),
+                        'dislikes_given' : $("#dislikes_given").val(),
+                        'likes' : $("#likes").val(),
+                        'dislikes' : $("#dislikes").val(),
+                        'numVotes' : $("#numVotes").val(),
+                        'vote' : $("#vote").val(),
+                        'user' : $('#user').val()
+                    },
+                    success : function(data){
+                         if (data.prediction == true) {
+                              // window.alert(data.username + ' is predicted to retain');
+                              // window.location.href='{% url "admin_home" %}';
+                              Swal.fire({
+                                type: 'success',
+                                title: 'Retained',
+                                text: data.username + ' is predicted to retain ',
+                              }).then(function() {
+                              window.location = '{% url "admin_home" %}';
+                              });
+                         }
+                         else {
+                              Swal.fire({
+                                type: 'warning',
+                                title: 'Churned',
+                                text: data.username + ' is predicted to churn ',
+                              }).then(function() {
+                              window.location = '{% url "admin_home" %}';
+                              });
+                         }
+                    }
+               })
+          })
+      });
+</script>
+
+<!-- Start of Page Header -->
+<div class="page-header">
+     <h3 class="page-title">
+     <span class="page-title-icon bg-gradient-primary text-white mr-2">
+     <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+     </span>
+     Prediction
+     </h3>
+</div>
+<!-- End of Page Header -->
+
+<!-- Start of Row 2 -->
+<div class="row">
+          <div class="col-12 grid-margin">
+          <div class="card">
+              <div class="card-body">
+              <h4 class="card-title">Retention Predictor</h4>
+              <p>Please fill out all the necessary fields</p>
+              <form class="was-validated" id="post-form" method="POST">
+                   {% csrf_token %}
+
+                    <div class="form-group">
+                         <label for="user">User</label>
+                         <select name="user" class="form-control" id="user"  required>
+                              <option disabled selected value> -- select an option -- </option>
+                              {% for emplye in emply %}
+                              <option value="{{emplye.username}}">{{emplye.username}}</option>
+                              {% endfor %}
+                         </select>
+                    <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                   <div class="form-group">
+                     <label for="departmentAlias">Department Alias:</label>
+                     <input type="text" name="departmentAlias" class="form-control" id="departmentAlias" readonly required></input>
+                    <div class="valid-feedback">Valid.</div>
+                     <div class="invalid-feedback">Please fill out this field.</div>
+                   </div>
+
+                   <div class="form-group">
+                         <label for="numVotes">Number of times voted:</label>
+                         <input type="number" class="form-control" id="numVotes" placeholder="Enter Number of votes" name="numVotes" readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="vote">Average vote:</label>
+                         <input type="number" class="form-control" id="vote" placeholder="Enter Average Number of votes" name="vote" readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="likes_given">Likes given:</label>
+                         <input type="number" class="form-control" id="likes_given" placeholder="Enter number of likes given" name="likes_given"  readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="dislikes_given">Dislikes given:</label>
+                         <input type="number" class="form-control" id="dislikes_given" placeholder="Enter number of dislikes given" name="dislikes_given"  readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="likes">Likes received:</label>
+                         <input type="number" class="form-control" id="likes" placeholder="Enter number of likes received" name="likes" readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="dislikes">Dislikes received:</label>
+                         <input type="number" class="form-control" id="dislikes" placeholder="Enter number of dislikes received" name="dislikes" readonly required>
+                         <div class="valid-feedback">Valid.</div>
+                         <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+                   <button type="submit" class="btn btn-primary">Submit</button>
+                   <button type="reset" class="btn btn-warning">Reset</button>
+
+                 </form>
+              </div>
+          </div>
+          </div>
+      </div>
+     
+
+

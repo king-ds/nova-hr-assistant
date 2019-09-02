@@ -22,11 +22,11 @@ def authens(request):
         if user is not None:
             request.session['name'] = 'SecretKey'
             request.session['username'] = str(user.username)
-            return redirect('index')
+            return redirect('admin_home')
         else:
             return redirect('login')
 
-def index(request):
+def admin_home(request):
     try:
        if request.session['name'] == 'SecretKey':
             return render(request, 'admin_authentication/dummy.html', {})
