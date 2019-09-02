@@ -16,7 +16,7 @@
     <div class="top-bar-inner">
         <div class="container">
         <ul>
-            <li id="home_button"><a class="active" href="{% url 'logout' %}"><span class="fa fa-cog"></span> Home</a></li>
+            <li id="home_button"><a class="active" href="{% url 'logout_user' %}"><span class="fa fa-cog"></span> Home</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         </div>
@@ -32,9 +32,9 @@
 <script>
 $(document).ready(function(event){
     $('#cancel_configuration, #home_button').click(function(){
-        if (confirm('Kanselahin ang pag konfigyor ng akawnt?')){
+        if (confirm('Do you want to cancel the account configuration?')){
             $.ajax({
-            url: "{% url 'logout' %}",
+            url: "{% url 'logout_user' %}",
             type: 'POST',
             data: {
                 'content': 'xxx',
@@ -44,8 +44,6 @@ $(document).ready(function(event){
                 window.location = "{% url 'home' %}";
                 }
             });
-        } else {
-            alert('Ipagpatuloy');
         }
     });
 });
