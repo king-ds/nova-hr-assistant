@@ -20,8 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gmail_authentication.urls')),
     path('', include('social_django.urls', namespace='social')),
-    path('web/admin/', include('admin_authentication.urls')),
-    path('web/admin/predict/', include('predictions.urls')),
     path('', include('vote.urls')),
+    path('web/admin/', include('admin_authentication.urls')),
     path('web/admin/', include('admin_dashboarding.urls')),
+    path('web/admin/', include('predictions.urls')),
+    path('web/admin/', include('mailer.urls')),
 ]

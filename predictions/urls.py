@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
-path('', views.pred_form, name='prediction'),
+path('predict/', views.pred_form, name='prediction'),
 path('json/predict/', views.predictpost, name='predictpost'),
 path('json/getUser/', views.getUser, name='getUser'),
 ]
