@@ -52,7 +52,3 @@ def configure_account(request):
 def logout_user(request):
 	logout(request)
 	return HttpResponseRedirect('/')
-
-@login_required(login_url='welcome_page')
-def home(request):
-    return HttpResponse('Tangina')

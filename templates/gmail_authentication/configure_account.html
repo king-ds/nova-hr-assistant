@@ -24,8 +24,8 @@
             <div class="input-field">
                 <select id="department" name="department">
                     {% if departments %}
-                    {% for department in departments %}
                     <option value="" disabled selected>Select your department</option>
+                    {% for department in departments %}
                     <option value="{{ department.id }}">{{ department.department_name }}</option>
                     {% endfor %}
                     {% else %}

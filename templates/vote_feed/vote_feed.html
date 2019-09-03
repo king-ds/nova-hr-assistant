@@ -1,7 +1,10 @@
+{% extends 'vote_feed/base.html' %}
+{% block title %}PyPiper{% endblock %}
 {% load static %}
 {% load django_template %}
 {% load mathfilters %}
 
+{% block content %}
 <div class="post-container-header">
     <div class="post-container-header-title">
       <h2><b>Home</b></h2>
@@ -9,7 +12,7 @@
   </div>
   <div class="post-container-sub-header">
       <div class="post-container-header-sub-title">
-        <h3><img src="{% static 'user_web/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at your company</h3>
+        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at your company</h3>
       </div>
   </div>
   <div class="post-container-header-divider">
@@ -69,3 +72,4 @@
         <p><center>There is no post yet</center></p>
         {% endif %}
       </div>
+{% endblock %}
