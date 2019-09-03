@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 # Application
 from gmail_authentication.models import *
 from vote.models import *
+from pypiper.scraper import DataScrape
 
 utc=pytz.UTC
 
@@ -40,6 +41,11 @@ def home(request):
 			
 			# Get the current user session
 			user_instance = User.objects.get(username=request.user)
+
+			# Scrape the data from workplace
+			scrape = DataScrape(user_instance.email)
+			reaction_summary = scrape.reaction_summary()
+			print(reaction_summary)
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:

@@ -1,5 +1,8 @@
 from django.contrib import admin
-from vote.models import Votes
+from import_export.admin import ImportExportModelAdmin
+from import_export import resources
+from .models import Votes
 
-
-admin.site.register(Votes)
+@admin.register(Votes)
+class VotesAdmin(ImportExportModelAdmin):
+    pass

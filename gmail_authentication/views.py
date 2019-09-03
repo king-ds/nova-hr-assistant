@@ -1,9 +1,12 @@
 # Django
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+
+# Application
+from profile_feed.models import *
+from .models import *
 
 # welcome page
 def welcome_page(request):
@@ -39,6 +42,28 @@ def configure_account(request):
 		new_user.save()
 		# Increment by one the number of employees
 		department_instance.add_employee()
+
+		# Make a reaction object for new user
+		user_instance = User.objects.get(username=request.user)
+		for i in range(0,6):
+			if i == 0:
+				new_like_object = Reaction(username=user_instance, reaction_type='LIKE')
+				new_like_object.save()
+			elif i == 1:
+				new_love_object = Reaction(username=user_instance, reaction_type='LOVE')
+				new_love_object.save()
+			elif i == 2:
+				new_haha_object = Reaction(username=user_instance, reaction_type='HAHA')
+				new_haha_object.save()
+			elif i == 3:
+				new_wow_object = Reaction(username=user_instance, reaction_type='WOW')
+				new_wow_object.save()
+			elif i == 4:
+				new_sad_object = Reaction(username=user_instance, reaction_type='SAD')
+				new_sad_object.save()
+			else:
+				new_angry_object = Reaction(username=user_instance, reaction_type='ANGRY')
+				new_angry_object.save()
 
 		return redirect('vote_page')
 

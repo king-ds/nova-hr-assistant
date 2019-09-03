@@ -1,7 +1,6 @@
 from django.db import models
 from gmail_authentication.models import *
 
-# Create your models here.
 class Votes(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     votes = models.IntegerField()
