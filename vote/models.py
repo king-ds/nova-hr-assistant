@@ -9,4 +9,4 @@ class Votes(models.Model):
     datetime_voted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.datetime_vote)
+        return str(self.datetime_voted)
