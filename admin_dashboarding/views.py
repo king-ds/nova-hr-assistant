@@ -3,13 +3,15 @@ import math
 import requests
 import calendar
 from datetime import datetime, timedelta
+
 # Django
 from django.shortcuts import render, redirect
-from gmail_authentication.models import *
-from vote.models import *
 from django.http import JsonResponse
 from django.db.models import Count, Sum, Avg
 
+# Application
+from gmail_authentication.models import *
+from vote.models import *
 
 def get_avg_votes(request):
     if request.method == "GET":
@@ -78,6 +80,7 @@ def home(request):
     if request.session['name'] == 'SecretKey':
         Users = User.objects.all()
         Departments = Department.objects.all()
-        return render(request, 'admin_dashboarding/dashboard.html', {'Users' : Users, 'Departments' : Departments})
+        Comments = Votes.objects.all()
+        return render(request, 'admin_dashboarding/dashboard.html', {'Users' : Users, 'Departments' : Departments, 'Comments': Comments})
     else:
         return redirect('login')

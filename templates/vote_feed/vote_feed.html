@@ -18,8 +18,8 @@
   <div class="post-container-header-divider">
   </div>
   <div class="post-container-stories">
-    {% if Votess %}
-    {% for votes in Votess %}
+    {% if Comments %}
+    {% for votes in Comments %}
     <div class="post-container-stories-post">
         <div class="container">
             <div class="col-md-5">
@@ -31,8 +31,7 @@
                                       <div style="display: table-row;">
                                           <div style="display: table-cell;vertical-align: middle;"><i class="fa fa-user" style="font-size: 40px; color: black;"></i></div>
                                            <div style="display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;">
-                                           <p style="color: #1476ff;">Anonymous {{ votes.username.id }}</p>
-                                           <p style="color: #b8b8b8;">You voted {{ votes.votes }}</p>
+                                           <p style="color: #1476ff;">{{ votes.username.first_name }} {{ votes.username.last_name }}</p>
                                            {% if Date_Posts|list_item:forloop.counter0 <= 1 %}
                                            <p style="margin-top:-18px; color: #b8b8b8;">Just now</p>
                                            {% elif Date_Posts|list_item:forloop.counter0 < 60 %}
@@ -59,7 +58,10 @@
                               </div>
                          </section>
                          <section class="post-body">
-                             <p style="margin-right: 50px;">{{ votes.comment }}</p>
+                             <p style="margin-right: 50px;">{% if votes.votes == 1 %}<span style="color:red !important;">(<i class='fas fa-angry'></i> Poor)</span>
+                              {% elif votes.votes == 2 %}<span style="color:gray !important;">(<i class="fas fa-frown-open"></i> Fair)</span>
+                              {% elif votes.votes == 3 %}<span style="color:green !important;">(<i class="fas fa-grin-alt"></i> Good)</span>
+                              {% else %}<span style="color:lightgreen !important;">(<i class="fas fa-grin-beam-sweat"></i> Excellent)</span>{% endif %} {{ votes.comment }}</p>
                          </section>
                          
                       </div>
@@ -69,7 +71,7 @@
         </div>
         {% endfor %}
         {% else %}
-        <p><center>There is no post yet</center></p>
+        <p style="text-align: center;">There is no post yet</p>
         {% endif %}
       </div>
 {% endblock %}

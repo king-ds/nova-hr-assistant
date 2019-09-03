@@ -154,9 +154,9 @@
     <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-        <h4 class="card-title">User Posts</h4>
+        <h4 class="card-title">User Comments</h4>
         <div class="table-responsive">
-            {% if Posts %}
+            {% if Comments %}
             <table class="table" id="post_table">
             <thead>
                 <tr>
@@ -164,7 +164,10 @@
                     #
                 </th>
                 <th>
-                    Post
+                    Comment
+                </th>
+                <th>
+                    Happiness Level
                 </th>
                 <th>
                     Datetime Posted
@@ -172,23 +175,26 @@
                 </tr>
             </thead>
             <tbody>
-                {% for post in Posts %}
+                {% for comment in Comments %}
                 <tr>
                 <td>
-                    {{post.id}}
+                    {{comment.id}}
                 </td>
                 <td>
-                    {{post.post}}
+                    {{comment.comment}}
                 </td>
                 <td>
-                    {{post.datetime_comments}}
+                    {{comment.votes}}
+                </td>
+                <td>
+                    {{comment.datetime_voted}}
                 </td>
                 </tr>
                 {% endfor %}
             </tbody>
             </table>
             {% else %}
-            <h5>No post available</h5>
+            <h5>No comment available</h5>
             {% endif %}
         </div>
         </div>

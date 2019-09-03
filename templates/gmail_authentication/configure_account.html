@@ -42,21 +42,4 @@
     {% endif %}
 </div>
 
-<!-- <script>
-window.onbeforeunload = close_tab;
-function close_tab(){
-    $.ajax({
-            url: "{% url 'logout' %}",
-            type: 'POST',
-            data: {
-                'content': 'xxx',
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-            },
-            success : function(data){
-                window.location = "{% url 'home' %}";
-            }
-        });
-   return null;
-}
-</script> -->
 {% endblock %}
