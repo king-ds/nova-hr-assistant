@@ -1,0 +1,245 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Kalam&display=swap');
+
+
+#dev-info{
+  font-family: 'Kalam', cursive;
+  
+}
+
+body,
+html {
+  /* overflow: auto; */
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.left-side-bar {
+  flex: 1;
+  /* height: 100%; */
+  width: 20%;
+  border-right: 0.5px solid rgb(230, 236, 240);
+}
+
+.post-container {
+  flex: 4;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+.post-container-header {
+  height: 53px;
+  border-bottom: 0.5px solid rgb(230, 236, 240);
+}
+
+.post-container-sub-header {
+  height: 30px;
+}
+
+.post-container-header-title {
+  margin: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.post-container-header-sub-title {
+  margin: 30px;
+}
+
+.post-container-header-sub-title > h3 {
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.post-container-header-divider {
+  margin-top: 10px;
+  height: 10px;
+  background-color: rgb(230, 236, 240);
+}
+
+.post-container-stories {
+  flex: 1;
+  background-color: whitesmoke;
+  padding-top: 5px;
+  padding-bottom: 5px;  
+}
+
+.post-container-stories-post {
+  margin-top: 15px;
+  background-color: white;
+  font-family: 'Rubik', sans-serif;
+}
+
+.left-side-bar-container {
+  float: right;
+  margin-right: 220px;
+  top: 0;
+}
+
+.left-side-bar-container-list {
+  position: fixed;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 25px;
+  margin-top: 50px;
+  color: black;
+}
+.left-side-bar-container-list a{
+  color:black;
+  transition:0.5s;
+}
+.left-side-bar-container-list li{
+  padding-bottom:50px;
+}
+.left-side-bar-container-list a:hover{
+  background-color:#9b9b9e !important;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 20px;
+  color:white;
+  /* color: red; */
+}
+
+.right-side-bar-container {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  margin: 20px;
+  margin-top: 10px;
+  /* position: fixed; */
+  overflow: auto;
+}
+
+.right-side-bar-container-title {
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.right-side-bar-container-posts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  padding: 10px;
+  height: 100%;
+  width: 350px;
+  /* align-items: stretch; */
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  font-family: 'Rubik', sans-serif;
+}
+
+.right-side-bar-container-posts-content {
+  flex: 1 0 auto;
+  /* padding: 5px; */
+
+}
+
+.right-side-bar-container-posts-footer {
+  background-color: #54c4ff;
+  color: white;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  padding: 5px;
+  margin-top: 3px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.right-side-bar-container-footer {
+  position:absolute;
+  bottom: 0;
+  height:30px;
+  margin: 10px;
+  right: 0;
+  background-color:transparent;
+  color:grey;
+}
+.right-side-bar-container-title i {
+  right: 0;
+  position: absolute;
+  margin-top: 5px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+  margin: 0;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/* Post Container */
+
+a{
+  color:#47649F;
+}
+
+body{
+  font-family:'helvetica';
+}
+
+/*-- Bootstrap Override Style --*/
+/*-- Content Style --*/
+.post-footer-option li{
+  float:left;
+  margin-right:50px;
+  padding-bottom:10px;
+
+}
+
+.post-footer-option li a{
+  color:#AFB4BD;
+  /* font-weight:500; */
+  /* font-size:1.3rem; */
+}
+
+.photo-profile{
+  border:1px solid #DDD;
+}
+
+
+.anchor-time{
+  color:#ADB2BB;
+  font-size:1.2rem;
+}
+
+.post-footer-option a:hover{
+  color: #639fff;
+}
+
+.col-md-5 {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px #0b618f;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0b618f;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #54c4ff;
+}

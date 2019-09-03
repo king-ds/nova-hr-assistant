@@ -1,0 +1,28 @@
+{% extends 'vote_feed/base.html' %}
+{% block title %}PyPiper | Developers{% endblock %}
+{% load staticfiles %}
+{% block content %}
+      <div class="post-container-header">
+        <div class="post-container-header-title">
+          <h2><b>Developer</b></h2>
+        </div>
+      </div>
+      <div class="post-container-sub-header">
+          <div class="post-container-header-sub-title">
+            <h3><img src="{% static 'user_web/images/logo.png' %}" style="width: 20px; height:20px; float: left;">About The Developer</h3>
+          </div>
+      </div>
+      <div class="post-container-header-divider">
+      </div>
+      <div class="post-container-stories">
+
+        <center> <img src="{% static "user_web/images/benjamin.jpg" %}"style="width:50%;height:50%;"> </center>
+        <center id="dev-info"> "A Mathematician is a device for turning coffee into theorems" <br> A caffeine-dependent life form, Benjamin Cabalona loves beer, food, music and solving problems. He believes that programming is an artform. He has an undergraduate degree in Pure Mathematics. </center> <br>
+        <center> <img src="{% static "user_web/images/ricardo.jpg" %}" style="width:50%;height:50%;"> </center> <p>
+        <center id="dev-info">  Ricardo Calura only likes 2 things. Driving Cars and breaking hearts. He is not sure about the latter.Nothing iritates him like a poorly written code He has an undergraduate degree in Computer Engineering. </center>
+        </p>
+
+        <center> <img src="{% static "user_web/images/justin.jpg" %}"  style="width:50%;height:50%;"> </center> <p>
+        <center id="dev-info">  Justin Paul Ramirez is a man with burning passion. He loves Anime, video games and music. He loves long rides, but short and concise codes.  He has an undergraduate degree in Information Systems. </center> </p>
+        </div>
+{% endblock %}

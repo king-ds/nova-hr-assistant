@@ -1,0 +1,81 @@
+{% extends 'vote_feed/base.html' %}
+{% block title %}PyPiper | Profile{% endblock %}
+{% block content %}
+
+{% load staticfiles %}
+<div class="post-container-header">
+    <div class="post-container-header-title">
+        <h2><b>Profile</b></h2>
+    </div>
+</div>
+<div class="post-container-sub-header">
+    <div class="post-container-header-sub-title">
+        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Hello, Welcome to your Profile</h3>
+    </div>
+</div>
+<div class="post-container-header-divider"></div>
+    <div class="user-profile-container">
+        <div class="user-profile-container-content">
+            <div class="user-profile-photo">
+                <img src="{% static 'profile_feed/images/profile-photo.png' %}">
+            </div>
+            <div class="user-profile-username">
+                <b><a href="#">@{{username}}</a></b>
+            </div>
+            <div class="user-profile-name">
+                <b>{{first_name}}&nbsp;{{last_name}}</b>
+            </div>
+            <div class="user-profile-email-address">
+                {{email}}
+            </div>
+            <div class="user-profile-date-joined">
+                Joined&nbsp;{{date_joined}}
+            </div>
+            <div class="user-profile-reactions-legend">
+                Reactions received | given
+            </div>
+            <div class="user-profile-summary">
+                <div class="column" style="background-color:#fcfcfc">
+                    Likes
+                    <p>0|0&nbsp;<i class="far fa-thumbs-up" style="font-size: 25px; color: #639fff;"></i></p>
+                </div>
+                <div class="column" style="background-color:#fcfcfc">
+                    Love
+                    <p>0|0&nbsp;<i class="fas fa-grin-hearts" style="font-size: 25px; color: red;"></i></p>
+                </div>
+                <div class="column" style="background-color:#fcfcfc">
+                    Wow
+                    <p>0|0&nbsp;<i class="fas fa-surprise" style="font-size: 25px; color:#ff9d00;"></i></p>
+                </div>
+                <div class="column" style="background-color:#fcfcfc">
+                    Haha
+                    <p>0|0&nbsp;<i class="fas fa-grin-beam-sweat" style="font-size: 25px; color: #ffe30d;"></i></p>
+                </div>
+                <div class="column" style="background-color:#fcfcfc">
+                    Angry
+                    <p>0|0&nbsp;<i class='fas fa-angry' style="font-size: 25px; color: orange;"></i></p>
+                </div>
+            </div>
+            <div class="user-profile-posts">
+                <div class="user-profile-posts-container">
+
+                    <div class="user-profile-posts-header">
+                        <h3>Posts</h3>
+                    </div>
+                    
+                    {% if User_Posts %}
+                    {% for post in User_Posts %}
+                    <div class="user-profile-posts-content">
+                        {{post.post}}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="user-profile-posts-content">
+                        No post available
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
