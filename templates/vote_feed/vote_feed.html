@@ -1,0 +1,71 @@
+{% load static %}
+{% load django_template %}
+{% load mathfilters %}
+
+<div class="post-container-header">
+    <div class="post-container-header-title">
+      <h2><b>Home</b></h2>
+    </div>
+  </div>
+  <div class="post-container-sub-header">
+      <div class="post-container-header-sub-title">
+        <h3><img src="{% static 'user_web/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at your company</h3>
+      </div>
+  </div>
+  <div class="post-container-header-divider">
+  </div>
+  <div class="post-container-stories">
+    {% if Votess %}
+    {% for votes in Votess %}
+    <div class="post-container-stories-post">
+        <div class="container">
+            <div class="col-md-5">
+                  <div class="panel panel-default">
+                      <div class="panel-body" style="margin-left: 50px;">
+                         <section class="post-heading">
+                              <div class="row">
+                                  <div class="col-md-11">
+                                      <div style="display: table-row;">
+                                          <div style="display: table-cell;vertical-align: middle;"><i class="fa fa-user" style="font-size: 40px; color: black;"></i></div>
+                                           <div style="display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;">
+                                           <p style="color: #1476ff;">Anonymous {{ votes.username.id }}</p>
+                                           <p style="color: #b8b8b8;">You voted {{ votes.votes }}</p>
+                                           {% if Date_Posts|list_item:forloop.counter0 <= 1 %}
+                                           <p style="margin-top:-18px; color: #b8b8b8;">Just now</p>
+                                           {% elif Date_Posts|list_item:forloop.counter0 < 60 %}
+                                           <p style="margin-top:-18px; color: #b8b8b8;">{{ Date_Posts|list_item:forloop.counter0 }} minutes ago</p>
+                                           {% elif Date_Posts|list_item:forloop.counter0 >= 60 and Date_Posts|list_item:forloop.counter0 < 1440 %}
+                                           {% with numerator=Date_Posts|list_item:forloop.counter0 denominator=60 %}
+                                           {% if numerator|div:denominator|floor == 1%}
+                                           <p style="margin-top:-18px; color: #b8b8b8;"> an hour ago</p>
+                                           {% else %}
+                                           <p style="margin-top:-18px; color: #b8b8b8;">{{ numerator|div:denominator|floor }} hours ago</p>
+                                           {% endif %}
+                                           {% endwith %}
+                                           {% elif Date_Posts|list_item:forloop.counter0 >= 1440 %}
+                                           <p style="margin-top:-18px; color: #b8b8b8;">{{ votes.datetime_voted }}</p>
+                                           {% else %}
+                                           <p style="margin-top:-18px; color: #b8b8b8;">{{ votes.datetime_voted }}</p>
+                                           {% endif %}
+                                           </div>
+                                       </div>
+                                  </div>
+                                   <div class="col-md-1">
+                                       <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                   </div>
+                              </div>
+                         </section>
+                         <section class="post-body">
+                             <p style="margin-right: 50px;">{{ votes.comment }}</p>
+                         </section>
+                         
+                      </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p><center>There is no post yet</center></p>
+        {% endif %}
+      </div>

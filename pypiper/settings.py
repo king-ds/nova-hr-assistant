@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'vote_feed',
     'import_export',
     'social_django',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

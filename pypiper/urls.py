@@ -25,4 +25,5 @@ urlpatterns = [
     path('web/admin/', include('admin_dashboarding.urls')),
     path('web/admin/', include('predictions.urls')),
     path('web/admin/', include('mailer.urls')),
+    path('', include('vote_feed.urls')),
 ]
