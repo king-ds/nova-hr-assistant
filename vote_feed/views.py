@@ -27,13 +27,13 @@ def home(request):
 
 	try:
 		admin_access = ['admin', 'christopher.cometa@novare.com.hk']
-		
+
 		# If user is authenticated
 		if request.user.is_authenticated:
-			
+
 			# Check for the existency of the user
 			is_user_exist = User.objects.filter(username=request.user).exists()
-			
+
 			if not is_user_exist:
 				return redirect('configure_account')
 			else:
@@ -47,14 +47,14 @@ def home(request):
 				return redirect('vote_page')
 			else:
 				pass
-			
+
 			# Get the current user session
 			user_instance = User.objects.get(username=request.user)
 
 			# Scrape the data from workplace
 			scrape = DataScrape(user_instance.email)
 			reaction_summary = scrape.reaction_summary()
-			print(scrape.get_details())
+			print(scrape.get_reaction_given())
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:
