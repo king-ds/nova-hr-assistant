@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('B9CwRbcfAwVMfoVpZYZ6ec8RvLaq7cm3/admin/', admin.site.urls),
     path('', include('gmail_authentication.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('', include('vote.urls')),
