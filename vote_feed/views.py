@@ -30,6 +30,15 @@ def home(request):
 		
 		# If user is authenticated
 		if request.user.is_authenticated:
+			
+			# Check for the existency of the user
+			is_user_exist = User.objects.filter(username=request.user).exists()
+			
+			if not is_user_exist:
+				return redirect('configure_account')
+			else:
+				pass
+
 			# Is user voter and poster?
 			is_voter = User.objects.get(username=request.user).selected_vote
 
@@ -43,9 +52,8 @@ def home(request):
 			user_instance = User.objects.get(username=request.user)
 
 			# Scrape the data from workplace
-			scrape = DataScrape(user_instance.email)
-			reaction_summary = scrape.reaction_summary()
-			print(reaction_summary)
+			# scrape = DataScrape(user_instance.email)
+			# reaction_summary = scrape.reaction_summary()
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:
