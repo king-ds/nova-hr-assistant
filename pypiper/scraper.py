@@ -9,9 +9,30 @@ class DataScrape:
         self.email_address = email_address
     
     def get_details(self):
-        employee_detail = graph.request('%s?fields=name,email,title&limit=9999999999' %self.email_address)
+        employee_detail = graph.request('%s?fields=name,email,title,department&limit=9999999999' %self.email_address)
         return employee_detail
     
+    def get_profile_picture(self):
+        employee_detail = self.get_details()
+        profile_picture = graph.request('%s/picture?type=large' %employee_detail['id'])['url']
+        return profile_picture
+    
+    def get_title(self):
+        employee_detail = self.get_details()
+        try:
+            title = employee_detail['title']
+        except KeyError as e:
+            title = 'No Title'
+        return title
+    
+    def get_department(self):
+        employee_detail = self.get_details()
+        try:
+            department = employee_detail['department']
+        except KeyError as e:
+            department = 'No Department'
+        return department
+        
     def get_feed(self):
         feed = graph.request('%s?fields=feed&limit=9999999999' %self.email_address)
         try:
