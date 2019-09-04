@@ -17,13 +17,16 @@
     <div class="user-profile-container">
         <div class="user-profile-container-content">
             <div class="user-profile-photo">
-                <img src="{% static 'profile_feed/images/profile-photo.png' %}">
+                <img src={{profile_picture}} alt="{% static 'profile_feed/images/profile-photo.png' %}">
             </div>
             <div class="user-profile-username">
                 <b><a href="#">@{{username}}</a></b>
             </div>
             <div class="user-profile-name">
                 <b>{{first_name}}&nbsp;{{last_name}}</b>
+            </div>
+            <div class="user-profile-title">
+                {{department}} • {{title}}
             </div>
             <div class="user-profile-email-address">
                 {{email}}
