@@ -24,18 +24,6 @@ def convert_timedelta(duration):
     minutes = math.floor(seconds // 60)
     return minutes
 
-@background(schedule=0)
-def scrape_reaction_received(email):
-	scrape = DataScrape(email)
-	reaction_given = scrape.get_reaction_given()
-
-@background(schedule=0)
-def fuck(email):
-    print("Here we go again!")
-    scrape = DataScrape(email)
-    reaction_summary = scrape.get_reaction_received()
-    print(scrape.get_reaction_given())
-
 @login_required(login_url='welcome_page')
 def home(request):
 
@@ -64,14 +52,6 @@ def home(request):
 
 			# Get the current user session
 			user_instance = User.objects.get(username=request.user)
-
-			# Scrape the data from workplace
-			scrape = DataScrape(user_instance.email)
-			
-			# Check if background task is already in Task table
-			is_task_exist = Task.objects.filter(task_params='[["%s"], {}]' %user_instance.email).exists()
-			if not is_task_exist:
-				fuck(user_instance.email)
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:

@@ -16,6 +16,9 @@
 <div class="post-container-header-divider"></div>
     <div class="user-profile-container">
         <div class="user-profile-container-content">
+            <div class="user-profile-refresh">
+                <span class="refresh_btn"><i class="fa fa-refresh"></i></span>
+            </div>
             <div class="user-profile-photo">
                 <img src={{profile_picture}} alt="{% static 'profile_feed/images/profile-photo.png' %}">
             </div>
@@ -40,24 +43,24 @@
             <div class="user-profile-summary">
                 <div class="column" style="background-color:#fcfcfc">
                     Likes
-                    <p>{{reaction_received.LIKE}}|0&nbsp;<i class="far fa-thumbs-up" style="font-size: 25px; color: #639fff;"></i></p>
+                    <p>{{reaction_received.LIKE}}|{{reaction_given.LIKE}}&nbsp;<i class="far fa-thumbs-up" style="font-size: 25px; color: #639fff;"></i></p>
                 </div>
                 
                 <div class="column" style="background-color:#fcfcfc">
                     Love
-                    <p>{{reaction_received.LOVE}}|0&nbsp;<i class="fas fa-grin-hearts" style="font-size: 25px; color: red;"></i></p>
+                    <p>{{reaction_received.LOVE}}|{{reaction_given.LOVE}}&nbsp;<i class="fas fa-grin-hearts" style="font-size: 25px; color: red;"></i></p>
                 </div>
                 <div class="column" style="background-color:#fcfcfc">
                     Wow
-                    <p>{{reaction_received.WOW}}|0&nbsp;<i class="fas fa-surprise" style="font-size: 25px; color:#ff9d00;"></i></p>
+                    <p>{{reaction_received.WOW}}|{{reaction_given.WOW}}&nbsp;<i class="fas fa-surprise" style="font-size: 25px; color:#ff9d00;"></i></p>
                 </div>
                 <div class="column" style="background-color:#fcfcfc">
                     Haha
-                    <p>{{reaction_received.HAHA}}|0&nbsp;<i class="fas fa-grin-beam-sweat" style="font-size: 25px; color: #ffe30d;"></i></p>
+                    <p>{{reaction_received.HAHA}}|{{reaction_given.HAHA}}&nbsp;<i class="fas fa-grin-beam-sweat" style="font-size: 25px; color: #ffe30d;"></i></p>
                 </div>
                 <div class="column" style="background-color:#fcfcfc">
                     Angry
-                    <p>{{reaction_received.ANGRY}}|0&nbsp;<i class='fas fa-angry' style="font-size: 25px; color: orange;"></i></p>
+                    <p>{{reaction_received.ANGRY}}|{{reaction_given.ANGRY}}&nbsp;<i class='fas fa-angry' style="font-size: 25px; color: orange;"></i></p>
                 </div>
             </div>
             <div class="user-profile-posts">
@@ -82,4 +85,23 @@
             </div>
         </div>
     </div>
+
+<script>
+$('.refresh_btn').click(function(){
+    if(confirm('Do you want to update your profile? Please noted that this will take few hours to finish.')){
+        $.ajax({
+        url: "{% url 'refresh_profile' %}",
+        success : function(data){
+            if(data.is_given_exist == true || data.is_received_exist == true){
+                console.log(data.is_received_exist)
+                alert('Already updating your profile...')
+            }
+            console.log('yes')
+        }
+    });
+    }else{
+        console.log('no')
+    }
+});
+</script>
 {% endblock %}

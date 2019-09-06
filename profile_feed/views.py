@@ -1,8 +1,14 @@
+# Django
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+# Application
 from gmail_authentication.models import User
+from background_task.models import Task
 from profile_feed.models import Reaction
 from pypiper.scraper import DataScrape
+from gmail_authentication.views import pull_reactions_given, pull_reactions_received
 
 @login_required(login_url='welcome_page')
 def profile(request, username):
@@ -18,9 +24,6 @@ def profile(request, username):
 		reaction = Reaction.objects.get(username=user_instance.id, reaction_type=key)
 		reaction_given[key] += reaction.reaction_given
 		reaction_received[key] += reaction.reaction_received
-	
-	print(User.objects.all())
-	print(reaction_received)
 
 	# Rendered context
 	context = {
@@ -43,3 +46,19 @@ def about(request):
 
 def developer(request):
     return render(request, 'profile_feed/about_developer.html')
+
+def refresh_profile(request):
+	user_instance = User.objects.get(username=request.user)
+	is_given_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_given', task_params='[["%s"], {}]' %user_instance.email).exists()
+	is_received_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_received', task_params='[["%s"], {}]' %user_instance.email).exists()
+	
+	if not is_given_exist:
+		pull_reactions_given(user_instance.email)
+	if not is_received_exist:
+		pull_reactions_received(user_instance.email)
+	
+	data = {
+		'is_given_exist' : is_given_exist,
+		'is_received_exist' : is_received_exist,
+	}
+	return JsonResponse(data)

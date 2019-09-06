@@ -8,7 +8,20 @@
     height: calc(100vh - 164px); /*50+60*/
     background-color: white;
 }
+.user-profile-refresh{
+    float: right;
+    margin: 5px;
+    font-size: 30px;
+}
 
+.user-profile-refresh i {
+    outline-color: None;
+}
+
+.user-profile-refresh:hover{
+    color: #54c4ff;
+    cursor: pointer;
+}
 .user-profile-photo{
     text-align: center;
     padding-top: 50px;
