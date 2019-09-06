@@ -7,6 +7,33 @@ from django.contrib.auth import logout
 # Application
 from profile_feed.models import *
 from .models import *
+from background_task import background
+from pypiper.scraper import DataScrape
+
+# Background tasks
+@background(schedule=0)
+def pull_reactions_received(email):
+	scrape = DataScrape(email)
+	reaction_received = scrape.get_reaction_received()
+	user_instance = User.objects.get(email=email)
+
+	for key in reaction_received:
+		Reaction.objects.filter(username=user_instance.id, reaction_type=key).update(reaction_received=reaction_received[key])
+
+	print("[INFO] Email: %s" %email)
+	print("[INFO] These reactions will be recorded %s" %reaction_received)
+
+@background(schedule=0)
+def pull_reactions_given(email):
+	scrape = DataScrape(email)
+	reaction_given = scrape.get_reaction_given()
+	user_instance = User.objects.get(email=email)
+
+	for key in reaction_given:
+		Reaction.objects.filter(username=user_instance.id, reaction_type=key).update(reaction_given=reaction_given[key])
+
+	print("[INFO] Email: %s" %email)
+	print("[INFO] These reactions will be recorded %s" %reaction_given)
 
 # welcome page
 def welcome_page(request):
@@ -45,6 +72,7 @@ def configure_account(request):
 
 		# Make a reaction object for new user
 		user_instance = User.objects.get(username=request.user)
+		
 		for i in range(0,6):
 			if i == 0:
 				new_like_object = Reaction(username=user_instance, reaction_type='LIKE')
@@ -64,6 +92,9 @@ def configure_account(request):
 			else:
 				new_angry_object = Reaction(username=user_instance, reaction_type='ANGRY')
 				new_angry_object.save()
+
+		pull_reactions_received(user_instance.email)
+		pull_reactions_given(user_instance.email)
 
 		return redirect('vote_page')
 

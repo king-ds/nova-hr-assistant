@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from gmail_authentication.models import User
+from profile_feed.models import Reaction
 from pypiper.scraper import DataScrape
 
 @login_required(login_url='welcome_page')
@@ -11,6 +12,15 @@ def profile(request, username):
 	profile_picture = scrape.get_profile_picture()
 	title = scrape.get_title()
 	department = scrape.get_department()
+	reaction_given = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
+	reaction_received = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
+	for key in reaction_given:
+		reaction = Reaction.objects.get(username=user_instance.id, reaction_type=key)
+		reaction_given[key] += reaction.reaction_given
+		reaction_received[key] += reaction.reaction_received
+	
+	print(User.objects.all())
+	print(reaction_received)
 
 	# Rendered context
 	context = {
@@ -22,6 +32,8 @@ def profile(request, username):
 		'profile_picture': profile_picture,
 		'title' : title,
 		'department' : department,
+		'reaction_given' : reaction_given,
+		'reaction_received' : reaction_received,
 	}
 	return render(request, 'profile_feed/profile.html', context)
 

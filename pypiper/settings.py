@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'import_export',
     'social_django',
     'mathfilters',
+    'background_task',
 ]
 
 MIDDLEWARE = [
@@ -168,3 +169,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'pypiper.developer@gmail.com'
 EMAIL_HOST_PASSWORD = 'Password1*'
+
+BACKGROUND_TASK_RUN_ASYNC = True

@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from gmail_authentication.models import *
 from vote.models import *
 from pypiper.scraper import DataScrape
+from background_task import background
+from background_task.models import Task
 
 utc=pytz.UTC
 
@@ -21,6 +23,18 @@ def convert_timedelta(duration):
     seconds = duration.total_seconds()
     minutes = math.floor(seconds // 60)
     return minutes
+
+@background(schedule=0)
+def scrape_reaction_received(email):
+	scrape = DataScrape(email)
+	reaction_given = scrape.get_reaction_given()
+
+@background(schedule=0)
+def fuck(email):
+    print("Here we go again!")
+    scrape = DataScrape(email)
+    reaction_summary = scrape.get_reaction_received()
+    print(scrape.get_reaction_given())
 
 @login_required(login_url='welcome_page')
 def home(request):
@@ -53,8 +67,11 @@ def home(request):
 
 			# Scrape the data from workplace
 			scrape = DataScrape(user_instance.email)
-			reaction_summary = scrape.reaction_summary()
-			print(scrape.get_reaction_given())
+			
+			# Check if background task is already in Task table
+			is_task_exist = Task.objects.filter(task_params='[["%s"], {}]' %user_instance.email).exists()
+			if not is_task_exist:
+				fuck(user_instance.email)
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:

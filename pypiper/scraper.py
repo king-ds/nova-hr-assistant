@@ -1,4 +1,5 @@
 import facebook
+import time
 
 token = {"DQVJ2YVlQUlJ4VkF5ZAlJnQi13eVo2U01kbXNBSTBhU19WbEIwQXJiZAzdXWVdZAeEs0UEV4NkVXSnMtTDBIMGtiN0x5dGFNQmduWnQzeHpxZA3I5VktWRGEzVGl3ZA2toTVhfamU5X2ItYVFVazFTdVBGa1BYbm8yQ3BCeEVPb3RZAdW5VMmxJUjNmNUN2U0N1cUJxN1QxMDJRY3BJZAWVkWllUbWZArNWx5SnFMNmlOcW9JOEk4YnRZASkhEcVp6VXdYbDJ2UXZAMYWFB"}
 graph = facebook.GraphAPI(token,version='3.1')
@@ -50,30 +51,42 @@ class DataScrape:
                 print('No Post')
         return post_list
 
-    def get_reaction_received(self, post_id):
+    def get_reactions_summary(self, post_id):
         reactions = graph.request('%s?fields=reactions&limit=99999999' %post_id)
         return reactions
 
-    def reaction_summary(self):
-        reactions = [0, 0, 0, 0, 0, 0]
+    def get_reaction_received(self):
+        start_time = time.time()
+        print(start_time)
+        reactions_dict = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
+
         for i in self.get_post_list():
             try:
-                for j in self.get_reaction_received(i)['reactions']['data']:
+                for j in self.get_reactions_summary(i)['reactions']['data']:
                     if j['type'] == 'LIKE':
-                        reactions[0] += 1
+                        reactions_dict['LIKE'] += 1
+                        print("[INFO] Like received add ~ 1")
                     elif j['type'] == 'LOVE':
-                        reactions[1] += 1
+                        reactions_dict['LOVE'] += 1
+                        print("[INFO] Love received add ~ 1")
                     elif j['type'] == 'HAHA':
-                        reactions[2] += 1
+                        reactions_dict['HAHA'] += 1
+                        print("[INFO] Haha received add ~ 1")
                     elif j['type'] == 'WOW':
-                        reactions[3] += 1
+                        reactions_dict['WOW'] += 1
+                        print("[INFO] Wow received add ~ 1")
                     elif j['type'] == 'SAD':
-                        reactions[4] += 1
+                        reactions_dict['SAD'] += 1
+                        print("[INFO] Sad received add ~ 1")
                     else:
                         reactions[5] += 1
+                        print("[INFO] Angry received add ~ 1")
+                else:
+                    print("[INFO] User's post have no any reactions")
             except KeyError as e:
                 print('No reaction')
-        return reactions
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return reactions_dict
 
 
     def get_user_groups(self):
@@ -84,7 +97,6 @@ class DataScrape:
         for i in group:
             group_list.append(i['id'])
 
-        print('User has no groups')
         return group_list
 
 
@@ -94,7 +106,7 @@ class DataScrape:
         try:
             group_post = group_post['data']
         except:
-            print('Group has no posts')
+            print('[INFO] User is not belong to group '+group_id)
         return group_post
 
 
@@ -110,23 +122,34 @@ class DataScrape:
 
 
     def get_reaction_given(self):
-        reactions_given = [0, 0, 0, 0, 0, 0]
+        start_time = time.time()
+        print(start_time)
+        reactions_dict = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
         for i in self.get_group_post_list():
             try:
-                for j in self.get_reaction_received(i)['reactions']['data']:
+                for j in self.get_reactions_summary(i)['reactions']['data']:
                     if j['name'] == (self.get_details()['name']):
                         if j['type'] == 'LIKE':
-                            reactions[0] += 1
+                            reactions_dict['LIKE'] += 1
+                            print("[INFO] Like given add ~ 1")
                         elif j['type'] == 'LOVE':
-                            reactions[1] += 1
+                            reactions_dict['LOVE'] += 1
+                            print("[INFO] Love given add ~ 1")
                         elif j['type'] == 'HAHA':
-                            reactions[2] += 1
+                            reactions_dict['HAHA'] += 1
+                            print("[INFO] Haha given add ~ 1")
                         elif j['type'] == 'WOW':
-                            reactions[3] += 1
+                            reactions_dict['WOW'] += 1
+                            print("[INFO] Wow given add ~ 1")
                         elif j['type'] == 'SAD':
-                            reactions[4] += 1
+                            reactions_dict['SAD'] += 1
+                            print("[INFO] Sad given add ~ 1")
                         else:
-                            reactions[5] += 1
+                            reactions_dict['ANGRY'] += 1
+                            print("[INFO] Angry given add ~ 1")
+                    else:
+                        print("[INFO] User haven't reacted in this post ~ 0")
             except:
-                print('No interaction')
-        return reactions_given
+                print('No reaction')
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return reactions_dict
