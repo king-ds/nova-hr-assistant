@@ -17,6 +17,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(null=True)
+    profile_picture = models.TextField()
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     datetime_joined = models.DateTimeField(auto_now_add=True)
     total_votes = models.IntegerField(default=0)

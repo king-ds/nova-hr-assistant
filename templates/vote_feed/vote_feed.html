@@ -29,7 +29,12 @@
                               <div class="row">
                                   <div class="col-md-11">
                                       <div style="display: table-row;">
-                                          <div style="display: table-cell;vertical-align: middle;"><i class="fa fa-user" style="font-size: 40px; color: black;"></i></div>
+                                          <div style="display: table-cell;vertical-align: middle;">
+                                            {% if votes.username.profile_picture %}
+                                            <img src="{{votes.username.profile_picture}}" style="width: 40px; float: left; margin-top: 12px; border-radius: 50%;">
+                                            {% else %}
+                                            <i class="fa fa-user" style="font-size: 40px; color: black;"></i></div>
+                                            {% endif %}
                                            <div style="display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;">
                                            <p style="color: #1476ff;">{{ votes.username.first_name }} {{ votes.username.last_name }}</p>
                                            {% if Date_Posts|list_item:forloop.counter0 <= 1 %}
