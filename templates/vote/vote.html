@@ -1,4 +1,7 @@
+{% extends 'gmail_authentication/base.html' %}
+{% block content %}
 {% load staticfiles %}
+<link rel="stylesheet" href="{% static 'vote/css/vote.css' %}">
 <script src="{% static 'gmail_authentication/js/jquery-3.4.1.min.js' %}"></script>
 <h3>Hello {{ User.first_name }} {{ User.last_name }}, <br><br> How happy are you today at work?<br></h3>
 
@@ -26,18 +29,10 @@
 </div>
 </div>
 
-
-
-{% load staticfiles %}
-
-  {% if User %}
-  <h3 id="headpost">Hello {{ User.first_name }} {{ User.last_name }}, How Are You Doing Today? </h3>
-  {% endif %}
-  <form id="post-form" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-      <br>
-        <textarea class="form-control" rows="5" id="post" name="post" placeholder="Write a post..."></textarea>
+<form id="post-form" method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+        <textarea class="form-control" rows="3" id="post" name="post" placeholder="Write a post..." required></textarea>
         <button id="submit_btn" type="submit" class="btn btn-primary">Post</button>
       </div>
   </form>
@@ -56,10 +51,10 @@
           'vote' : global
         },
         success : function(data){
-          console.log(data.status);
           if(data.status == 200){
-            console.log("{% url 'home' %}")
             window.location.href = "{% url 'home' %}";
+          }else{
+            alert('You have not selected your vote yet!')
           }
         }
       })
@@ -187,3 +182,4 @@ $(document).ready(function(){
       });
   });
 </script>
+{% endblock %}
