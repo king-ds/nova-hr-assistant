@@ -6,7 +6,7 @@
 body {
     margin: 0%;
     background-color: whitesmoke;
-    background-image: url('../images/grey_gear.png') !important;
+    /* background-image: url('../images/grey_gear.png') !important; */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: contain;
@@ -54,7 +54,7 @@ ul {
     height: 46px;
     position: relative;
     width: 100%;
-    background-color: #111;
+    background-color: #006298;
 }
 
 .top-bar-inner {
@@ -92,6 +92,7 @@ fieldset {
 
 .input-field {
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .input-field>input{
@@ -100,9 +101,15 @@ fieldset {
     font-size: 14px;
     line-height: 20px;
     width: 300px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    border: none;
     outline: none;
-    border: 1px solid gray;
+    border-bottom: 1px solid black;
+}
+
+.input-field>label{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
 }
 
 .input-field>select{
@@ -111,9 +118,9 @@ fieldset {
     font-size: 14px;
     line-height: 20px;
     width: 311px;
-    border-radius: 5px;
+    border: none;
     outline: none;
-    border: 1px solid gray;
+    border-bottom: 1px solid black;
 }
 
 .input-field-button {
@@ -132,13 +139,13 @@ fieldset {
     text-align: center;
     white-space: nowrap;
     color: white;
-    background-color: black;
+    background-color: #006298;
     outline:none;
     border: none;
 }
 
 .input-field-button>button:hover{
-    background-color: #44464a;
+    background-color: #4287f5;
 }
 
 .input-field-button>a{
@@ -149,7 +156,7 @@ fieldset {
 
 .page-outer {
     height: 1000vh;
-    background-image: url('../images/grey_sidegear.png') !important;
+    /* background-image: url('../images/grey_sidegear.png') !important; */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: contain;
