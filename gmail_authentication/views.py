@@ -35,6 +35,11 @@ def pull_reactions_given(email):
 	print("[INFO] Email: %s" %email)
 	print("[INFO] These reactions will be recorded %s" %reaction_given)
 
+def pull_profile_picture(email):
+	scrape = DataScrape(email)
+	profile_picture = scrape.get_profile_picture()
+	add_profile_photo = User.objects.filter(email=email).update(profile_picture=profile_picture)
+
 # welcome page
 def welcome_page(request):
     return render(request, 'gmail_authentication/welcome_page.html')
@@ -95,6 +100,7 @@ def configure_account(request):
 
 		pull_reactions_received(user_instance.email)
 		pull_reactions_given(user_instance.email)
+		pull_profile_picture(user_instance.email)
 
 		return redirect('vote_page')
 

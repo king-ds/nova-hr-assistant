@@ -28,7 +28,7 @@ def convert_timedelta(duration):
 def home(request):
 
 	try:
-		admin_access = ['admin', 'christopher.cometa@novare.com.hk']
+		admin_access = ['ricardo.calura', 'christopher.cometa@novare.com.hk']
 
 		# If user is authenticated
 		if request.user.is_authenticated:

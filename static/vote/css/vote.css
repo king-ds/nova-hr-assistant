@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Kalam&display=swap');
+
+h3 {
+    margin: 10px;
+    padding-bottom: 30px;
+    font-family: 'Montserrat', 'sans-serif';
+}
+
+.table {
+	display: table;   /* Allow the centering to work */
+	margin: 0 auto;
+}
+
+#line{
+    height: 5px;
+    width: 250px;
+    background-color:black;
+    position: relative;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+#emoji{
+    list-style: none;
+    position: relative;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0px;
+    padding: 0px;
+    z-index: 99;
+}
+
+#note{
+    list-style: none;
+    position: relative;
+    top:57%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0px;
+    padding: 0px;
+    z-index: 99;
+}
+
+#emoji li{
+    display: inline-block;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+#note li{
+    width: 38px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    color:#d4d3cf;
+    display: inline-block;
+    margin-left: 17px;
+    margin-right: 18px;
+    transition: all .3s;
+}
+
+#dot{
+    height: 5px;
+    width: 71px;
+    background-color: white;
+    transition: all .3s;
+}
+
+.form-group > textarea, button {
+    display: block;
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group > textarea {
+    width: 95%;
+    border: none;
+    font-size: 20px;
+    border-bottom: 1px solid black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-group > button { 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    color: white;
+    background-color: #006298;
+    outline:none;
+    border: none;
+}
+
+.form-group > button:hover{
+    background-color: #4287f5;
+}

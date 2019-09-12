@@ -50,13 +50,19 @@ def submit_vote(request):
 
 		vote = request.POST.get('vote', None)
 		post = request.POST.get('post', None)
-		userinstance = User.objects.get(username = request.user)
-		voteinstance = Votes.objects.create(username = userinstance,votes = vote,comment=post)
-		userinstance.add_total_votes(int(vote))
-		User.objects.filter(username=request.user).update(selected_vote=False)
+
+		if int(vote) == 0:
+			status = 400
+		
+		else:
+			userinstance = User.objects.get(username = request.user)
+			voteinstance = Votes.objects.create(username = userinstance,votes = vote,comment=post)
+			userinstance.add_total_votes(int(vote))
+			User.objects.filter(username=request.user).update(selected_vote=False)
+			status = 200
 
 		data = {
-			'status': 200
+			'status': status
 		}
 
 	return JsonResponse(data)

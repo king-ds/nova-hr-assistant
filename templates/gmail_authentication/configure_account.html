@@ -10,19 +10,24 @@
         {% csrf_token %}
         <fieldset>
             <div class="input-field">
-                <input type="text" autocomplete="off" placeholder="Username" id="username" name="username" value="{{ user.username }}" readonly required>
+                <label for="username"><b>Username</b></label>
+                <br><br><input type="text" autocomplete="off" placeholder="Username" id="username" name="username" value="{{ user.username }}" readonly required>
             </div>
             <div class="input-field">
-                <input type="text"  autocomplete="off" placeholder="First Name" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                <label for="first_name"><b>First Name</b></label>
+                <br><br><input type="text"  autocomplete="off" placeholder="First Name" id="first_name" name="first_name" value="{{ user.first_name }}" required>
             </div>
             <div class="input-field">
-                <input type="text"  autocomplete="off" placeholder="Last Name" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                <label for="last_name"><b>Last Name</b></label>
+                <br><br><input type="text"  autocomplete="off" placeholder="Last Name" id="last_name" name="last_name" value="{{ user.last_name }}" required>
             </div>
             <div class="input-field">
-                <input type="email" autocomplete="off" placeholder="Email Address" id="email" name="email" value="{{ user.email }}" required>
+                <label for="email"><b>Email Address</b></label>
+                <br><br><input type="email" autocomplete="off" placeholder="Email Address" id="email" name="email" value="{{ user.email }}" required>
             </div>
             <div class="input-field">
-                <select id="department" name="department">
+                <label for="department"><b>Department</b></label>
+                <br><br><select id="department" name="department" required>
                     {% if departments %}
                     <option value="" disabled selected>Select your department</option>
                     {% for department in departments %}
