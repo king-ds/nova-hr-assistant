@@ -3,6 +3,10 @@ import math
 import requests
 import calendar
 from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
+import altair as alt
+pd.set_option('display.max_columns', None)
 
 # Django
 from django.shortcuts import render, redirect
@@ -12,6 +16,7 @@ from django.db.models import Count, Sum, Avg
 # Application
 from gmail_authentication.models import *
 from vote.models import *
+from profile_feed.models import *
 
 def get_avg_votes(request):
     if request.method == "GET":
@@ -37,6 +42,135 @@ def get_avg_votes(request):
             'avg_votes' : avg_votes,
         }
         return JsonResponse(data)
+
+
+def get_dept_vote(request):
+    dept_list = []
+    vote_list = []
+    dept_name_list = []
+    act_vote_list = []
+    departments = Department.objects.all().values('department_name')
+    for department in departments:
+        dept_list.append(department['department_name'])
+    for i in dept_list:
+        instance = Department.objects.get(department_name=i)
+        vote_list.append(Votes.objects.filter(department_name=instance))
+    for i in vote_list:
+        for j in i:
+            dept_name_list.append(str(j.department_name))
+            act_vote_list.append(j.votes)
+
+    user = User.objects.all().values('id','department')
+    userer = pd.DataFrame(user)
+    userer.columns=['user_id','dept_id']
+    reaction = Reaction.objects.all().values('username','reaction_given','reaction_received','reaction_type')
+    reacter = (pd.DataFrame(reaction))
+    reacter.columns = ['user_id','reaction_given','reaction_received','reaction_type']
+    depter = Department.objects.all().values('department_name','id')
+    depteter = (pd.DataFrame(depter))
+    depteter.columns = ['department_name','dept_id']
+    voter = Votes.objects.all().values('username','votes','department_name')
+    voter = (pd.DataFrame(voter))
+    voter.columns = ['user_id','votes','dept_id']
+    voter = pd.pivot_table(index='dept_id',values='votes',aggfunc=np.mean,data=voter)
+    voter['votes'] = voter['votes'].apply(math.ceil)
+    usdep = (pd.merge(userer,depteter,on='dept_id'))
+    summary = (pd.merge(usdep,reacter,on='user_id'))
+    print(summary)
+    summary = (pd.pivot_table(index=['user_id','dept_id','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index())
+    final = pd.merge(summary,voter,on=['dept_id'])
+
+
+
+
+
+
+
+    frame = pd.DataFrame(dept_name_list)
+    frame.columns = ['Department']
+    frame['Votes'] = act_vote_list
+    frame = pd.pivot_table(index='Department',values='Votes',aggfunc=np.mean,data=frame).reset_index()
+    frame['Votes'] = frame['Votes'].apply(math.ceil)
+    print(frame)
+    context = locals()
+    source = frame
+
+    chart =  alt.Chart(source).mark_bar().encode(
+    x=alt.X('Votes:Q',axis=alt.Axis(values=[1,2,3,4])),
+    color= alt.Color('Votes:O', scale=alt.Scale(domain=[1,2,3,4],range=['red','lightred','orange','lightgreen'])),
+    row='Department:N'
+    ).properties(
+        height = 50,
+        width = 1150
+        )
+
+
+
+
+
+    if request.method == "GET":
+        date_today = datetime.today()
+        start_delta = timedelta(weeks=1)
+
+        time_series = list()
+        str_time_series = list()
+        weekly_votes = list()
+
+        for i in reversed(range(0,8)):
+            str_time_series.append((date_today - timedelta(i)).date().strftime("%B %d %Y"))
+            time_series.append((date_today - timedelta(i)).date())
+
+        for i in time_series:
+            month = i.month
+            month_name = calendar.month_name[month]
+            day = i.day
+            year = i.year
+            daily_votes = Votes.objects.filter(datetime_voted__year=year,datetime_voted__month=month,datetime_voted__day=day).count()
+            weekly_votes.append(daily_votes)
+
+        data = {
+            'time_series' : str_time_series,
+            'weekly_votes' : weekly_votes
+        }
+
+        data = pd.DataFrame(data)
+        data.columns = ['Date','Number of Votes']
+        data['Date'] = pd.to_datetime(data['Date'])
+
+
+        chart_2 = alt.Chart(data).mark_line().encode(
+            x = alt.X('Date:T'),
+            y = 'Number of Votes:Q'
+        ).properties(
+            height=250,
+            width=1218
+            )
+
+
+        # context['chart'] = chart_1
+        if request.method == "GET":
+            total_employees = User.objects.all().count()
+            total_deparments = Department.objects.all().count()
+            total_posts = Votes.objects.all().count()
+            datas = {'total_employees' : total_employees,
+                'total_deparments' : total_deparments,
+                'total_posts' : total_posts,
+                'chart' : chart,
+                'chart_2' : chart_2,
+            }
+
+
+
+
+
+
+
+
+    return render(request, 'admin_dashboarding/test.html', datas)
+
+
+
+
 
 def get_total_data(request):
     if request.method == "GET":

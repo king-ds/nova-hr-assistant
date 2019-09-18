@@ -1,7 +1,7 @@
 import facebook
 import time
 
-token = {"DQVJ2YVlQUlJ4VkF5ZAlJnQi13eVo2U01kbXNBSTBhU19WbEIwQXJiZAzdXWVdZAeEs0UEV4NkVXSnMtTDBIMGtiN0x5dGFNQmduWnQzeHpxZA3I5VktWRGEzVGl3ZA2toTVhfamU5X2ItYVFVazFTdVBGa1BYbm8yQ3BCeEVPb3RZAdW5VMmxJUjNmNUN2U0N1cUJxN1QxMDJRY3BJZAWVkWllUbWZArNWx5SnFMNmlOcW9JOEk4YnRZASkhEcVp6VXdYbDJ2UXZAMYWFB"}
+token = {"DQVJ0OGdHUlFsalNqRTR2YkNydDZAGTVdCRF81eGQyLXJKMlJ2djdzSFVzbDVSX210cjVQeDE1TU5uTGJadG1ZAejVERmdTQ0Q4TFpuS2dCa2RROWQwOFdPZA0pVdzRjV3llVFN4VXFpYXlNdmZAyNjItVmZAnTVpVVWVmczdZAMnRhY3hUWFFZAeENQc1V6X3dtNzFaT2RuaThZAcHNjUk9hdVQwSEY4OTM3OUhDUWZA6b0pra1NMZAVZAPdHFxVVQzbTFoNHJRcjdacF93"}
 graph = facebook.GraphAPI(token,version='3.1')
 
 class DataScrape:
@@ -10,7 +10,7 @@ class DataScrape:
         self.email_address = email_address
 
     def get_details(self):
-        employee_detail = graph.request('%s?fields=name,email,title,department&limit=9999999999' %self.email_address)
+        employee_detail = graph.request('%s?fields=name,email,title,department&limit=1000' %self.email_address)
         return employee_detail
 
     def get_profile_picture(self):
@@ -35,7 +35,7 @@ class DataScrape:
         return department
 
     def get_feed(self):
-        feed = graph.request('%s?fields=feed&limit=9999999999' %self.email_address)
+        feed = graph.request('%s?fields=feed&limit=100' %self.email_address)
         try:
             feed = feed['feed']['data']
         except:
@@ -52,7 +52,7 @@ class DataScrape:
         return post_list
 
     def get_reactions_summary(self, post_id):
-        reactions = graph.request('%s?fields=reactions&limit=99999999' %post_id)
+        reactions = graph.request('%s?fields=reactions&limit=100' %post_id)
         return reactions
 
     def get_reaction_received(self):
@@ -91,7 +91,7 @@ class DataScrape:
 
     def get_user_groups(self):
         group_list = []
-        group = graph.request('%s?fields=groups&limit=999999999999' %self.email_address)
+        group = graph.request('%s?fields=groups&limit=100' %self.email_address)
         group = group['groups']['data']
 
         for i in group:
@@ -101,7 +101,7 @@ class DataScrape:
 
 
     def get_group_feed(self,group_id):
-        group_post = graph.request('%s/feed?limit=9999999999' %group_id)
+        group_post = graph.request('%s/feed?limit=100' %group_id)
 
         try:
             group_post = group_post['data']

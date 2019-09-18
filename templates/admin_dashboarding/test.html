@@ -1,0 +1,84 @@
+{% extends 'admin_dashboarding/base.html' %}
+{% block title %}PyPiper | Dashboard{% endblock %}
+{% block content %}
+{% load staticfiles %}
+{% load django_altair %}
+
+
+<script src="https://cdn.jsdelivr.net/npm//vega@3.2"></script>
+<script src="https://cdn.jsdelivr.net/npm//vega-lite@2.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm//vega-embed@3.0"></script>
+
+
+<div class="page-header">
+    <h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-home"></i>
+    </span>
+    Dashboard
+    </h3>
+</div>
+
+<div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+        <h4 class="font-weight-normal mb-3">Total Users
+            <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_employees" name="total_employees"> {{total_employees}} </h2>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+        <h4 class="font-weight-normal mb-3">Total Departments
+            <i class="mdi mdi-briefcase-outline mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_deparments"> {{total_deparments}} </h2>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+        <div class="card-body">
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+        <h4 class="font-weight-normal mb-3">Total Number of Posts
+            <i class="mdi mdi-buffer mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5" id="total_posts">{{total_posts}}</h2>
+        </div>
+    </div>
+    </div>
+
+
+<div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+             <div class="card-body">
+             <h4 class="card-title">Daily Employee Engagement</h4>
+               {% render_chart chart %}
+             </div>
+        </div>
+        </div>
+   </div>
+
+
+<div class="row">
+       <div class="col-md-12 grid-margin stretch-card">
+       <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Daily Employee Engagement</h4>
+              {% render_chart chart_2 %}
+            </div>
+       </div>
+       </div>
+  </div>
+
+
+
+
+{% endblock %}
