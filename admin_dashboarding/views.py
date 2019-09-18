@@ -76,9 +76,50 @@ def get_dept_vote(request):
     voter['votes'] = voter['votes'].apply(math.ceil)
     usdep = (pd.merge(userer,depteter,on='dept_id'))
     summary = (pd.merge(usdep,reacter,on='user_id'))
-    print(summary)
+    test = pd.pivot_table(index='reaction_type',values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index()
     summary = (pd.pivot_table(index=['user_id','dept_id','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index())
     final = pd.merge(summary,voter,on=['dept_id'])
+    #print(test)
+
+
+    # brush = alt.selection(type='interval', encodings=['x'],empty='none')
+    #
+    # bars = alt.Chart().mark_bar().encode(
+    # x='reaction_given:O',
+    # y='count()',
+    # color=alt.condition(brush, 'reaction_type:O', alt.value('lightgray'))
+    # ).add_selection(
+    # brush
+    # )
+    #
+    # chart_3 = alt.layer(bars, data=test).properties(width = 500)
+
+    brush = alt.selection(type='interval', encodings=['x'],empty='none')
+
+
+    base = alt.Chart().mark_bar().encode(
+    x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
+    y='count()',
+    tooltip='reaction_type'
+
+    ).properties(
+    width=350,
+    height=350
+    )
+
+    background = base.add_selection(brush)
+
+    highlight = base.encode(
+    color='reaction_type'
+    ).transform_filter(brush)
+
+    # layer the two charts & repeat alt.value('goldenrod')
+    chart_3 = alt.layer(
+    background,
+    highlight,
+    data=test).repeat(column=["reaction_given","reaction_received"])
+
+
 
 
 
@@ -91,7 +132,6 @@ def get_dept_vote(request):
     frame['Votes'] = act_vote_list
     frame = pd.pivot_table(index='Department',values='Votes',aggfunc=np.mean,data=frame).reset_index()
     frame['Votes'] = frame['Votes'].apply(math.ceil)
-    print(frame)
     context = locals()
     source = frame
 
@@ -101,7 +141,7 @@ def get_dept_vote(request):
     row='Department:N'
     ).properties(
         height = 50,
-        width = 1150
+        width = 800
         )
 
 
@@ -143,7 +183,7 @@ def get_dept_vote(request):
             y = 'Number of Votes:Q'
         ).properties(
             height=250,
-            width=1218
+            width=800
             )
 
 
@@ -157,6 +197,7 @@ def get_dept_vote(request):
                 'total_posts' : total_posts,
                 'chart' : chart,
                 'chart_2' : chart_2,
+                'chart_3' : chart_3,
             }
 
 
