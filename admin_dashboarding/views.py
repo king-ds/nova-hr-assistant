@@ -76,10 +76,11 @@ def get_dept_vote(request):
     voter['votes'] = voter['votes'].apply(math.ceil)
     usdep = (pd.merge(userer,depteter,on='dept_id'))
     summary = (pd.merge(usdep,reacter,on='user_id'))
-    test = pd.pivot_table(index='reaction_type',values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index()
+    test = pd.pivot_table(index=['reaction_type','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index()
     summary = (pd.pivot_table(index=['user_id','dept_id','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index())
     final = pd.merge(summary,voter,on=['dept_id'])
-    #print(test)
+    test.columns = ['Reaction Type', 'Department Name' ,'Reaction Given', 'Reaction Received']
+    print(final)
 
 
     # brush = alt.selection(type='interval', encodings=['x'],empty='none')
@@ -94,30 +95,20 @@ def get_dept_vote(request):
     #
     # chart_3 = alt.layer(bars, data=test).properties(width = 500)
 
-    brush = alt.selection(type='interval', encodings=['x'],empty='none')
+    brush = alt.selection_interval()
 
 
-    base = alt.Chart().mark_bar().encode(
-    x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
-    y='count()',
-    tooltip='reaction_type'
 
-    ).properties(
-    width=350,
-    height=350
-    )
+    chart_x = alt.Chart(test).mark_bar().encode(
+        y = 'Reaction Type',
+        x = 'sum(Reaction Given)',
+        color = alt.condition(brush,alt.value('lightgray'),'Department Name')
+        ).add_selection(brush)
 
-    background = base.add_selection(brush)
 
-    highlight = base.encode(
-    color='reaction_type'
-    ).transform_filter(brush)
+    chart_y = chart_x.encode(x = 'sum(Reaction Received)')
 
-    # layer the two charts & repeat alt.value('goldenrod')
-    chart_3 = alt.layer(
-    background,
-    highlight,
-    data=test).repeat(column=["reaction_given","reaction_received"])
+    chart_3 = chart_x | chart_y
 
 
 
