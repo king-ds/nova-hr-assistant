@@ -1,7 +1,10 @@
+from workplace_data.models import Post
+from ast import literal_eval
+import json
 import facebook
 import time
 
-token = {"DQVJ2YVlQUlJ4VkF5ZAlJnQi13eVo2U01kbXNBSTBhU19WbEIwQXJiZAzdXWVdZAeEs0UEV4NkVXSnMtTDBIMGtiN0x5dGFNQmduWnQzeHpxZA3I5VktWRGEzVGl3ZA2toTVhfamU5X2ItYVFVazFTdVBGa1BYbm8yQ3BCeEVPb3RZAdW5VMmxJUjNmNUN2U0N1cUJxN1QxMDJRY3BJZAWVkWllUbWZArNWx5SnFMNmlOcW9JOEk4YnRZASkhEcVp6VXdYbDJ2UXZAMYWFB"}
+token = {"DQVJ2SVdqcklvRTJfV2pjR3NuS05DVFRhZAmVlczNxMVBqZA1NwdWx0c2NPdDFnVmR0aXpYZAm4ySHBFT1Ywcjcyb25Ia09MZAFJIMWNOSWVaV085SlQ2TEF3UmN3dWQwX1JyNWVCajJxVHdIc2tBNVVFSUk0aS1yWjJZAclNNVjNpTDIzdVJrd3BMNXhfeVJvbVRXb2hfUGJhakgxZAzR1WHN0OEk0TTFHWEJOZA1ZAPYnVvS1VsMnN3NEtnLXVTTTNINlR4LUtYeXZAB"}
 graph = facebook.GraphAPI(token,version='3.1')
 
 class DataScrape:
@@ -10,13 +13,21 @@ class DataScrape:
         self.email_address = email_address
 
     def get_details(self):
-        employee_detail = graph.request('%s?fields=name,email,title,department&limit=9999999999' %self.email_address)
+        employee_detail = graph.request('%s?fields=id,name,email,title,department&limit=9999999999' %self.email_address)
         return employee_detail
 
     def get_profile_picture(self):
         employee_detail = self.get_details()
         profile_picture = graph.request('%s/picture?type=large' %employee_detail['id'])['url']
         return profile_picture
+
+    def get_id(self):
+        employee_detail = self.get_details()
+        try:
+            user_id = employee_detail['id']
+        except KeyError as e:
+            user_id = 'No Id'
+        return user_id
 
     def get_title(self):
         employee_detail = self.get_details()
@@ -120,36 +131,17 @@ class DataScrape:
                     print('No id')
         return group_post_list
 
-
-    def get_reaction_given(self):
-        start_time = time.time()
-        print(start_time)
+    def get_reaction_given(self, user_id):
+        total_reactions = 0
+        total_posts = 0
         reactions_dict = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
-        for i in self.get_group_post_list():
-            try:
-                for j in self.get_reactions_summary(i)['reactions']['data']:
-                    if j['name'] == (self.get_details()['name']):
-                        if j['type'] == 'LIKE':
-                            reactions_dict['LIKE'] += 1
-                            print("[INFO] Like given add ~ 1")
-                        elif j['type'] == 'LOVE':
-                            reactions_dict['LOVE'] += 1
-                            print("[INFO] Love given add ~ 1")
-                        elif j['type'] == 'HAHA':
-                            reactions_dict['HAHA'] += 1
-                            print("[INFO] Haha given add ~ 1")
-                        elif j['type'] == 'WOW':
-                            reactions_dict['WOW'] += 1
-                            print("[INFO] Wow given add ~ 1")
-                        elif j['type'] == 'SAD':
-                            reactions_dict['SAD'] += 1
-                            print("[INFO] Sad given add ~ 1")
-                        else:
-                            reactions_dict['ANGRY'] += 1
-                            print("[INFO] Angry given add ~ 1")
-                    else:
-                        print("[INFO] User haven't reacted in this post ~ 0")
-            except:
-                print('No reaction')
-        print("--- %s seconds ---" % (time.time() - start_time))
+        for post in Post.objects.all():
+            total_posts += 1
+            reaction_summary = literal_eval(post.reactions)
+            for key, val in reaction_summary.items():
+                if key == user_id:
+                    total_reactions += 1
+                    reactions_dict[val] += 1
+
+        print("[INFO] %s has %d reactions from %d posts" %(self.email_address, total_reactions, total_posts))
         return reactions_dict
