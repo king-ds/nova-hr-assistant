@@ -2,11 +2,15 @@
 {% block title %}PyPiper | Dashboard{% endblock %}
 {% block content %}
 {% load staticfiles %}
+{% load django_altair %}
+
+
+
 
 <div class="page-header">
     <h3 class="page-title">
     <span class="page-title-icon bg-gradient-primary text-white mr-2">
-        <i class="mdi mdi-home"></i>                 
+        <i class="mdi mdi-home"></i>
     </span>
     Dashboard
     </h3>
@@ -26,7 +30,7 @@
     <div class="col-md-4 stretch-card grid-margin">
     <div class="card bg-gradient-info card-img-holder text-white">
         <div class="card-body">
-        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>                  
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
         <h4 class="font-weight-normal mb-3">Total Departments
             <i class="mdi mdi-briefcase-outline mdi-24px float-right"></i>
         </h4>
@@ -37,7 +41,7 @@
     <div class="col-md-4 stretch-card grid-margin">
     <div class="card bg-gradient-success card-img-holder text-white">
         <div class="card-body">
-        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>                                    
+        <img src="{% static 'admin_dashboarding/images/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
         <h4 class="font-weight-normal mb-3">Total Number of Posts
             <i class="mdi mdi-buffer mdi-24px float-right"></i>
         </h4>
@@ -52,14 +56,14 @@
         <div class="card-body">
         <div class="clearfix">
             <h4 class="card-title float-left">Employee Happiness Level</h4>
-            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>                                     
+            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
         </div>
         <select name="company" class="form-control" id="company" required>
                 {% for department in Departments %}
                 <option value="{{department.department_name}}">{{department.department_name}}</option>
                 {% endfor %}
-           </select> 
-        <div id="barChart_container">        
+           </select>
+        <div id="barChart_container">
         <canvas id="barChart" height="200" width="800"></canvas>
         </div>
         </div>
@@ -72,7 +76,7 @@
         <div id="horizontalBar_container">
         <canvas id="horizontalBar" height="245px"></canvas>
         </div>
-        <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>                                                      
+        <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
         </div>
     </div>
     </div> -->
@@ -219,7 +223,7 @@
             url: '{% url "get_total_data" %}',
             type: 'GET',
             dataType: 'json',
-            
+
             success:function(data){
                 $("#total_employees").text(data.total_employees)
                 $("#total_deparments").text(data.total_deparments)
@@ -275,7 +279,7 @@
                             }]
                         }
                     };
-                
+
                 var barChart = new Chart(ctx, {type:'bar', data:votes_data, options, options})
 
             }
@@ -290,7 +294,7 @@
                   url: '{% url "get_total_employee" %}',
                   type: 'GET',
                   success:function(data){
-   
+
                        var data = {
                             labels : data.time_series,
                             datasets : [
@@ -330,7 +334,7 @@
              });
         });
    }
-   
+
    </script>
 
 <script>
@@ -341,7 +345,7 @@
     };
 </script>
 
-<script>     
+<script>
     window.setInterval(function(){
         get_average_votes();
         get_total_data();

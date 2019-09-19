@@ -46,7 +46,7 @@ class DataScrape:
         return department
 
     def get_feed(self):
-        feed = graph.request('%s?fields=feed&limit=9999999999' %self.email_address)
+        feed = graph.request('%s?fields=feed&limit=100' %self.email_address)
         try:
             feed = feed['feed']['data']
         except:
@@ -63,7 +63,7 @@ class DataScrape:
         return post_list
 
     def get_reactions_summary(self, post_id):
-        reactions = graph.request('%s?fields=reactions&limit=99999999' %post_id)
+        reactions = graph.request('%s?fields=reactions&limit=100' %post_id)
         return reactions
 
     def get_reaction_received(self):
@@ -102,7 +102,7 @@ class DataScrape:
 
     def get_user_groups(self):
         group_list = []
-        group = graph.request('%s?fields=groups&limit=999999999999' %self.email_address)
+        group = graph.request('%s?fields=groups&limit=100' %self.email_address)
         group = group['groups']['data']
 
         for i in group:
@@ -112,7 +112,7 @@ class DataScrape:
 
 
     def get_group_feed(self,group_id):
-        group_post = graph.request('%s/feed?limit=9999999999' %group_id)
+        group_post = graph.request('%s/feed?limit=100' %group_id)
 
         try:
             group_post = group_post['data']

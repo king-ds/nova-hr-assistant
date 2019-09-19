@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'social_django',
     'mathfilters',
     'background_task',
+    'django_altair',
     'workplace_data',
 ]
 
