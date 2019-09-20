@@ -20,19 +20,18 @@ def pull_reactions_received(email):
 	for key in reaction_received:
 		Reaction.objects.filter(username=user_instance.id, reaction_type=key).update(reaction_received=reaction_received[key])
 
-	print("[INFO] Email: %s" %email)
 	print("[INFO] These reactions will be recorded %s" %reaction_received)
 
 @background(schedule=0)
 def pull_reactions_given(email):
 	scrape = DataScrape(email)
-	reaction_given = scrape.get_reaction_given()
+	user_id = scrape.get_id()
+	reaction_given = scrape.get_reaction_given(user_id)
 	user_instance = User.objects.get(email=email)
 
 	for key in reaction_given:
 		Reaction.objects.filter(username=user_instance.id, reaction_type=key).update(reaction_given=reaction_given[key])
 
-	print("[INFO] Email: %s" %email)
 	print("[INFO] These reactions will be recorded %s" %reaction_given)
 
 def pull_profile_picture(email):

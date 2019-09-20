@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'background_task',
     'django_altair',
+    'workplace_data',
 ]
 
 MIDDLEWARE = [
