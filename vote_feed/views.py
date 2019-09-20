@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 # Application
 from gmail_authentication.models import *
 from vote.models import *
+from django.db.models import Q
 from pypiper.scraper import DataScrape
 from background_task import background
 from background_task.models import Task
@@ -55,8 +56,10 @@ def home(request):
 
 			# Check if recently logged in user have admin access
 			if str(request.user) in admin_access:
+				admin = True
 				Comment = Votes.objects.all().order_by("-id")
 			else:
+				admin = True
 				Comment = Votes.objects.filter(username=user_instance).order_by("-id")
 
 			User_Instance = User.objects.get(username = request.user)
@@ -78,3 +81,30 @@ def home(request):
 		return HttpResponse('Please logout the admin account first and reload the page.')
 
 	return render(request, 'vote_feed/vote_feed.html', context)
+
+@csrf_exempt
+def search_user(request):
+
+	user_details = list()
+	user_pictures = list()
+	admin_access = ['ricardo.calura']
+
+	if str(request.user) in admin_access:
+		user = request.POST.get('user', None)
+		if ' ' in user:
+			user = user.split(' ')
+			comments = Votes.objects.filter(Q(username__last_name__icontains=user[1]) | Q(username__first_name__icontains=user[0]))
+		else:
+			comments = Votes.objects.filter(Q(username__last_name__icontains=user) | Q(username__first_name__icontains=user))
+
+		for comment in comments:
+			user_details.append(comment.username.first_name+' '+comment.username.last_name)
+			user_pictures.append(comment.username.profile_picture)
+	
+	data = {
+		'comments' : list(comments.values()),
+		'user_details' : user_details,
+		'user_pictures' : user_pictures,
+	}
+
+	return JsonResponse(data)
