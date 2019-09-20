@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import altair as alt
+import numpy as np
 pd.set_option('display.max_columns', None)
 
 # Django
@@ -45,95 +46,69 @@ def get_avg_votes(request):
 
 
 def get_dept_vote(request):
-    dept_list = []
-    vote_list = []
-    dept_name_list = []
-    act_vote_list = []
-    departments = Department.objects.all().values('department_name')
-    for department in departments:
-        dept_list.append(department['department_name'])
-    for i in dept_list:
-        instance = Department.objects.get(department_name=i)
-        vote_list.append(Votes.objects.filter(department_name=instance))
-    for i in vote_list:
-        for j in i:
-            dept_name_list.append(str(j.department_name))
-            act_vote_list.append(j.votes)
-
+    chart = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+    chart_2 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+    chart_3 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
     user = User.objects.all().values('id','department')
-    userer = pd.DataFrame(user)
-    userer.columns=['user_id','dept_id']
-    reaction = Reaction.objects.all().values('username','reaction_given','reaction_received','reaction_type')
-    reacter = (pd.DataFrame(reaction))
-    reacter.columns = ['user_id','reaction_given','reaction_received','reaction_type']
-    depter = Department.objects.all().values('department_name','id')
-    depteter = (pd.DataFrame(depter))
-    depteter.columns = ['department_name','dept_id']
-    voter = Votes.objects.all().values('username','votes','department_name')
-    voter = (pd.DataFrame(voter))
-    voter.columns = ['user_id','votes','dept_id']
-    voter = pd.pivot_table(index='dept_id',values='votes',aggfunc=np.mean,data=voter)
-    voter['votes'] = voter['votes'].apply(math.ceil)
-    usdep = (pd.merge(userer,depteter,on='dept_id'))
-    summary = (pd.merge(usdep,reacter,on='user_id'))
-    test = pd.pivot_table(index=['reaction_type','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index()
-    summary = (pd.pivot_table(index=['user_id','dept_id','department_name'],values=['reaction_given','reaction_received'],aggfunc=sum,data=summary).reset_index())
-    final = pd.merge(summary,voter,on=['dept_id'])
-    test.columns = ['Reaction Type', 'Department Name' ,'Reaction Given', 'Reaction Received']
-    print(final)
-
-
-    # brush = alt.selection(type='interval', encodings=['x'],empty='none')
-    #
-    # bars = alt.Chart().mark_bar().encode(
-    # x='reaction_given:O',
-    # y='count()',
-    # color=alt.condition(brush, 'reaction_type:O', alt.value('lightgray'))
-    # ).add_selection(
-    # brush
-    # )
-    #
-    # chart_3 = alt.layer(bars, data=test).properties(width = 500)
-
-    brush = alt.selection_interval()
+    department = Department.objects.all().values('id','department_name')
+    votes = Votes.objects.all().values('username','department_name','votes')
+    reactions = Reaction.objects.all().values('username','reaction_given','reaction_received','reaction_type')
+    #check if the query set for user is empty
+    if not user:
+        # assign empty graphs if there are no users.
+        chart = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+        chart_2 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+        chart_3 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+    else:
+        user = pd.DataFrame(user)
+        user.columns = ['user_id','dept_id']
+        department = pd.DataFrame(department)
+        department.columns = ['dept_id','Department Name']
+        user = pd.merge(user,department,on=['dept_id'])
+        #check if the query set for votes is empty
+        if not votes:
+            chart = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+        else:
+            votes = pd.DataFrame(votes)
+            votes.columns = ['user_id','dept_id','votes']
+            user_dept_votes = pd.merge(user,votes,on=['user_id','dept_id'])
+            dept_votes = pd.pivot_table(index=['Department Name'],values='votes',aggfunc=np.mean,data=user_dept_votes).reset_index()
+            dept_votes.columns = ['Department Name','Votes']
+            dept_votes['Votes'] = dept_votes['Votes'].apply(math.ceil)
 
 
 
-    chart_x = alt.Chart(test).mark_bar().encode(
-        y = 'Reaction Type',
-        x = 'sum(Reaction Given)',
-        color = alt.condition(brush,alt.value('lightgray'),'Department Name')
-        ).add_selection(brush)
+            # Render Vote Chart If there are votes
+            chart =  alt.Chart(dept_votes).mark_bar().encode(
+            x=alt.X('Votes:Q',axis=alt.Axis(values=[1,2,3,4])),
+            color= alt.Color('Votes:O', scale=alt.Scale(domain=[1,2,3,4],range=['red','red','orange','lightgreen'])),
+            row='Department Name:N'
+            ).properties(
+                height = 50,
+                width = 800
+                )
 
 
-    chart_y = chart_x.encode(x = 'sum(Reaction Received)')
-
-    chart_3 = chart_x | chart_y
-
-
-
-
-
-
+            # check if there are empty reactions
+            if not reactions:
+                chart_3 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
+            else:
+                reactions = pd.DataFrame(reactions)
+                reactions.columns = ['user_id','Reactions Given','Reactions Received','Reaction Type']
+                reactions = pd.merge(user,reactions,on=['user_id'])
 
 
+                brush = alt.selection_interval()
+                chart_x = alt.Chart(reactions).mark_bar().encode(
+                    y = 'Reaction Type:N',
+                    x = 'sum(Reactions Given):Q',
+                    color = alt.condition(brush,alt.value('lightgray'),'Department Name:N')
+                    ).add_selection(brush)
+                chart_y = chart_x.encode(x = 'sum(Reactions Received):Q')
+                chart_3 = chart_x | chart_y
 
-    frame = pd.DataFrame(dept_name_list)
-    frame.columns = ['Department']
-    frame['Votes'] = act_vote_list
-    frame = pd.pivot_table(index='Department',values='Votes',aggfunc=np.mean,data=frame).reset_index()
-    frame['Votes'] = frame['Votes'].apply(math.ceil)
-    context = locals()
-    source = frame
 
-    chart =  alt.Chart(source).mark_bar().encode(
-    x=alt.X('Votes:Q',axis=alt.Axis(values=[1,2,3,4])),
-    color= alt.Color('Votes:O', scale=alt.Scale(domain=[1,2,3,4],range=['red','lightred','orange','lightgreen'])),
-    row='Department:N'
-    ).properties(
-        height = 50,
-        width = 800
-        )
+
 
 
 
@@ -178,7 +153,7 @@ def get_dept_vote(request):
             )
 
 
-        # context['chart'] = chart_1
+
         if request.method == "GET":
             total_employees = User.objects.all().count()
             total_deparments = Department.objects.all().count()
