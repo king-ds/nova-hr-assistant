@@ -6,7 +6,7 @@ class Votes(models.Model):
     votes = models.IntegerField()
     comment = models.TextField()
     datetime_voted = models.DateTimeField(auto_now_add=True)
-    department_name = models.ForeignKey(Department, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return str(self.datetime_voted)

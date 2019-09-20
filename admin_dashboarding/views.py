@@ -51,8 +51,9 @@ def get_dept_vote(request):
     chart_3 = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
     user = User.objects.all().values('id','department')
     department = Department.objects.all().values('id','department_name')
-    votes = Votes.objects.all().values('username','department_name','votes')
+    votes = Votes.objects.all().values('username','votes')
     reactions = Reaction.objects.all().values('username','reaction_given','reaction_received','reaction_type')
+
     #check if the query set for user is empty
     if not user:
         # assign empty graphs if there are no users.
@@ -63,15 +64,17 @@ def get_dept_vote(request):
         user = pd.DataFrame(user)
         user.columns = ['user_id','dept_id']
         department = pd.DataFrame(department)
+
         department.columns = ['dept_id','Department Name']
+
         user = pd.merge(user,department,on=['dept_id'])
         #check if the query set for votes is empty
         if not votes:
             chart = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
         else:
             votes = pd.DataFrame(votes)
-            votes.columns = ['user_id','dept_id','votes']
-            user_dept_votes = pd.merge(user,votes,on=['user_id','dept_id'])
+            votes.columns = ['user_id','votes']
+            user_dept_votes = pd.merge(user,votes,on=['user_id'])
             dept_votes = pd.pivot_table(index=['Department Name'],values='votes',aggfunc=np.mean,data=user_dept_votes).reset_index()
             dept_votes.columns = ['Department Name','Votes']
             dept_votes['Votes'] = dept_votes['Votes'].apply(math.ceil)
@@ -105,7 +108,7 @@ def get_dept_vote(request):
                     color = alt.condition(brush,alt.value('lightgray'),'Department Name:N')
                     ).add_selection(brush)
                 chart_y = chart_x.encode(x = 'sum(Reactions Received):Q')
-                chart_3 = chart_x | chart_y
+                chart_3 = chart_x & chart_y
 
 
 
