@@ -18,8 +18,6 @@ from pypiper.scraper import DataScrape
 from background_task import background
 from background_task.models import Task
 
-utc=pytz.UTC
-
 def convert_timedelta(duration):
     seconds = duration.total_seconds()
     minutes = math.floor(seconds // 60)
@@ -67,7 +65,7 @@ def home(request):
 			# Date Manipulation
 			Date_Posts = []
 			for votes_comment in Comment:
-				Date_Posts.append(convert_timedelta(utc.localize(datetime.datetime.now()) - votes_comment.datetime_voted))
+				Date_Posts.append(convert_timedelta(datetime.datetime.now() - votes_comment.datetime_voted))
 
 		else:
 			return redirect('welcome')
