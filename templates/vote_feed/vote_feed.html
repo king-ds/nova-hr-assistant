@@ -17,10 +17,12 @@
       </div>
   </div>
   <div class="post-container-header-divider">
+  {% if admin %}
     <div class="post-container-search-bar" style="float: right; margin: 15px;">
       <input type="text" id="search_field">
       <button id="searchbtn" onclick="search_user()">Search</button>
     </div>
+  {% endif %}
   </div>
   <div class="post-container-stories">
 
@@ -138,25 +140,25 @@
             $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
                                                  "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
                                                  "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
-                                                 "<section><p style='margin-right: 50px;'><span style='color:red !important;'>(<i class='fas fa-angry'></i> Poor)</span>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:red !important;'>(<i class='fas fa-angry'></i> Poor)</span>&nbsp;&nbsp;"+
                                                  data.comments[i]['comment']+"</p></section>")
           } else if(data.comments[i]['votes'] == 2){
             $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
                                                  "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
                                                  "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
-                                                 "<section><p style='margin-right: 50px;'><span style='color:gray !important;'>(<i class='fas fa-frown-open'></i> Fair)</span>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:gray !important;'>(<i class='fas fa-frown-open'></i> Fair)</span>&nbsp;&nbsp;"+
                                                  data.comments[i]['comment']+"</p></section>")
           } else if(data.comments[i]['votes'] == 3){
             $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
                                                  "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
                                                  "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
-                                                 "<section><p style='margin-right: 50px;'><span style='color:green !important;'>(<i class='fas fa-grin-alt'></i> Good)</span>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:green !important;'>(<i class='fas fa-grin-alt'></i> Good)</span>&nbsp;&nbsp;"+
                                                  data.comments[i]['comment']+"</p></section>")
           } else {
             $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
                                                  "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
                                                  "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
-                                                 "<section><p style='margin-right: 50px;'><span style='color:lightgreen !important;'>(<i class='fas fa-grin-beam-sweat'></i> Excellent)</span>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:lightgreen !important;'>(<i class='fas fa-grin-beam-sweat'></i> Excellent)</span>&nbsp;&nbsp;"+
                                                  data.comments[i]['comment']+"</p></section>")
           }
         }

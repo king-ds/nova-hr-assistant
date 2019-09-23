@@ -57,7 +57,7 @@ def home(request):
 				admin = True
 				Comment = Votes.objects.all().order_by("-id")
 			else:
-				admin = True
+				admin = False
 				Comment = Votes.objects.filter(username=user_instance).order_by("-id")
 
 			User_Instance = User.objects.get(username = request.user)
@@ -74,6 +74,7 @@ def home(request):
 			'Comments': Comment,
 			'User': User_Instance,
 			'Date_Posts': Date_Posts,
+			'admin' : admin,
 		}
 	except ObjectDoesNotExist:
 		return HttpResponse('Please logout the admin account first and reload the page.')
