@@ -6,6 +6,9 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'vote_feed/css/modal.css' %}">
+<link rel="stylesheet" href="{% static 'vote_feed/css/search.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 <div class="post-container-header">
     <div class="post-container-header-title">
       <h2><b>Home</b></h2>
@@ -13,15 +16,15 @@
   </div>
   <div class="post-container-sub-header">
       <div class="post-container-header-sub-title">
-        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at your company</h3>
+        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at Novare Technologies</h3>
       </div>
   </div>
   <div class="post-container-header-divider">
   {% if admin %}
-    <div class="post-container-search-bar" style="float: right; margin: 15px;">
-      <input type="text" id="search_field">
-      <button id="searchbtn" onclick="search_user()">Search</button>
-    </div>
+  <div class="post-container-search-bar" style="float: right; margin: 15px;">
+    <input type="search" id="search_field" class="input" placeholder="Search" required>
+    <i class="fa fa-search" id="search-icon" onclick="search_user()"></i>
+  </div>
   {% endif %}
   </div>
   <div class="post-container-stories">
