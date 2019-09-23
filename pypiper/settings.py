@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'social_django',
     'mathfilters',
     'background_task',
+    'django_altair',
     'workplace_data',
 ]
 
@@ -125,9 +126,9 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
