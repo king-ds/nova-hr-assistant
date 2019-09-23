@@ -92,8 +92,8 @@ $('.refresh_btn').click(function(){
         $.ajax({
         url: "{% url 'refresh_profile' %}",
         success : function(data){
-            if(data.is_given_exist == true || data.is_received_exist == true){
-                console.log(data.is_received_exist)
+            if(data.is_post_update_exist == true){
+                console.log(data.is_post_update_exist)
                 alert('Already updating your profile...')
             }
             console.log('yes')

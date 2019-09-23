@@ -2,6 +2,7 @@ from workplace_data.models import Post
 from ast import literal_eval
 import json
 import facebook
+from datetime import date, datetime, timedelta
 import time
 
 token = {"DQVJ2SVdqcklvRTJfV2pjR3NuS05DVFRhZAmVlczNxMVBqZA1NwdWx0c2NPdDFnVmR0aXpYZAm4ySHBFT1Ywcjcyb25Ia09MZAFJIMWNOSWVaV085SlQ2TEF3UmN3dWQwX1JyNWVCajJxVHdIc2tBNVVFSUk0aS1yWjJZAclNNVjNpTDIzdVJrd3BMNXhfeVJvbVRXb2hfUGJhakgxZAzR1WHN0OEk0TTFHWEJOZA1ZAPYnVvS1VsMnN3NEtnLXVTTTNINlR4LUtYeXZAB"}
@@ -13,7 +14,7 @@ class DataScrape:
         self.email_address = email_address
 
     def get_details(self):
-        employee_detail = graph.request('%s?fields=id,name,email,title,department&limit=9999999999' %self.email_address)
+        employee_detail = graph.request('%s?fields=id,name,email,title,department&limit=100' %self.email_address)
         return employee_detail
 
     def get_profile_picture(self):
@@ -68,7 +69,7 @@ class DataScrape:
 
     def get_reaction_received(self):
         start_time = time.time()
-        print(start_time)
+        # print(start_time)
         reactions_dict = dict.fromkeys(['LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY'], 0)
 
         for i in self.get_post_list():
