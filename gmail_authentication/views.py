@@ -1,3 +1,9 @@
+# Python
+import datetime
+import facebook
+import requests
+import pandas as pd
+
 # Django
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -8,7 +14,12 @@ from django.contrib.auth import logout
 from profile_feed.models import *
 from .models import *
 from background_task import background
+from workplace_data.models import Post
 from pypiper.scraper import DataScrape
+from background_task.models import Task
+
+token = {"DQVJ2SVdqcklvRTJfV2pjR3NuS05DVFRhZAmVlczNxMVBqZA1NwdWx0c2NPdDFnVmR0aXpYZAm4ySHBFT1Ywcjcyb25Ia09MZAFJIMWNOSWVaV085SlQ2TEF3UmN3dWQwX1JyNWVCajJxVHdIc2tBNVVFSUk0aS1yWjJZAclNNVjNpTDIzdVJrd3BMNXhfeVJvbVRXb2hfUGJhakgxZAzR1WHN0OEk0TTFHWEJOZA1ZAPYnVvS1VsMnN3NEtnLXVTTTNINlR4LUtYeXZAB"}
+graph = facebook.GraphAPI(token,version='3.1')
 
 # Background tasks
 @background(schedule=0)
@@ -38,6 +49,130 @@ def pull_profile_picture(email):
 	scrape = DataScrape(email)
 	profile_picture = scrape.get_profile_picture()
 	add_profile_photo = User.objects.filter(email=email).update(profile_picture=profile_picture)
+
+@background(schedule=0)
+def update_post(email):
+	current_date = datetime.date.today() + datetime.timedelta(days=1)
+	post_date_latest = Post.objects.latest('updated_time')
+	week_lag =  current_date - datetime.timedelta(days=7)
+	print(current_date)
+	print(post_date_latest.updated_time.date())
+	print (week_lag)
+	allgroups = list(Post.objects.order_by().values_list('group_id', flat=True).distinct())
+	
+	if current_date > (post_date_latest.updated_time.date() + datetime.timedelta(days=1)):
+		print ("current is larger than latest post date")	
+		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
+		df_post = pd.DataFrame(columns=columns_needed)
+		counter_group = 0
+		counter_post = 0
+		counter_reaction = 0
+
+		for i in allgroups:
+		    pull_post = graph.request(i + '/feed?fields=reactions, updated_time, message&limit=100&since='+ str(post_date_latest.updated_time.date()) + '&until=' + str(current_date))
+		    counter_group += 1
+		    print('[INFO] Pulling the data from group', i)
+
+		    while pull_post['data']:
+		        for post in pull_post['data']:
+		            reaction_dict = dict()
+		            counter_post += 1
+		            ids = post['id'].split('_')
+		            print('[INFO] Post ID: %s' %ids[1])
+		            try: 
+		                for reaction in post['reactions']['data']:
+		                    counter_reaction += 1
+		                    reaction_dict[reaction['id']] = reaction['type']
+		                    print('[INFO] %s has %s this post: %s' %(reaction['id'], reaction['type'], ids[1]))
+
+		            except KeyError as e:
+		                print('[INFO] %s have no reaction' %ids[1])
+
+		            try:
+		                temp_post = pd.Series([ids[0], ids[1], post['message'], post['updated_time'], reaction_dict], index=columns_needed)
+		                df_post = df_post.append(temp_post, ignore_index=True)
+
+		            except KeyError as e:
+		                temp_post = pd.Series([ids[0], ids[1], 'No Message', post['updated_time'], reaction_dict], index=columns_needed)
+		                df_post = df_post.append(temp_post, ignore_index=True)
+		        if 'next' in pull_post['paging'].keys():
+		            pull_post = requests.get(pull_post['paging']['next']).json()
+		            print('[INFO] End of page...')
+		        else:
+		        	break  
+		    print ('[INFO] For Sanity Check; Total Groups: %d, Total Posts: %d, Total Reactions: %d' %(counter_group, counter_post, counter_reaction))
+
+		for index, row in df_post.iterrows():
+			is_post_exist = Post.objects.filter(post_id = row['post_id']).exists()
+			if is_post_exist:
+				pass
+			else:	
+				print(is_post_exist)
+				p = Post(group_id=row['group_id'], post_id=row['post_id'], message=row['message'], updated_time=row['updated_time'], reactions=row['reactions'])
+				p.save()
+		#below is update
+		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
+		df_update = pd.DataFrame(columns=columns_needed)
+		counter_group = 0
+		counter_post = 0
+		counter_reaction = 0
+
+		for i in allgroups:
+		    pull_post = graph.request(i + '/feed?fields=reactions, updated_time, message&limit=100&since='+ str(week_lag) + '&until=' + str(current_date))
+		    counter_group += 1
+		    print('[INFO] Pulling the data from group', i)
+
+		    while pull_post['data']:
+		        for post in pull_post['data']:
+		            reaction_dict = dict()
+		            counter_post += 1
+		            ids = post['id'].split('_')
+		            print('[INFO] Post ID: %s' %ids[1])
+		            try: 
+		                for reaction in post['reactions']['data']:
+		                    counter_reaction += 1
+		                    reaction_dict[reaction['id']] = reaction['type']
+		                    print('[INFO] %s has %s this post: %s' %(reaction['id'], reaction['type'], ids[1]))
+
+		            except KeyError as e:
+		                print('[INFO] %s have no reaction' %ids[1])
+
+		            try:
+		                temp_post = pd.Series([ids[0], ids[1], post['message'], post['updated_time'], reaction_dict], index=columns_needed)
+		                df_update = df_update.append(temp_post, ignore_index=True)
+
+		            except KeyError as e:
+		                temp_post = pd.Series([ids[0], ids[1], 'No Message', post['updated_time'], reaction_dict], index=columns_needed)
+		                df_update = df_update.append(temp_post, ignore_index=True)
+		        if 'next' in pull_post['paging'].keys():
+		            pull_post = requests.get(pull_post['paging']['next']).json()
+		            print('[INFO] End of page...')
+		        else:
+		        	break  
+		    print ('[INFO] For Sanity Check; Total Groups: %d, Total Posts: %d, Total Reactions: %d' %(counter_group, counter_post, counter_reaction))
+		
+		Last_week = Post.objects.filter(updated_time__range=[current_date - datetime.timedelta(days=7), current_date])
+		indexcnt = 0
+		for index, row in df_update.iterrows():
+			for last_row in Last_week:	
+				if (last_row.group_id == row['group_id'] and last_row.post_id == row['post_id']):
+					print ("match")
+					indexcnt += 1
+					print (indexcnt)
+					Post.objects.filter(post_id=row['post_id']).update(message= row['message'], reactions = row['reactions'])
+	
+		is_given_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_given', task_params='[["%s"], {}]' %email).exists()
+		is_received_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_received', task_params='[["%s"], {}]' %email).exists()
+		if not is_given_exist:
+			pull_reactions_given(email)
+
+		if not is_received_exist:
+			pull_reactions_received(email)
+
+	else:
+		print ("Post and reactions already updated")
+		
+
 
 # welcome page
 def welcome_page(request):

@@ -1,3 +1,6 @@
+# Python
+import datetime
+
 # Django
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -8,7 +11,7 @@ from gmail_authentication.models import User
 from background_task.models import Task
 from profile_feed.models import Reaction
 from pypiper.scraper import DataScrape
-from gmail_authentication.views import pull_reactions_given, pull_reactions_received
+from gmail_authentication.views import pull_reactions_given, pull_reactions_received, update_post
 
 @login_required(login_url='welcome_page')
 def profile(request, username):
@@ -51,14 +54,14 @@ def refresh_profile(request):
 	user_instance = User.objects.get(username=request.user)
 	is_given_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_given', task_params='[["%s"], {}]' %user_instance.email).exists()
 	is_received_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_received', task_params='[["%s"], {}]' %user_instance.email).exists()
+	is_post_update_exist = Task.objects.filter(task_name='gmail_authentication.views.update_post', task_params='[["%s"], {}]' %user_instance.email).exists()
 	
-	if not is_given_exist:
-		pull_reactions_given(user_instance.email)
-	if not is_received_exist:
-		pull_reactions_received(user_instance.email)
-	
+	if not is_post_update_exist:
+		update_post(user_instance.email)
+
+
 	data = {
-		'is_given_exist' : is_given_exist,
-		'is_received_exist' : is_received_exist,
+		'is_post_update_exist' : is_post_update_exist,
+		# 'is_received_exist' : is_received_exist,
 	}
 	return JsonResponse(data)

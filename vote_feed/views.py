@@ -25,7 +25,7 @@ def convert_timedelta(duration):
 
 @login_required(login_url='welcome_page')
 def home(request):
-
+	utc = pytz.UTC
 	try:
 		admin_access = ['ricardo.calura', 'christopher.cometa@novare.com.hk']
 
@@ -65,7 +65,7 @@ def home(request):
 			# Date Manipulation
 			Date_Posts = []
 			for votes_comment in Comment:
-				Date_Posts.append(convert_timedelta(datetime.datetime.now() - votes_comment.datetime_voted))
+				Date_Posts.append(convert_timedelta(utc.localize(datetime.datetime.now()) - votes_comment.datetime_voted))
 
 		else:
 			return redirect('welcome')
