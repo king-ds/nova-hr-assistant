@@ -55,13 +55,10 @@ def update_post(email):
 	current_date = datetime.date.today() + datetime.timedelta(days=1)
 	post_date_latest = Post.objects.latest('updated_time')
 	week_lag =  current_date - datetime.timedelta(days=7)
-	print(current_date)
-	print(post_date_latest.updated_time.date())
-	print (week_lag)
 	allgroups = list(Post.objects.order_by().values_list('group_id', flat=True).distinct())
 	
 	if current_date > (post_date_latest.updated_time.date() + datetime.timedelta(days=1)):
-		print ("current is larger than latest post date")	
+		print ("[INFO] Current date : %s is larger than latest Post date %s" %(current_date, post_date_latest.updated_time.date()))	
 		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
 		df_post = pd.DataFrame(columns=columns_needed)
 		counter_group = 0
@@ -156,11 +153,10 @@ def update_post(email):
 		for index, row in df_update.iterrows():
 			for last_row in Last_week:	
 				if (last_row.group_id == row['group_id'] and last_row.post_id == row['post_id']):
-					print ("match")
+					print ("[INFO] Group ID: %s and Post ID: %s are already stored in Database" %(row['group_id'], row['post_id']))
 					indexcnt += 1
-					print (indexcnt)
 					Post.objects.filter(post_id=row['post_id']).update(message= row['message'], reactions = row['reactions'])
-	
+		print ("[INFO] %d posts are matched in the Database" %indexcnt)
 		is_given_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_given', task_params='[["%s"], {}]' %email).exists()
 		is_received_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_received', task_params='[["%s"], {}]' %email).exists()
 		if not is_given_exist:
@@ -170,7 +166,7 @@ def update_post(email):
 			pull_reactions_received(email)
 
 	else:
-		print ("Post and reactions already updated")
+		print ("[INFO] Post and reactions already updated")
 		
 
 
