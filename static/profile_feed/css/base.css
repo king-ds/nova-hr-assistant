@@ -67,8 +67,8 @@ html {
 .post-container-stories {
   flex: 1;
   background-color: whitesmoke;
-  padding-top: 5px;
-  padding-bottom: 5px;  
+  padding-top: 20px;
+  padding-bottom: 15px;  
 }
 
 .post-container-stories-post {
