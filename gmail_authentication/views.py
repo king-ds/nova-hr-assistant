@@ -56,9 +56,9 @@ def update_post(email):
 	post_date_latest = Post.objects.latest('updated_time')
 	week_lag =  current_date - datetime.timedelta(days=7)
 	allgroups = list(Post.objects.order_by().values_list('group_id', flat=True).distinct())
-	
+
 	if current_date > (post_date_latest.updated_time.date() + datetime.timedelta(days=1)):
-		print ("[INFO] Current date : %s is larger than latest Post date %s" %(current_date, post_date_latest.updated_time.date()))	
+		print ("[INFO] Current date : %s is larger than latest Post date %s" %(current_date, post_date_latest.updated_time.date()))
 		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
 		df_post = pd.DataFrame(columns=columns_needed)
 		counter_group = 0
@@ -76,7 +76,7 @@ def update_post(email):
 		            counter_post += 1
 		            ids = post['id'].split('_')
 		            print('[INFO] Post ID: %s' %ids[1])
-		            try: 
+		            try:
 		                for reaction in post['reactions']['data']:
 		                    counter_reaction += 1
 		                    reaction_dict[reaction['id']] = reaction['type']
@@ -96,14 +96,14 @@ def update_post(email):
 		            pull_post = requests.get(pull_post['paging']['next']).json()
 		            print('[INFO] End of page...')
 		        else:
-		        	break  
+		        	break
 		    print ('[INFO] For Sanity Check; Total Groups: %d, Total Posts: %d, Total Reactions: %d' %(counter_group, counter_post, counter_reaction))
 
 		for index, row in df_post.iterrows():
 			is_post_exist = Post.objects.filter(post_id = row['post_id']).exists()
 			if is_post_exist:
 				pass
-			else:	
+			else:
 				print(is_post_exist)
 				p = Post(group_id=row['group_id'], post_id=row['post_id'], message=row['message'], updated_time=row['updated_time'], reactions=row['reactions'])
 				p.save()
@@ -125,7 +125,7 @@ def update_post(email):
 		            counter_post += 1
 		            ids = post['id'].split('_')
 		            print('[INFO] Post ID: %s' %ids[1])
-		            try: 
+		            try:
 		                for reaction in post['reactions']['data']:
 		                    counter_reaction += 1
 		                    reaction_dict[reaction['id']] = reaction['type']
@@ -145,13 +145,13 @@ def update_post(email):
 		            pull_post = requests.get(pull_post['paging']['next']).json()
 		            print('[INFO] End of page...')
 		        else:
-		        	break  
+		        	break
 		    print ('[INFO] For Sanity Check; Total Groups: %d, Total Posts: %d, Total Reactions: %d' %(counter_group, counter_post, counter_reaction))
-		
+
 		Last_week = Post.objects.filter(updated_time__range=[current_date - datetime.timedelta(days=7), current_date])
 		indexcnt = 0
 		for index, row in df_update.iterrows():
-			for last_row in Last_week:	
+			for last_row in Last_week:
 				if (last_row.group_id == row['group_id'] and last_row.post_id == row['post_id']):
 					print ("[INFO] Group ID: %s and Post ID: %s are already stored in Database" %(row['group_id'], row['post_id']))
 					indexcnt += 1
@@ -167,7 +167,7 @@ def update_post(email):
 
 	else:
 		print ("[INFO] Post and reactions already updated")
-		
+
 
 
 # welcome page
@@ -207,7 +207,7 @@ def configure_account(request):
 
 		# Make a reaction object for new user
 		user_instance = User.objects.get(username=request.user)
-		
+
 		for i in range(0,6):
 			if i == 0:
 				new_like_object = Reaction(username=user_instance, reaction_type='LIKE')

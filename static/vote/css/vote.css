@@ -13,6 +13,9 @@ h3 {
 	margin: 0 auto;
 }
 
+
+
+
 #line{
     height: 5px;
     width: 250px;
@@ -79,14 +82,14 @@ h3 {
 }
 
 .form-group > textarea {
-    width: 95%;
-    border: none;
+position: inherit;
+    width: 90%;
+    border: black;
     font-size: 20px;
-    border-bottom: 1px solid black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-group > button { 
+.form-group > button {
     margin-top: 20px;
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
@@ -103,6 +106,7 @@ h3 {
     background-color: #006298;
     outline:none;
     border: none;
+    position: inherit;
 }
 
 .form-group > button:hover{

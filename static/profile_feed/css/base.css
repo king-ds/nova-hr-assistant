@@ -140,6 +140,12 @@ html {
 
 }
 
+.rotated-image {
+  -webkit-transform: rotate(50deg);
+          transform: rotate(360deg);
+          transition: 2s;
+}
+
 .right-side-bar-container-posts-footer {
   background-color: #54c4ff;
   color: white;
