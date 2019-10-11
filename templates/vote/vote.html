@@ -20,11 +20,12 @@
 </div>
 </div>
 
+
 <form id="post-form" method="POST">
   {% csrf_token %}
   <div class="form-group">
-        <textarea class="form-control" rows="3" id="post" name="post" placeholder="Write a post..." required></textarea>
-        <button id="submit_btn" type="submit" class="btn btn-primary">Post</button>
+        <textarea class="form-control" rows="3" id="post" name="post" placeholder="Do you have any feedback to HR?" ></textarea>
+        <button id="submit_btn" type="submit" class="btn btn-primary">Send</button>
       </div>
   </form>
 
