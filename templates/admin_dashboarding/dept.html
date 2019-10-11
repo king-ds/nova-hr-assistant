@@ -1,0 +1,23 @@
+{% extends 'admin_dashboarding/base.html' %}
+{% block title %}PyPiper | Email{% endblock %}
+{% load static %}
+{% block content %}
+
+
+
+
+<h1> Add a new Department </h1>
+
+
+<br>
+<p>
+<form method="POST">
+{% csrf_token %}
+<input type="text" name="department">
+
+<button type="submit">Submit</button>
+</form>
+</p>
+
+
+{% endblock %}

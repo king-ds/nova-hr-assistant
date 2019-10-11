@@ -23,10 +23,11 @@ class User(models.Model):
     total_votes = models.IntegerField(default=0)
     prediction = models.BooleanField(default=True)
     selected_vote = models.BooleanField(default=False)
+    staff_status = models.BooleanField(default=False)
 
     def add_total_votes(self, vote):
         self.total_votes += vote
         self.save()
-    
+
     def __str__(self):
         return self.username
