@@ -11,7 +11,6 @@ body {
     background-attachment: fixed;
     background-size: contain;
     background-position: 100% 0%;
-    overflow: hidden;
 }
 
 ul {
