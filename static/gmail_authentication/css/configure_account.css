@@ -154,7 +154,6 @@ fieldset {
 }
 
 .page-outer {
-    height: 1000vh;
     /* background-image: url('../images/grey_sidegear.png') !important; */
     background-repeat: no-repeat;
     background-attachment: fixed;
