@@ -59,6 +59,7 @@ def update_post(email):
 
 	if current_date > post_date_latest.updated_time.date():
 		print ("[INFO] Current date : %s is larger than latest Post date %s" %(current_date, post_date_latest.updated_time.date()))
+
 		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
 		df_post = pd.DataFrame(columns=columns_needed)
 		counter_group = 0

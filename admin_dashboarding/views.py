@@ -67,10 +67,10 @@ def get_dept_vote(request):
         department = pd.DataFrame(department)
         
         try:
-            department.columns = ['dept_id','Department Name']
+            department.columns = ['dept_id','department_name']
             user = pd.merge(user,department,on=['dept_id'])
         except:
-            department.columns = ['Department Name', 'dept_id']
+            department.columns = ['department_name', 'dept_id']
             user = pd.merge(user,department,on=['dept_id'])
 
         #check if the query set for votes is empty
@@ -80,8 +80,8 @@ def get_dept_vote(request):
             votes = pd.DataFrame(votes)
             votes.columns = ['user_id','votes']
             user_dept_votes = pd.merge(user,votes,on=['user_id'])
-            dept_votes = pd.pivot_table(index=['Department Name'],values='votes',aggfunc=np.mean,data=user_dept_votes).reset_index()
-            dept_votes.columns = ['Department Name','Votes']
+            dept_votes = pd.pivot_table(index=['department_name'],values='votes',aggfunc=np.mean,data=user_dept_votes).reset_index()
+            dept_votes.columns = ['department_name','Votes']
             dept_votes['Votes'] = dept_votes['Votes'].apply(math.ceil)
 
 
@@ -90,7 +90,7 @@ def get_dept_vote(request):
             chart =  alt.Chart(dept_votes).mark_bar().encode(
             x=alt.X('Votes:Q',axis=alt.Axis(values=[1,2,3,4])),
             color= alt.Color('Votes:O', scale=alt.Scale(domain=[1,2,3,4],range=['red','red','orange','lightgreen'])),
-            row='Department Name:N'
+            row='department_name:N'
             ).properties(
                 height = 50,
                 width = 800
@@ -110,7 +110,7 @@ def get_dept_vote(request):
                 chart_x = alt.Chart(reactions).mark_bar().encode(
                     y = 'Reaction Type:N',
                     x = 'sum(Reactions Given):Q',
-                    color = alt.condition(brush,alt.value('lightgray'),'Department Name:N')
+                    color = alt.condition(brush,alt.value('lightgray'),'department_name:N')
                     ).add_selection(brush)
                 chart_y = chart_x.encode(x = 'sum(Reactions Received):Q')
                 chart_3 = chart_x & chart_y
