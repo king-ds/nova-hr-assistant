@@ -27,7 +27,7 @@ SECRET_KEY = 'j3(dvek=)q787c0^u6y19r!mjc-=z_8iud-=vn0lshum%=2-p1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -92,8 +92,12 @@ WSGI_APPLICATION = 'pypiper.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pypiperdb',
+        'USER': 'admin',
+        'PASSWORD' : '7L4EWx1Ky67QXb9uCFD3',
+        'HOST': 'pypiper.cqkc0aajshho.ap-southeast-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -145,8 +149,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '562878391381-45jamg5b8953done8nicess42dokcn93.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'm3Y5N5KDlkqBsPd0rfL2C-s2'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '57991292374-p6ed8akdq6qqk0vdd8rmqo5kbrhl5hqj.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'nydmTchTPQR5VqhCAhdkeio_'
 
 LOGIN_URL = '/auth/complete/google-oauth2/'
 
