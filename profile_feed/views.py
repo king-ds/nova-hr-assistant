@@ -9,6 +9,7 @@ from django.http import JsonResponse
 # Application
 from gmail_authentication.models import User
 from background_task.models import Task
+from background_task.models_completed import CompletedTask
 from profile_feed.models import Reaction
 from pypiper.scraper import DataScrape
 from gmail_authentication.views import pull_reactions_given, pull_reactions_received, update_post
@@ -18,6 +19,15 @@ def profile(request, username):
 	# Get user instance
 	user_instance = User.objects.get(username=request.user)
 	scrape = DataScrape(user_instance.email)
+	is_given_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_given', task_params='[["%s"], {}]' %user_instance.email).exists()
+	is_received_exist = Task.objects.filter(task_name='gmail_authentication.views.pull_reactions_received', task_params='[["%s"], {}]' %user_instance.email).exists()
+	is_post_update_exist = Task.objects.filter(task_name='gmail_authentication.views.update_post', task_params='[["%s"], {}]' %user_instance.email).exists()
+	is_post_update_completed = CompletedTask.objects.filter(task_name='gmail_authentication.views.update_post', task_params='[["%s"], {}]' %user_instance.email).exists()
+
+	if not is_post_update_exist:
+		if not is_post_update_completed:
+			update_post(user_instance.email, repeat=Task.HOURLY)
+
 	profile_picture = scrape.get_profile_picture()
 	title = scrape.get_title()
 	department = scrape.get_department()
