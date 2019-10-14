@@ -57,7 +57,7 @@ def update_post(email):
 	week_lag =  current_date - datetime.timedelta(days=7)
 	allgroups = list(Post.objects.order_by().values_list('group_id', flat=True).distinct())
 
-	if current_date > (post_date_latest.updated_time.date() + datetime.timedelta(days=1)):
+	if current_date > post_date_latest.updated_time.date():
 		print ("[INFO] Current date : %s is larger than latest Post date %s" %(current_date, post_date_latest.updated_time.date()))
 		columns_needed = ['group_id', 'post_id', 'message', 'updated_time', 'reactions']
 		df_post = pd.DataFrame(columns=columns_needed)

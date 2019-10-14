@@ -65,11 +65,13 @@ def get_dept_vote(request):
         user = pd.DataFrame(user)
         user.columns = ['user_id','dept_id']
         department = pd.DataFrame(department)
-
-        department.columns = ['Department Name', 'dept_id']
-        print(user)
-        print(department)
-        user = pd.merge(user,department,on=['dept_id'])
+        
+        try:
+            department.columns = ['dept_id','Department Name']
+            user = pd.merge(user,department,on=['dept_id'])
+        except:
+            department.columns = ['Department Name', 'dept_id']
+            user = pd.merge(user,department,on=['dept_id'])
 
         #check if the query set for votes is empty
         if not votes:
