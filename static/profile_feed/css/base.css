@@ -39,7 +39,7 @@ html {
 }
 .post-container-header {
   padding: 10px;
-  color: black;
+  color: #0b618f;
   background-color:white;
   border-bottom: 0.5px solid rgb(230, 236, 240);
 }
@@ -55,6 +55,7 @@ html {
 
 .post-container-header-sub-title {
   margin: 30px;
+  color: #0b618f;
 }
 
 .post-container-header-sub-title > h3 {
