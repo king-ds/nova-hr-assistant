@@ -93,12 +93,12 @@ html {
 .left-side-bar ul {
   text-align: center;
   font-family: 'Archivo Black', sans-serif;
-  font-size: 25px;
+  font-size: 20px;
   margin-top: 50px;
 }
 
 .left-side-bar li {
-  padding-bottom:50px;
+  padding-bottom:20px;
 }
 
 .left-side-bar li a{
