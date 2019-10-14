@@ -26,7 +26,7 @@ def profile(request, username):
 
 	if not is_post_update_exist:
 		if not is_post_update_completed:
-			update_post(user_instance.email, repeat=Task.HOURLY)
+			update_post(user_instance.email, repeat=Task.WEEKLY)
 
 	profile_picture = scrape.get_profile_picture()
 	title = scrape.get_title()

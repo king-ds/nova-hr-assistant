@@ -8,20 +8,7 @@
     height: calc(100vh - 164px); /*50+60*/
     background-color: white;
 }
-.user-profile-refresh{
-    float: right;
-    margin: 5px;
-    font-size: 30px;
-}
 
-.user-profile-refresh i {
-    outline-color: None;
-}
-
-.user-profile-refresh:hover{
-    color: #54c4ff;
-    cursor: pointer;
-}
 .user-profile-photo{
     text-align: center;
     padding-top: 50px;
@@ -35,7 +22,7 @@
     height: 200px;
     border-radius: 100%;
     padding: 5px;
-    border: 1px solid black;
+    border: 5px solid #0b618f;
 }
 
 .user-profile-name {
