@@ -18,16 +18,17 @@
         <div class="left-side-bar-logo">
             <img id="novare_logo" src="{% static 'vote_feed/images/Nova.png' %}" style="width:176px; cursor: pointer;" onclick="refresh()">
         </div>
-      <div class="left-side-bar-container">
-        <div class="left-side-bar-container-list">
+        
+      <!-- <div class="left-side-bar-container"> -->
+        <!-- <div class="left-side-bar-container-list"> -->
         <ul>
           <li><a href="{% url 'home' %}"><span class="fa fa-home" style="color: #ecc236"></span>&nbsp;&nbsp;Home</a> </li>
           <li><a href="{% url 'profile' username=request.user %}"><span class="fa fa-user-o" style="color: #ecc236;"></span>&nbsp;&nbsp;Profile</a></li>
           <li><a href="{% url 'about' %}"><span class="fa fa-question-circle-o" style="color: #ecc236"></span>&nbsp;&nbsp;About</a></li>
           <li><a href="{% url 'logout_user' %}"><span class="fa fa-sign-out" style="color: #ecc236"></span>&nbsp;&nbsp;Logout</a></li>
         </ul>
-        </div>
-      </div>
+        <!-- </div> -->
+      <!-- </div> -->
     </div>
 
     <!-- Middle Split -->

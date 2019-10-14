@@ -11,7 +11,6 @@
 
 body,
 html {
-  /* overflow: auto; */
     height: 100%;
     padding: 0;
     margin: 0;
@@ -24,11 +23,9 @@ html {
 
 .left-side-bar {
   flex: 1;
-  /* height: 100%; */
   width: 100%;
   color: white;
   background-color: #0b618f;
-  /* border-right: 0.5px solid rgb(230, 236, 240); */
 }
 
 .post-container {
@@ -89,34 +86,32 @@ html {
 }
 
 .left-side-bar-logo{
-  /* padding: 30px; */
   background-color: white;
   text-align: center;
-  /* -webkit-box-shadow:inset 0px 0px 0px 5px whitesmoke;
-  -moz-box-shadow:inset 0px 0px 0px 5px whitesmoke;
-  box-shadow:inset 0px 0px 0px 5px whitesmoke; */
 }
 
-.left-side-bar-container-list {
-  position: fixed;
+.left-side-bar ul {
+  text-align: center;
   font-family: 'Archivo Black', sans-serif;
   font-size: 25px;
   margin-top: 50px;
 }
-.left-side-bar-container-list a{
+
+.left-side-bar li {
+  padding-bottom:50px;
+}
+
+.left-side-bar li a{
   color:white;
   transition:0.5s;
 }
-.left-side-bar-container-list li{
-  padding-bottom:50px;
-}
-.left-side-bar-container-list a:hover{
-  background-color:#9b9b9e !important;
+
+.left-side-bar a:hover{
+  background-color:white !important;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 20px;
-  color:#62b5e5;
-  /* color: red; */
+  color:#0b618f;
 }
 
 .right-side-bar-container {
