@@ -66,7 +66,7 @@ def get_dept_vote(request):
         user.columns = ['user_id','dept_id']
         department = pd.DataFrame(department)
 
-        department.columns = ['dept_id','Department Name']
+        department.columns = ['Department Name', 'dept_id']
         print(user)
         print(department)
         user = pd.merge(user,department,on=['dept_id'])
