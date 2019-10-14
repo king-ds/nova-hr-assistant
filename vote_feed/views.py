@@ -27,7 +27,6 @@ def convert_timedelta(duration):
 def home(request):
 	utc = pytz.UTC
 	try:
-		admin_access = ['ricardo.calura', 'christopher.cometa@novare.com.hk']
 
 		# If user is authenticated
 		if request.user.is_authenticated:
@@ -52,15 +51,15 @@ def home(request):
 			# Get the current user session
 			user_instance = User.objects.get(username=request.user)
 
-			# Check if recently logged in user have admin access
-			if str(request.user) in admin_access:
+			# If admin
+			if user_instance.staff_status:
 				admin = True
 				Comment = Votes.objects.all().order_by("-id")
 			else:
 				admin = False
 				Comment = Votes.objects.filter(username=user_instance).order_by("-id")
 
-			User_Instance = User.objects.get(username = request.user)
+			# User_Instance = User.objects.get(username = request.user)
 
 			# Date Manipulation
 			Date_Posts = []
@@ -72,7 +71,7 @@ def home(request):
 
 		context = {
 			'Comments': Comment,
-			'User': User_Instance,
+			# 'User': User_Instance,
 			'Date_Posts': Date_Posts,
 			'admin' : admin,
 		}

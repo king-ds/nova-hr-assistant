@@ -13,6 +13,7 @@ pd.set_option('display.max_columns', None)
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db.models import Count, Sum, Avg
+from django.http import HttpResponse
 
 # Application
 from gmail_authentication.models import *
@@ -64,9 +65,14 @@ def get_dept_vote(request):
         user = pd.DataFrame(user)
         user.columns = ['user_id','dept_id']
         department = pd.DataFrame(department)
+        
+        try:
+            department.columns = ['dept_id','Department Name']
+            user = pd.merge(user,department,on=['dept_id'])
+        except:
+            department.columns = ['Department Name', 'dept_id']
+            user = pd.merge(user,department,on=['dept_id'])
 
-        department.columns = ['dept_id','department_name']
-        user = pd.merge(user,department,on=['dept_id'])
         #check if the query set for votes is empty
         if not votes:
             chart = alt.Chart(pd.DataFrame(),title='No Users Yet').mark_bar()
@@ -227,3 +233,56 @@ def home(request):
         return render(request, 'admin_dashboarding/dashboard.html', {'Users' : Users, 'Departments' : Departments, 'Comments': Comments})
     else:
         return redirect('login')
+
+
+
+
+
+def staff(request):
+    if request.method == 'POST':
+        search_id = request.POST.get('textfield', None)
+        print(search_id)
+        try:
+            user = User.objects.get(email = search_id)
+            #do something with user
+            user.staff_status = True  # change field
+            user.save()                   # this will update only
+            print(User.objects.all().values('staff_status'))
+            return render(request,'admin_dashboarding/success.html')
+        except User.DoesNotExist:
+            return HttpResponse("no such user")
+    else:
+        return render(request, 'admin_dashboarding/staff.html')
+
+
+
+
+def dept(request):
+    if request.method == 'POST':
+        department = request.POST.get('department',None)
+        print(department)
+        new_department = Department()
+        new_department.department_name = department
+        new_department.datetime_created = datetime.now()
+        new_department.num_of_employees = 0
+        new_department.save()
+        return render(request,'admin_dashboarding/success.html')
+    else:
+        return render(request,'admin_dashboarding/dept.html')
+
+
+
+
+
+
+# class Department(models.Model):
+#     department_name = models.CharField(max_length=100)
+#     datetime_created = models.DateTimeField(auto_now_add=True)
+#     num_of_employees = models.IntegerField()
+#
+#     def add_employee(self):
+#         self.num_of_employees += 1
+#         self.save()
+#
+#     def __str__(self):
+#         return self.department_name

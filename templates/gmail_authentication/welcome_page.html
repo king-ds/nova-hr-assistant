@@ -21,250 +21,268 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <style>
-  
-    @keyframes slide {
-
-    0%{
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
+    body {
+        font-family: 'Raleway', sans-serif;
+        background-color: #e7e7e7;
+        margin:0 auto;
     }
 
-    100%{
-        transform: translateY(-300px) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
-    }
-    }
-    .area{
-    background: #005887;  
-    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
-    width: 100%;
-    height:100%;
+    .wrapper {
+        /* width: 100%; */
+        width:100vw;
+        height: 100vh;
+        position: relative;
+        margin: 0 auto;
+        box-shadow: 2px 18px 70px 0px #9D9D9D;
+        /* overflow: hidden; */
     }
 
-.circles{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.circles li{
-    position: absolute;
-    display: block;
-    list-style: none;
-    width: 20px;
-    height: 20px;
-    background: rgba(83, 128, 153);
-    animation: animate 25s linear infinite;
-    bottom: -150px;
-    
-}
-
-.circles li:nth-child(1){
-    left: 25%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 0s;
-}
-
-
-.circles li:nth-child(2){
-    left: 10%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 2s;
-    animation-duration: 12s;
-}
-
-.circles li:nth-child(3){
-    left: 70%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 4s;
-}
-
-.circles li:nth-child(4){
-    left: 40%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 0s;
-    animation-duration: 18s;
-}
-
-.circles li:nth-child(5){
-    left: 65%;
-    width: 20px;
-    height: 20px;
-    animation-delay: 0s;
-}
-
-.circles li:nth-child(6){
-    left: 75%;
-    width: 110px;
-    height: 110px;
-    animation-delay: 3s;
-}
-
-.circles li:nth-child(7){
-    left: 35%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 7s;
-}
-
-.circles li:nth-child(8){
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    animation-delay: 15s;
-    animation-duration: 45s;
-}
-
-.circles li:nth-child(9){
-    left: 20%;
-    width: 15px;
-    height: 15px;
-    animation-delay: 2s;
-    animation-duration: 35s;
-}
-
-.circles li:nth-child(10){
-    left: 85%;
-    width: 150px;
-    height: 150px;
-    animation-delay: 0s;
-    animation-duration: 11s;
-}
-
-
-
-@keyframes animate {
-
-    0%{
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        border-radius: 0;
+    .login-text {
+        width: 100%;
+        height: 450px;
+        background: linear-gradient(to left, #4e54c8, #8f94fb);
+        position: absolute;
+        top: -300px;
+        box-sizing: border-box;
+        padding: 6%;
+        transition: all 0.5s ease-in-out;
+        z-index: 11;
     }
 
-    100%{
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-        border-radius: 50%;
-    }
+.text {
+  margin-left: 20px;
+  color: #fff;
+  display: none;
+  transition: all 0.5s ease-in-out;
+  transition-delay: 0.3s;
+  z-index:10;
+  width:100%;
+  height:100%;
+}
+.text a, .text a:visited {
+  font-size: 36px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+}
+.text hr {
+  width: 100%;
+  float: left;
+  background-color: #fff;
+  font-size: 16px;
+}
+.text input {
+  margin-top: 30px;
+  height: 40px;
+  width: 300px;
+  border-radius: 2px;
+  border: none;
+  background-color: #444;
+  opacity: 0.6;
+  outline: none;
+  color: #fff;
+  padding-left: 10px;
+}
+.text input[type=text] {
+  margin-top: 60px;
+}
+.text button {
+  margin-top: 60px;
+  height: 40px;
+  width: 140px;
+  outline: none;
+}
+.text .login-btn {
+  background: #fff;
+  border: none;
+  border-radius: 2px;
+  color: #696a86;
+}
+.text .signup-btn {
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  color: #fff;
+}
 
+.cta {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #696a86;
+  border: 2px solid #fff;
+  position: absolute;
+  bottom: -6%;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.call-text {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 10%;
+  box-sizing: border-box;
+  text-align: center;
+  -webkit-animation: fadein 3.5s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 3.5s; /* Firefox < 16 */
+    -ms-animation: fadein 3.5s; /* Internet Explorer */
+    animation: fadein 3.5s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.call-text h1 {
+  font-size: 3vw;
+  margin-top: 25vh;
+  color: #696a86;
+}
+.call-text h1 span {
+  color: #333;
+  font-weight: bolder;
+}
+.call-text button {
+  height: 40px;
+  width: 180px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(to left, #4e54c8, #8f94fb);
+  color: #fff;
+  font-weight: bolder;
+  margin-top: 30px;
+  cursor: pointer;
+  outline: none;
+}
+
+.show-hide {
+  display: block;
+}
+
+.expand {
+  transform: translateY(300px);
+}
+#special{
+    width:40%;
+    font-size: 15px;
+    background:#fff;
+    color:#4e54c8;
+}
+.preface {
+    font-size:20px;
+}
+
+.google-wrapper {
+  /* background-color: white; */
+  background-image: linear-gradient(to right, #4e54c8 50%, white 50%);
+  background-size: 200% 100%;
+  background-position:right bottom;
+  transition:all 2s ease;
+  width:30vw;
+  color:#4e54c8;
+  text-align: center;
+  height:50px;
+  box-shadow: 1px 3px 1px rgb(68,68,68);
+}
+.google-wrapper:hover {
+  background-position:left bottom;
+  color:white;
+}
+.fa {
+  font-size: 30px;
+  width: 50px;
+  padding:12px;
+  height:50px;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+  float:left;
+}
+
+.fa-google {
+  background: #4e54c8;
+  color: white;
+}
+.inner-google {
+  font-size:70%;
+  padding: 7px;
+}
+@media screen and (max-width: 800px) {
+  .inner-google {
+ display: none;
+  }
+  .google-wrapper {
+   width:50px;
+  }
+  .fa:hover {
+  color:rgb(197, 0, 0);
+  }
 }
     </style>
 </head>
 <body>
-    <!-- Left Side -->
-    <div class="split left">
-        <div class="centered">
-            <div class="welcome-container">
-                <!-- Header -->
-                <div class="welcome-container-header">
-                    Engage with your Coworkers! Join the Fun.
-                </div>
-                <!-- End of Header -->
-
-                <!-- Subheader -->
-                <div class="welcome-container-subheader">
-                    We have bunch of features, including ...
-                </div>
-                <!-- End of Subheader -->
-
-                <!-- Items -->
-                <!-- Item # 1 -->
-                <div class="welcome-container-item">
-                    <span class="glyphicon glyphicon-bullhorn"></span>
-                    <!-- Title and Text 1 -->
-                    <div>
-                        <div class="welcome-container-item-title">
-                            Vote
-                        </div>
-                        <div class="welcome-container-item-text">
-                            You can evaluate your hapiness level.
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Item # 1 -->
-
-                <!-- Item # 2 -->
-                <div class="welcome-container-item">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    <!-- Title and Text 2 -->
-                    <div>
-                        <div class="welcome-container-item-title">
-                            Post
-                        </div>
-                        <div class="welcome-container-item-text">
-                            Share your thoughts with your coworkers.
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Item # 2 -->
-
-                <!-- Item # 3 -->
-                <div class="welcome-container-item">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
-                    <!-- Title and Text 3 -->
-                    <div>
-                        <div class="welcome-container-item-title">
-                            Like
-                        </div>
-                        <div class="welcome-container-item-text">
-                          Like your coworkers' posts.
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Items -->
-            </div>
+    <div class="wrapper">
+        <div class="login-text" id="logintxt">     
+          <div class="text" id="txt"> 
+            <a href="#">You write, we listen</a>
+            <hr>
+            <br><br>
+            <p class="preface"> Voice out your HR feedback and we'll take action</p><br>
+             <!-- <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn" id="special"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>     -->
+              <a href="{% url 'social:begin' 'google-oauth2' %}">
+             <div class="google-wrapper">
+              <span class="fa fa-google"> </span>
+              <span class="inner-google">Sign in with google</span>
+             </div>
+            </a>
+             <button class="signup-btn">Take me back</button>
+          </div>
         </div>
-    </div>
-    <!-- End of Left Side -->
-
-    <!-- Right side -->
-    <div class="split right" style="background-color:#005887; overflow: hidden !important;">
-            <div class="area">
-                    <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                     </ul>
-            </div>
-        <!-- Fotter -->
-        <div class="landing-page-footer">
-
-            <p>© 2019 PyPiper</p>
+        
+        <div class="call-text">
+          <h1>Hi! I'm <span>Nova</span>, your personal HR Assistant.</h1>
+          <button class="ctaa">How can I help you?</button>
         </div>
+      </div>
+      <script>
+            var cta = document.querySelector(".ctaa");
+            cta.addEventListener('click', function(e){
+                var text = document.getElementById("txt");
+                var loginText = document.getElementById("logintxt");
+                text.classList.toggle('show-hide');
+                loginText.classList.toggle('expand');
+            })
 
-        <div class="centered">
-            <div class="sign-in-container">
-                <div class="sign-in-container-logo">
-                    <img src="{% static 'gmail_authentication/images/novare_logo.png' %}" class="sign-container-logo-pypiper">
-                </div>
-                <h3 class="sign-in-container-header">Hi I'm Nova, your HR assistant!</h3>
-                <div class="sign-in-container-sign-in-form">
-                    <h2 class="sign-in-container-sign-in-form-join-subheader">How may I help you today?</h2>
-                    <div class="sign-in-container-sign-in-form-button">
-                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End of Left Side -->
-
-
+            var cta2 = document.querySelector(".signup-btn");
+            cta2.addEventListener('click', function(e){
+                var text = document.getElementById("txt");
+                var loginText = document.getElementById("logintxt");
+                text.classList.toggle('show-hide');
+                loginText.classList.toggle('expand');
+            })
+        </script>
 </body>
 </html>
