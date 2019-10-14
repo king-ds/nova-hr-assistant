@@ -2,36 +2,52 @@
 {% block title %}PyPiper | About{% endblock %}
 {% block content %}
 {% load staticfiles %}
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
-    <style>
-    .soul{
-        width:100%;
-        margin:0 auto;
-        height:10%;
-        border-bottom: 2px solid black;
-        font-family: 'Raleway', sans-serif;
-        font-weight: bold;
-    }
-    h1 {
-    font-weight: 200;
-    }
-    h1 { font-size: 3.0em; }
-    h1 > span {
-        color:dodgerblue;
-    }
-    .blog{
-        width:100%;
-        height: 75%;
-    }
-    .headart{
-        font-weight: bold !important;
-        font-size: 150% !important;
-        color:dodgerblue;
-    }
-    </style>
-    <script>
-    var TxtRotate = function(el, toRotate, period) {
+<link rel="stylesheet" href="{% static 'vote_feed/css/modal.css' %}">
+<link rel="stylesheet" href="{% static 'vote_feed/css/search.css' %}">
+<link rel="stylesheet" href="{% static 'profile_feed/css/about.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<div class="post-container-header">
+    <div class="post-container-header-title">
+      <h2><b>About</b></h2>
+    </div>
+  </div>
+  <div class="post-container-sub-header">
+      <div class="post-container-header-sub-title">
+        <h3><img src="{% static 'vote_feed/images/novare_logo.png' %}" style="width: 20px; height:20px; float: left;">Who We Are</h3>
+      </div>
+  </div>
+  <div class="post-container-header-divider"></div>
+  <div class="post-container-stories" style="background-color:white">
+    <div class="soul"> 
+      <h1 style="margin-left:50px;">We are Nova
+        <span class="txt-rotate" data-period="1000" data-rotate='["You Write,", "We Listen." ]'></span>
+      </h1>
+    </div>
+  <br>
+
+<article class="blog">
+<div style="width:100%;">
+    <div style="margin:0 auto; width:90%; border-bottom:2px dashed black; ">
+        <p style="font-size:100%; text-align: justify; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <span class="headart"> &emsp; DATA </span> is the driving force of many businesses today. It allows businesses
+        to be more competitive in a sense that their business strategies and decisions revolves around
+        what their data tells them. Data can be gathered anywhere, for example, social media, IoT devices, GPS and the like.
+        Gathered data can then be used for data science and analytics, which unlocks a company's capabilities of acting
+        proactively rather than reactively. In this project, the goal is to gather employee happiness and engagement by using <b>Nova</b>, with the goal of predicting employee churn.
+        </p>
+      
+    </div>
+    <div style="margin:0 auto; width:90%;">
+            <p style="font-size:100%; text-align: justify; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <span class="headart" style="color:indianred;"> &emsp; Nova </span> is a platform where you can express your feelings toward your work environment. You can also create/read anonymous post among your colleages. Share the link now!
+            </p>
+        </div>
+</div>
+</article>
+</div>
+<script>
+var TxtRotate = function(el, toRotate, period) {
   this.toRotate = toRotate;
   this.el = el;
   this.loopNum = 0;
@@ -42,39 +58,34 @@
 };
 
 TxtRotate.prototype.tick = function() {
-  //Don't use modulo, it causes the loop. If there is no full text, you are out of the loop and you don't want to do anything.
-  var fullTxt = this.toRotate[this.loopNum];
-  if(fullTxt) {
-    if (this.isDeleting) {
-      this.txt = fullTxt.substring(0, this.txt.length - 1);
-    } else {
-      this.txt = fullTxt.substring(0, this.txt.length + 1);
-    }
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
 
-    this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
-
-    var that = this;
-    var delta = 300 - Math.random() * 100;
-
-    if (this.isDeleting) { delta /= 2; }
-
-    if (!this.isDeleting && this.txt === fullTxt) {
-      // If you are on the last item of the toRotate array, break the loop before deletion.
-      if(this.loopNum >= this.toRotate.length-1) {
-        return;
-      }
-      delta = this.period;
-      this.isDeleting = true;
-    } else if (this.isDeleting && this.txt === '') {
-      this.isDeleting = false;
-      this.loopNum++;
-      delta = 500;
-    }
-
-    setTimeout(function() {
-      that.tick();
-    }, delta);
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
   }
+
+  this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+  var that = this;
+  var delta = 300 - Math.random() * 100;
+
+  if (this.isDeleting) { delta /= 2; }
+
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false;
+   this.loopNum++;
+    delta = 500;
+  }
+
+  setTimeout(function() {
+    that.tick();
+  }, delta);
 };
 
 window.onload = function() {
@@ -89,37 +100,8 @@ window.onload = function() {
   // INJECT CSS
   var css = document.createElement("style");
   css.type = "text/css";
-  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.01em solid #666; }";
+  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #fff }";
   document.body.appendChild(css);
 };
-    </script>
-</head>
-<header class="soul"> 
-        <h1>About our
-                <span
-                   class="txt-rotate"
-                   data-period="2000"
-                   data-rotate='["project.", "vision.", "solution, Pypiper." ]'></span>
-        </h1>
-</header> <br>
-<article class="blog">
-<div style="width:100%;">
-    <div style="margin:0 auto; width:90%; border-bottom:2px dashed black; ">
-        <p style="font-size:1.5vw; font-weight:lighter !important; text-align: justify;">
-        <span class="headart"> &emsp; DATA </span> is the driving force of many businesses today. It allows businesses
-        to be more competitive in a sense that their business strategies and decisions revolves around
-        what their data tells them. Data can be gathered anywhere, for example, social media, IoT devices, GPS and the like.
-        Gathered data can then be used for data science and analytics, which unlocks a company's capabilities of acting
-        proactively rather than reactively. In this project, the goal is to gather employee happiness and engagement by using Pypiper, with the goal of predicting employee churn.
-        </p>
-      
-    </div>
-    <div style="margin:0 auto; width:90%;">
-            <p style="font-size:1.5vw; font-weight:lighter !important; text-align: justify;">
-            <span class="headart" style="color:indianred;"> &emsp; PyPiper </span> is a platform where you can express your feelings toward your work environment. You can also create/read anonymous post among your colleages. Share the link now!
-            </p>
-        </div>
-</div>
-</article>
-
+</script>
 {% endblock %}
