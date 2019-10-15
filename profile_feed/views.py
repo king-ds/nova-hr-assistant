@@ -57,6 +57,12 @@ def profile(request, username):
 def about(request):
     return render(request, 'profile_feed/about.html')
 
+
+@login_required(login_url='welcome_page')
+def useful_links(request):
+    return render(request, 'profile_feed/links.html')
+
+
 def developer(request):
     return render(request, 'profile_feed/about_developer.html')
 

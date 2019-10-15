@@ -7,4 +7,5 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('developer', views.developer, name='developer'),
     path('json/refresh_profile', views.refresh_profile, name='refresh_profile'),
+    path('links/', views.useful_links, name='view.useful_links'),
 ]
