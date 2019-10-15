@@ -115,13 +115,6 @@ def get_dept_vote(request):
                 chart_y = chart_x.encode(x = 'sum(Reactions Received):Q')
                 chart_3 = chart_x & chart_y
 
-
-
-
-
-
-
-
     if request.method == "GET":
         date_today = datetime.today()
         start_delta = timedelta(weeks=1)
@@ -166,20 +159,16 @@ def get_dept_vote(request):
             total_employees = User.objects.all().count()
             total_deparments = Department.objects.all().count()
             total_posts = Votes.objects.all().count()
+            Users = User.objects.all()
+            
             datas = {'total_employees' : total_employees,
                 'total_deparments' : total_deparments,
                 'total_posts' : total_posts,
+                'Users' : Users,
                 'chart' : chart,
                 'chart_2' : chart_2,
                 'chart_3' : chart_3,
             }
-
-
-
-
-
-
-
 
     return render(request, 'admin_dashboarding/test.html', datas)
 
@@ -233,10 +222,6 @@ def home(request):
         return render(request, 'admin_dashboarding/dashboard.html', {'Users' : Users, 'Departments' : Departments, 'Comments': Comments})
     else:
         return redirect('login')
-
-
-
-
 
 def staff(request):
     if request.method == 'POST':
