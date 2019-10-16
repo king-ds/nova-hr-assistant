@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/89c426fcea.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="shortcut icon" href="{% static 'profile_feed/images/logo.png' %}" />
+    <link rel="shortcut icon" href="{% static 'profile_feed/images/nova.png' %}" />
 
   </head>
 <body>
@@ -22,10 +22,11 @@
       <!-- <div class="left-side-bar-container"> -->
         <!-- <div class="left-side-bar-container-list"> -->
         <ul>
-          <li ><a href="{% url 'home' %}"><span class="fa fa-home" style="color: #ecc236"></span>&nbsp;&nbsp;Home</a> </li>
-          <li><a href="{% url 'profile' username=request.user %}"><span class="fa fa-user-o" style="color: #ecc236;"></span>&nbsp;&nbsp;Profile</a></li>
-          <li><a href="{% url 'about' %}"><span class="fa fa-question-circle-o" style="color: #ecc236"></span>&nbsp;&nbsp;About</a></li>
-          <li><a href="{% url 'logout_user' %}"><span class="fa fa-sign-out" style="color: #ecc236"></span>&nbsp;&nbsp;Logout</a></li>
+          <li ><a href="{% url 'home' %}"><span class="fa fa-home" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;Home</a> </li>
+          <li><a href="{% url 'profile' username=request.user %}"><span class="fa fa-user-o" style="color: #ecc236;" aria-hidden="true"></span>&nbsp;&nbsp;Profile</a></li>
+          <li><a href="{% url 'useful_links' %}"><span class="fa fa-link" style="color: #ecc236;" aria-hidden="true"></span>&nbsp;&nbsp;Useful Links</a></li>
+          <li><a href="{% url 'about' %}"><span class="fa fa-question-circle-o" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;About</a></li>
+          <li><a href="{% url 'logout_user' %}"><span class="fa fa-sign-out" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;Logout</a></li>
         </ul>
         <!-- </div> -->
       <!-- </div> -->
