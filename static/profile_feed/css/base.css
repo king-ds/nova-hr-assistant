@@ -26,6 +26,7 @@ html {
   width: 100%;
   color: white;
   background-color: #0b618f;
+  border-right:1px solid #DDD;
 }
 
 .post-container {
