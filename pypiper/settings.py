@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'pypiperdb',
         'USER': 'admin',
         'PASSWORD' : '7L4EWx1Ky67QXb9uCFD3',
-        'HOST': 'pypiper.cqkc0aajshho.ap-southeast-1.rds.amazonaws.com',
+        'HOST': 'pypiper.cg2bkl7ofb89.ap-southeast-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
