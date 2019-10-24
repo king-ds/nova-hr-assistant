@@ -11,7 +11,6 @@ body {
     background-attachment: fixed;
     background-size: contain;
     background-position: 100% 0%;
-    overflow: hidden;
 }
 
 ul {
@@ -155,7 +154,6 @@ fieldset {
 }
 
 .page-outer {
-    height: 1000vh;
     /* background-image: url('../images/grey_sidegear.png') !important; */
     background-repeat: no-repeat;
     background-attachment: fixed;

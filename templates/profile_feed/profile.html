@@ -1,5 +1,5 @@
 {% extends 'vote_feed/base.html' %}
-{% block title %}PyPiper | Profile{% endblock %}
+{% block title %}Nova | Profile{% endblock %}
 {% block content %}
 
 {% load staticfiles %}
@@ -10,15 +10,12 @@
 </div>
 <div class="post-container-sub-header">
     <div class="post-container-header-sub-title">
-        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Hello, Welcome to your Profile</h3>
+        <h3><img src="{% static 'vote_feed/images/novare_logo.png' %}" style="width: 20px; height:20px; float: left;">Hello, Welcome to your Profile</h3>
     </div>
 </div>
 <div class="post-container-header-divider"></div>
     <div class="user-profile-container">
         <div class="user-profile-container-content">
-            <div class="user-profile-refresh">
-                <span class="refresh_btn"><i class="fa fa-refresh"></i></span>
-            </div>
             <div class="user-profile-photo">
                 <img src={{profile_picture}} alt="{% static 'profile_feed/images/profile-photo.png' %}">
             </div>
@@ -86,22 +83,4 @@
         </div>
     </div>
 
-<script>
-$('.refresh_btn').click(function(){
-    if(confirm('Do you want to update your profile? Please noted that this will take few hours to finish.')){
-        $.ajax({
-        url: "{% url 'refresh_profile' %}",
-        success : function(data){
-            if(data.is_given_exist == true || data.is_received_exist == true){
-                console.log(data.is_received_exist)
-                alert('Already updating your profile...')
-            }
-            console.log('yes')
-        }
-    });
-    }else{
-        console.log('no')
-    }
-});
-</script>
 {% endblock %}

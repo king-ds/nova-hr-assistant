@@ -1,9 +1,9 @@
 {% extends 'gmail_authentication/base.html' %}
-{% block title %} PyPiper | Configure your account{% endblock %}
+{% block title %} Nova | Configure your account{% endblock %}
 {% block content %}
 
 <div class="page-container-configure-account-form">
-    <h2 class="page-container-title">Configure your PyPiper account</h2>
+    <h2 class="page-container-title">Configure your Nova account</h2>
     <p>Please fill out this form</p>
     {% if user.is_authenticated %}
     <form method="POST">
@@ -47,4 +47,4 @@
     {% endif %}
 </div>
 
-{% endblock %}
+{% endblock %}       <!-- <button class="cta">Hey</button> -->

@@ -13,11 +13,10 @@ from django.contrib.auth.decorators import login_required
 # Application
 from gmail_authentication.models import *
 from vote.models import *
+from django.db.models import Q
 from pypiper.scraper import DataScrape
 from background_task import background
 from background_task.models import Task
-
-utc=pytz.UTC
 
 def convert_timedelta(duration):
     seconds = duration.total_seconds()
@@ -26,9 +25,8 @@ def convert_timedelta(duration):
 
 @login_required(login_url='welcome_page')
 def home(request):
-
+	utc = pytz.UTC
 	try:
-		admin_access = ['ricardo.calura', 'christopher.cometa@novare.com.hk']
 
 		# If user is authenticated
 		if request.user.is_authenticated:
@@ -53,13 +51,15 @@ def home(request):
 			# Get the current user session
 			user_instance = User.objects.get(username=request.user)
 
-			# Check if recently logged in user have admin access
-			if str(request.user) in admin_access:
+			# If admin
+			if user_instance.staff_status:
+				admin = True
 				Comment = Votes.objects.all().order_by("-id")
 			else:
+				admin = False
 				Comment = Votes.objects.filter(username=user_instance).order_by("-id")
 
-			User_Instance = User.objects.get(username = request.user)
+			# User_Instance = User.objects.get(username = request.user)
 
 			# Date Manipulation
 			Date_Posts = []
@@ -71,10 +71,38 @@ def home(request):
 
 		context = {
 			'Comments': Comment,
-			'User': User_Instance,
+			# 'User': User_Instance,
 			'Date_Posts': Date_Posts,
+			'admin' : admin,
 		}
 	except ObjectDoesNotExist:
 		return HttpResponse('Please logout the admin account first and reload the page.')
 
 	return render(request, 'vote_feed/vote_feed.html', context)
+
+@csrf_exempt
+def search_user(request):
+
+	user_details = list()
+	user_pictures = list()
+	admin_access = ['ricardo.calura']
+
+	if str(request.user) in admin_access:
+		user = request.POST.get('user', None)
+		if ' ' in user:
+			user = user.split(' ')
+			comments = Votes.objects.filter(Q(username__last_name__icontains=user[1]) | Q(username__first_name__icontains=user[0]))
+		else:
+			comments = Votes.objects.filter(Q(username__last_name__icontains=user) | Q(username__first_name__icontains=user))
+
+		for comment in comments:
+			user_details.append(comment.username.first_name+' '+comment.username.last_name)
+			user_pictures.append(comment.username.profile_picture)
+	
+	data = {
+		'comments' : list(comments.values()),
+		'user_details' : user_details,
+		'user_pictures' : user_pictures,
+	}
+
+	return JsonResponse(data)

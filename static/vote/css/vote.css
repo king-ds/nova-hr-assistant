@@ -13,16 +13,19 @@ h3 {
 	margin: 0 auto;
 }
 
+
+
+
 #line{
     height: 5px;
     width: 250px;
-    background-color:black;
+    background-color:#006298;
     position: relative;
     top:50%;
     left: 50%;
     transform: translate(-50%,-50%);
     margin-bottom: 20px;
-    margin-top: 10px;
+    margin-top: -40px;
 }
 
 #emoji{
@@ -36,21 +39,21 @@ h3 {
     z-index: 99;
 }
 
-#note{
-    list-style: none;
-    position: relative;
-    top:57%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    margin: 0px;
-    padding: 0px;
-    z-index: 99;
+#emoji {
+    margin-top: 30px;
 }
 
 #emoji li{
     display: inline-block;
-    margin-left: 12px;
-    margin-right: 12px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#emoji li:hover{
+    color: #006298;
+    cursor: pointer;
 }
 
 #note li{
@@ -59,8 +62,8 @@ h3 {
     font-size: 15px;
     color:#d4d3cf;
     display: inline-block;
-    margin-left: 17px;
-    margin-right: 18px;
+    margin-left: 25px;
+    margin-right: 25px;
     transition: all .3s;
 }
 
@@ -79,14 +82,14 @@ h3 {
 }
 
 .form-group > textarea {
-    width: 95%;
-    border: none;
+position: inherit;
+    width: 90%;
+    border: black;
     font-size: 20px;
-    border-bottom: 1px solid black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-group > button { 
+.form-group > button {
     margin-top: 20px;
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
@@ -103,6 +106,7 @@ h3 {
     background-color: #006298;
     outline:none;
     border: none;
+    position: inherit;
 }
 
 .form-group > button:hover{

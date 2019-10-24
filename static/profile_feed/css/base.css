@@ -11,7 +11,6 @@
 
 body,
 html {
-  /* overflow: auto; */
     height: 100%;
     padding: 0;
     margin: 0;
@@ -24,19 +23,22 @@ html {
 
 .left-side-bar {
   flex: 1;
-  /* height: 100%; */
-  width: 20%;
-  border-right: 0.5px solid rgb(230, 236, 240);
+  width: 100%;
+  color: white;
+  background-color: #0b618f;
+  border-right:1px solid #DDD;
 }
 
 .post-container {
-  flex: 4;
+  flex: 5;
   height: 100%;
   width: 100%;
   overflow: auto;
 }
 .post-container-header {
-  height: 53px;
+  padding: 10px;
+  color: #0b618f;
+  background-color:white;
   border-bottom: 0.5px solid rgb(230, 236, 240);
 }
 
@@ -51,6 +53,7 @@ html {
 
 .post-container-header-sub-title {
   margin: 30px;
+  color: #0b618f;
 }
 
 .post-container-header-sub-title > h3 {
@@ -67,8 +70,8 @@ html {
 .post-container-stories {
   flex: 1;
   background-color: whitesmoke;
-  padding-top: 5px;
-  padding-bottom: 5px;  
+  padding-top: 20px;
+  padding-bottom: 15px;  
 }
 
 .post-container-stories-post {
@@ -83,28 +86,38 @@ html {
   top: 0;
 }
 
-.left-side-bar-container-list {
-  position: fixed;
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 25px;
-  margin-top: 50px;
-  color: black;
+.left-side-bar-logo{
+  background-color: white;
+  text-align: center;
 }
-.left-side-bar-container-list a{
-  color:black;
+
+.left-side-bar ul {
+  text-align: center;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 20px;
+  margin-top: 50px;
+}
+
+.left-side-bar li {
+  padding-top: 10px;
+  padding-bottom:10px;
+  color:white;
   transition:0.5s;
 }
-.left-side-bar-container-list li{
-  padding-bottom:50px;
-}
-.left-side-bar-container-list a:hover{
-  background-color:#9b9b9e !important;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 20px;
+
+.left-side-bar li a{
   color:white;
-  /* color: red; */
+  transition:0.5s;
 }
+
+.left-side-bar li:hover {
+  background-color:white !important;
+}
+
+.left-side-bar li:hover > a{
+  color: #0b618f;
+}
+
 
 .right-side-bar-container {
   display: flex;
@@ -138,6 +151,12 @@ html {
   flex: 1 0 auto;
   /* padding: 5px; */
 
+}
+
+.rotated-image {
+  -webkit-transform: rotate(50deg);
+          transform: rotate(360deg);
+          transition: 2s;
 }
 
 .right-side-bar-container-posts-footer {

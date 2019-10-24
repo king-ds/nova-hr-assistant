@@ -9,31 +9,23 @@
 
 
   <ul id="emoji">
-      <li value="1" id="btn-1"><img src="{% static 'vote/images/emoji11.png' %}" style="width: 50px; height: 50px;"/></li>
-      <li value="2" id="btn-2"><img src="{% static 'vote/images/emoji22.png' %}" style="width: 50px; height: 50px;"/></li>
-      <li value="3" id="btn-3"><img src="{% static 'vote/images/emoji33.png' %}" style="width: 50px; height: 50px;"/></li>
-      <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji44.png' %}" style="width: 50px; height: 50px;"/></li>
-      <!-- <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji55.png' %}" style="width: 50px; height: 50px;"/></li> -->
+      <li value="1" id="btn-1"><img src="{% static 'vote/images/emoji11.png' %}" style="width: 50px; height: 50px;"/><p>POOR</p></li>
+      <li value="2" id="btn-2"><img src="{% static 'vote/images/emoji22.png' %}" style="width: 50px; height: 50px;"/><p>FAIR</p></li>
+      <li value="3" id="btn-3"><img src="{% static 'vote/images/emoji33.png' %}" style="width: 50px; height: 50px;"/><p>GOOD</p></li>
+      <li value="4" id="btn-4"><img src="{% static 'vote/images/emoji44.png' %}" style="width: 50px; height: 50px;"/><p>EXCELLENT</p></li>
   </ul>
-
-
-<ul id="note">
-    <li>BAD</li>
-    <li>OKAY</li>
-    <li>GOOD</li>
-    <li>GREAT</li>
-</ul>
 
 <div id="line">
     <div id="dot"></div>
 </div>
 </div>
 
+
 <form id="post-form" method="POST">
   {% csrf_token %}
   <div class="form-group">
-        <textarea class="form-control" rows="3" id="post" name="post" placeholder="Write a post..." required></textarea>
-        <button id="submit_btn" type="submit" class="btn btn-primary">Post</button>
+        <textarea class="form-control" rows="3" id="post" name="post" placeholder="Do you have any feedback to HR?" ></textarea>
+        <button id="submit_btn" type="submit" class="btn btn-primary">Send</button>
       </div>
   </form>
 

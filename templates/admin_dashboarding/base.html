@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles %}
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -28,7 +29,8 @@
   <link rel="stylesheet" href="{% static 'admin_dashboarding/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'mailer/css/mailer.css' %}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'admin_dashboarding/images/logo_pypiper.png' %}" />
+  <link rel="shortcut icon" href="{% static 'profile_feed/images/nova_shortcut.png' %}" />
+  <!-- <link rel="shortcut icon" href="{% static 'admin_dashboarding/images/logo_pypiper.png' %}" /> -->
 
 
 </head>
@@ -37,7 +39,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="{% url 'admin_home' %}"><img src="{% static 'admin_dashboarding/images/pypiper.png' %}" alt="logo"/></a>
+        <a class="navbar-brand brand-logo" href="{% url 'admin_home' %}"><img src="{% static 'profile_feed/images/nova.png' %}" alt="logo"/></a>
         <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{% static "images/logo_pypiper.png" %}" alt="logo"/></a> -->
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -108,6 +110,21 @@
               <i class="mdi mdi-arrow-up-bold-circle-outline menu-icon"></i>
             </a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'staff' %}">
+              <span class="menu-title">Update Staff Status</span>
+              <i class="mdi mdi-arrow-up-bold-circle-outline menu-icon"></i>
+            </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'department' %}">
+              <span class="menu-title">Add a New Department</span>
+              <i class="mdi mdi-arrow-up-bold-circle-outline menu-icon"></i>
+            </a>
+          </li>
+
+
             <div class="collapse" id="general-pages">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>

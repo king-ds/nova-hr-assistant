@@ -8,25 +8,28 @@
     <script src="https://kit.fontawesome.com/89c426fcea.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="shortcut icon" href="{% static 'profile_feed/images/logo.png' %}" />
+    <link rel="shortcut icon" href="{% static 'profile_feed/images/nova.png' %}" />
 
   </head>
 <body>
   <!-- Entire Container -->
-  <div class="container" style="background-color:Lime;">
-    <div class="left-side-bar" style="background-color:white;">
-      <div class="left-side-bar-container">
-        <div class="left-side-bar-container-list">
-        <ul>
-          <li><a href="{% url 'home' %}"><span class="fa fa-gear fa-spin" style="color: #4287f5"></span></a></li>
-          <li><a href="{% url 'home' %}"><span class="fa fa-home" style="color: #4287f5"></span>&nbsp;&nbsp;Home</a> </li>
-          <li><a href="{% url 'profile' username=request.user %}"><span class="fa fa-user-o" style="color: #4287f5;"></span>&nbsp;&nbsp;Profile</a></li>
-          <li><a href="{% url 'about' %}"><span class="fa fa-question-circle-o" style="color: #4287f5"></span>&nbsp;&nbsp;About</a></li>
-          <li><a href="{% url 'developer' %}"><span class="fa fa-user-secret" style="color: #4287f5"></span>&nbsp;&nbsp;Developer</a></li>
-          <li><a href="{% url 'logout_user' %}"><span class="fa fa-sign-out" style="color: #4287f5"></span>&nbsp;&nbsp;Logout</a></li>
-        </ul>
+  <div class="container">
+    <div class="left-side-bar">
+        <div class="left-side-bar-logo">
+            <img id="novare_logo" src="{% static 'profile_feed/images/nova.png' %}" style="width:80px; margin: 14px; cursor: pointer;" onclick="refresh()">
         </div>
-      </div>
+        
+      <!-- <div class="left-side-bar-container"> -->
+        <!-- <div class="left-side-bar-container-list"> -->
+        <ul>
+          <li ><a href="{% url 'home' %}"><span class="fa fa-home" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;Home</a> </li>
+          <li><a href="{% url 'profile' username=request.user %}"><span class="fa fa-user-o" style="color: #ecc236;" aria-hidden="true"></span>&nbsp;&nbsp;Profile</a></li>
+          <li><a href="{% url 'useful_links' %}"><span class="fa fa-link" style="color: #ecc236;" aria-hidden="true"></span>&nbsp;&nbsp;Useful Links</a></li>
+          <li><a href="{% url 'about' %}"><span class="fa fa-question-circle-o" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;About</a></li>
+          <li><a href="{% url 'logout_user' %}"><span class="fa fa-sign-out" style="color: #ecc236" aria-hidden="true"></span>&nbsp;&nbsp;Logout</a></li>
+        </ul>
+        <!-- </div> -->
+      <!-- </div> -->
     </div>
 
     <!-- Middle Split -->
@@ -40,5 +43,11 @@
   </div>
   <!-- End of Entire Container -->
 </body>
+<script>
+function refresh(){
+  var img = document.getElementById("novare_logo")
+  img.setAttribute("class", "rotated-image");
+  setTimeout(location.reload.bind(location), 1000);
+}
 </script>
 </html>

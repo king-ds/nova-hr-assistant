@@ -1,10 +1,14 @@
 {% extends 'vote_feed/base.html' %}
-{% block title %}PyPiper{% endblock %}
+{% block title %}Nova{% endblock %}
 {% load static %}
 {% load django_template %}
 {% load mathfilters %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'vote_feed/css/modal.css' %}">
+<link rel="stylesheet" href="{% static 'vote_feed/css/search.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 <div class="post-container-header">
     <div class="post-container-header-title">
       <h2><b>Home</b></h2>
@@ -12,12 +16,48 @@
   </div>
   <div class="post-container-sub-header">
       <div class="post-container-header-sub-title">
-        <h3><img src="{% static 'profile_feed/images/logo.png' %}" style="width: 20px; height:20px; float: left;">Stories at your company</h3>
+        <h3><img src="{% static 'vote_feed/images/novare_logo.png' %}" style="width: 20px; height:20px; float: left;">Your Feedbacks</h3>
       </div>
   </div>
   <div class="post-container-header-divider">
+  {% if admin %}
+  <div class="post-container-search-bar" style="float: right; margin: 15px;">
+    <input type="search" id="search_field" class="input" placeholder="Search" required>
+    <i class="fa fa-search" id="search-icon" onclick="search_user()"></i>
+  </div>
+  {% endif %}
   </div>
   <div class="post-container-stories">
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Search Results</h3>
+          <div class="post-container-stories-post">
+            <div class="container">
+              <div class="col-md-5">
+                <div class="panel panel-default">
+                  <div class="panel-body" style="margin-left: 50px;">
+                    <section class="post-heading">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <div style="display: table-row;">
+                            <div class="user-post" style="display: table-cell;vertical-align: middle;">
+                                                  
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     {% if Comments %}
     {% for votes in Comments %}
     <div class="post-container-stories-post">
@@ -79,4 +119,65 @@
         <p style="text-align: center;">There is no post yet</p>
         {% endif %}
       </div>
+
+<script>
+  function search_user(){
+    var user = $('#search_field').val()
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    $.ajax({
+      url : "{% url 'search' %}",
+      type : "POST",
+      data : {
+        "user" : user,
+      },
+      success : function(data){
+
+        $(".user-post").empty()
+        modal.style.display = "block";
+
+        for (i = 0; i < data.user_details.length; i++){
+
+          if(data.comments[i]['votes'] == 1){
+            $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
+                                                 "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
+                                                 "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:red !important;'>(<i class='fas fa-angry'></i> Poor)</span>&nbsp;&nbsp;"+
+                                                 data.comments[i]['comment']+"</p></section>")
+          } else if(data.comments[i]['votes'] == 2){
+            $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
+                                                 "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
+                                                 "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:gray !important;'>(<i class='fas fa-frown-open'></i> Fair)</span>&nbsp;&nbsp;"+
+                                                 data.comments[i]['comment']+"</p></section>")
+          } else if(data.comments[i]['votes'] == 3){
+            $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
+                                                 "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
+                                                 "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:green !important;'>(<i class='fas fa-grin-alt'></i> Good)</span>&nbsp;&nbsp;"+
+                                                 data.comments[i]['comment']+"</p></section>")
+          } else {
+            $(".user-post").append("<img src="+ data.user_pictures[i] +" style='width: 40px; float: left; margin-top: 12px; border-radius: 50%;'>"+
+                                                 "<div style='display: table-cell; vertical-align:middle; word-break: break-all; padding-left: 10px;'>"+
+                                                 "<p style='color: #1476ff;'>"+ data.user_details[i] +"</p></div>"+
+                                                 "<section><p style='margin-right: 50px;'><span style='color:lightgreen !important;'>(<i class='fas fa-grin-beam-sweat'></i> Excellent)</span>&nbsp;&nbsp;"+
+                                                 data.comments[i]['comment']+"</p></section>")
+          }
+        }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+      }
+    });
+  }
+</script>
 {% endblock %}
+
